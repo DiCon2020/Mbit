@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Mbit</string>
+    <string name="baseUrl">https://api.taemin.dev/mbit/</string>
 </resources>
