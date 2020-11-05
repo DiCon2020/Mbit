@@ -18,5 +18,6 @@ class LoginActivity : AppCompatActivity() {
             ViewModelProvider(this).get(LoginActivityViewModel::class.java)
         binding.viewModel = viewModel
 
+        //commit test
     }
 }
