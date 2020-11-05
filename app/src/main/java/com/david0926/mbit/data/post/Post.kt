@@ -1,4 +1,6 @@
-package com.david0926.mbit.data
+package com.david0926.mbit.data.post
+
+import com.david0926.mbit.data.UserModel
 
 data class Post (
     var commentList: ArrayList<Any>,

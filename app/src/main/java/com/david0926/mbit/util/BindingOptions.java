@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,11 +39,21 @@ public class BindingOptions {
     }
 
     @BindingAdapter("bindButtonEnabled")
-    public static void bindButtonEnabled(View v, boolean enabled) {
+    public static void bindButtonEnabled(Button v, boolean enabled) {
         v.setClickable(enabled);
         v.setFocusable(enabled);
         v.setBackgroundTintList(ContextCompat.getColorStateList(v.getContext(),
                 enabled ? R.color.colorPrimary : R.color.materialGray6));
+    }
+
+    @BindingAdapter("bindSecondaryButtonEnabled")
+    public static void bindSecondaryButtonEnabled(Button v, boolean enabled) {
+        v.setClickable(enabled);
+        v.setFocusable(enabled);
+        v.setTextColor(ContextCompat.getColorStateList(v.getContext(),
+                enabled ? R.color.colorPrimary : R.color.white));
+        v.setBackgroundTintList(ContextCompat.getColorStateList(v.getContext(),
+                enabled ? R.color.colorSecondary : R.color.materialGray6));
     }
 
     @BindingAdapter("bindEditTextAutoFocus")

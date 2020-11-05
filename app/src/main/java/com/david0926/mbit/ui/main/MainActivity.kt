@@ -6,12 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.david0926.mbit.R
-import com.david0926.mbit.data.*
+import com.david0926.mbit.data.network.LoginRequest
 import com.david0926.mbit.databinding.ActivityMainBinding
 import com.david0926.mbit.network.auth.AuthManager
-import com.david0926.mbit.network.auth.PostManager
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 
 
 class MainActivity : AppCompatActivity() {
@@ -22,8 +19,7 @@ class MainActivity : AppCompatActivity() {
             DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
 
-        val viewModel: MainActivityViewModel =
-            ViewModelProvider(this).get(MainActivityViewModel::class.java)
+        val viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
         binding.viewModel = viewModel
 
 

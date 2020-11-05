@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -10,10 +11,11 @@
 
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingVertical="36dp"
@@ -21,6 +23,27 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circleImageView"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginStart="36dp"
+            android:src="@color/materialGray4"
+            app:layout_constraintBottom_toBottomOf="@+id/editText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView" />
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/colorPrimary"
+            android:padding="2dp"
+            android:src="@drawable/ic_baseline_add_24"
+            app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
+            app:layout_constraintEnd_toEndOf="@+id/circleImageView"
+            app:tint="@color/white" />
 
         <TextView
             android:id="@+id/textView"
@@ -32,75 +55,81 @@
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/circleImageView"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
 
 
         <EditText
             android:id="@+id/editText"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="36dp"
-            android:layout_marginTop="36dp"
-            android:hint="이메일"
-            android:inputType="textEmailAddress"
+            android:layout_marginHorizontal="48dp"
+            android:layout_marginTop="16dp"
+            android:hint="닉네임"
             android:maxLines="1"
-            android:text="@={viewModel.email}"
+            android:text="@={viewModel.name}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView" />
+            app:layout_constraintStart_toEndOf="@+id/circleImageView"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <EditText
             android:id="@+id/editText2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="36dp"
-            android:layout_marginTop="16dp"
-            android:hint="비밀번호"
-            android:inputType="textPassword"
+            android:layout_marginHorizontal="48dp"
+            android:layout_marginTop="24dp"
+            android:hint="출생 연도 (4자리)"
             android:maxLines="1"
-            android:text="@={viewModel.pw}"
+            android:text="@={viewModel.birth}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/editText" />
 
-        <EditText
-            android:id="@+id/editText3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="36dp"
-            android:layout_marginTop="16dp"
-            android:hint="비밀번호 확인"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:text="@={viewModel.pwCheck}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/font_primary_extrabold"
             android:textColor="@color/materialRed"
             android:textSize="14sp"
             android:visibility="@{viewModel.errorMsg.length() &gt; 0, default=gone}"
-            app:bindErrorMsg="@{viewModel.errorMsg}" />
+            app:bindErrorMsg="@{viewModel.errorMsg}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText2" />
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:drawableTint="@color/colorPrimary"
+            android:fontFamily="@font/font_primary_regular"
+            android:text="개인정보 수집 약관에 동의합니다."
+            android:textColor="@color/textColorDefault"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
         <Button
+            android:id="@+id/btnRegister2Next"
             style="@style/ButtonSecondaryStyleColored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="36dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginHorizontal="48dp"
+            android:layout_marginTop="16dp"
             android:text="다음"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            app:bindSecondaryButtonEnabled="@{viewModel.nextEnabled}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBox"
+            tools:layout_editor_absoluteX="36dp" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

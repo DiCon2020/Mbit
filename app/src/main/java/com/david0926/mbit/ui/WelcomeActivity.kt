@@ -8,7 +8,6 @@ import com.david0926.mbit.R
 import com.david0926.mbit.databinding.ActivityWelcomeBinding
 import com.david0926.mbit.ui.login.LoginActivity
 import com.david0926.mbit.ui.register.RegisterActivity
-import kotlinx.android.synthetic.main.activity_welcome.*
 
 class WelcomeActivity : AppCompatActivity() {
 
@@ -18,13 +17,13 @@ class WelcomeActivity : AppCompatActivity() {
             DataBindingUtil.setContentView(this, R.layout.activity_welcome)
         binding.lifecycleOwner = this
 
-        btnWelcomeLogin.setOnClickListener {
+        binding.btnWelcomeLogin.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
             overridePendingTransition(R.anim.slide_left, R.anim.slide_left_before)
             finish()
         }
 
-        btnWelcomeRegister.setOnClickListener {
+        binding.btnWelcomeRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
             overridePendingTransition(R.anim.slide_right, R.anim.slide_right_before)
             finish()

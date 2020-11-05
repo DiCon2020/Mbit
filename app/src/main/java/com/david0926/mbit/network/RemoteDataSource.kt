@@ -1,6 +1,9 @@
 package com.david0926.mbit.network
 
 import com.david0926.mbit.data.*
+import com.david0926.mbit.data.network.LoginRequest
+import com.david0926.mbit.data.network.RegisterRequest
+import com.david0926.mbit.data.post.*
 
 interface RemoteDataSource {
 

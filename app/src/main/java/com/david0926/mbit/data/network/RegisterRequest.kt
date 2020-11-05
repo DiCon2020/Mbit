@@ -1,4 +1,4 @@
-package com.david0926.mbit.data
+package com.david0926.mbit.data.network
 
 import okhttp3.MultipartBody
 

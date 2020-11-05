@@ -1,8 +1,8 @@
 package com.david0926.mbit.network.auth
 
 import com.david0926.mbit.data.CommonResponse
-import com.david0926.mbit.data.LoginRequest
-import com.david0926.mbit.data.RegisterRequest
+import com.david0926.mbit.data.network.LoginRequest
+import com.david0926.mbit.data.network.RegisterRequest
 import com.david0926.mbit.data.UserModel
 import com.david0926.mbit.network.RemoteDataSource
 import com.david0926.mbit.network.RemoteDataSourceImpl
