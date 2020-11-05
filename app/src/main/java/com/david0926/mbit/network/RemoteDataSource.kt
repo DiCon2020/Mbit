@@ -3,7 +3,7 @@ package com.david0926.mbit.network
 import com.david0926.mbit.data.CommonResponse
 import com.david0926.mbit.data.LoginRequest
 import com.david0926.mbit.data.RegisterRequest
-import com.david0926.mbit.data.UserResponse
+import com.david0926.mbit.data.UserModel
 
 interface RemoteDataSource {
     fun login(
@@ -26,7 +26,7 @@ interface RemoteDataSource {
 
     fun setUserData(
         token: String,
-        userResponse: UserResponse,
+        userModel: UserModel,
         onResponse : (CommonResponse) -> Unit,
         onFailure: (Throwable) -> Unit
     )

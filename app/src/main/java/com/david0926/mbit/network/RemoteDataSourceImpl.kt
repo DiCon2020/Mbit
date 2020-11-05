@@ -3,7 +3,7 @@ package com.david0926.mbit.network
 import com.david0926.mbit.data.CommonResponse
 import com.david0926.mbit.data.LoginRequest
 import com.david0926.mbit.data.RegisterRequest
-import com.david0926.mbit.data.UserResponse
+import com.david0926.mbit.data.UserModel
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
@@ -70,11 +70,11 @@ class RemoteDataSourceImpl : RemoteDataSource {
 
     override fun setUserData(
         token: String,
-        userResponse: UserResponse,
+        userModel: UserModel,
         onResponse: (CommonResponse) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
-        MbitRetrofit.authService.setUserData("Bearer $token", userResponse).enqueue(object : Callback<CommonResponse> {
+        MbitRetrofit.authService.setUserData("Bearer $token", userModel).enqueue(object : Callback<CommonResponse> {
             override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                 onFailure(t)
             }

@@ -2,7 +2,7 @@ package com.david0926.mbit.data
 
 import okhttp3.MultipartBody
 
-data class UserResponse (
+data class UserModel (
     var id: String,
     var password: String,
     var username: String,

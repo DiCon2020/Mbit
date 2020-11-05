@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.david0926.mbit.R
 import com.david0926.mbit.data.LoginRequest
 import com.david0926.mbit.databinding.ActivityLoginBinding
-import com.david0926.mbit.network.auth.AuthManager
 import com.david0926.mbit.ui.dialog.LoadingDialog
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -26,11 +25,10 @@ class LoginActivity : AppCompatActivity() {
             val dialog = LoadingDialog(this)
             dialog.setMessage("로그인 중...")
 
-            val authManager = AuthManager()
-            //authManager.login(LoginRequest())
+            viewModel.requestLogin(LoginRequest(viewModel.email.value!!, viewModel.pw.value!!))
         }
 
-        btnLoginRegister.setOnClickListener{
+        btnLoginRegister.setOnClickListener {
 
         }
     }

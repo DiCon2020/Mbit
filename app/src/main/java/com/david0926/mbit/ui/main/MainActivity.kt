@@ -10,7 +10,7 @@ import com.david0926.mbit.databinding.ActivityMainBinding
 import com.david0926.mbit.network.auth.AuthManager
 import com.david0926.mbit.data.LoginRequest
 import com.david0926.mbit.data.RegisterRequest
-import com.david0926.mbit.data.UserResponse
+import com.david0926.mbit.data.UserModel
 import com.google.gson.Gson
 
 
@@ -45,9 +45,9 @@ class MainActivity : AppCompatActivity() {
 
                 Log.w("회원 정보", userdata.data.toString())
                 Log.w("회원 정보", Gson().toJson(userdata.data))
-                val user: UserResponse = Gson().fromJson(
+                val user: UserModel = Gson().fromJson(
                     Gson().toJson(userdata.data),
-                    UserResponse::class.java
+                    UserModel::class.java
                 ) // 받은 유저 정보, 실패했으면 Null값
                 Log.w("회원 정보", user.username)
                 // data타입 Any로 해둔건 앞으로 어떻게 될지 몰라서 나중에 고쳐드려요
