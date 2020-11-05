@@ -20,11 +20,13 @@ class WelcomeActivity : AppCompatActivity() {
 
         btnWelcomeLogin.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
+            overridePendingTransition(R.anim.slide_left, R.anim.slide_left_before)
             finish()
         }
 
         btnWelcomeRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
+            overridePendingTransition(R.anim.slide_right, R.anim.slide_right_before)
             finish()
         }
     }
