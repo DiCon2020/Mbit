@@ -1,10 +1,9 @@
-package com.david0926.mbit.ui.Retrofit
+package com.david0926.mbit.network
 
-import android.util.Log
-import com.david0926.mbit.ui.Retrofit.Model.CommonResponse
-import com.david0926.mbit.ui.Retrofit.Model.LoginModel
-import com.david0926.mbit.ui.Retrofit.Model.RegisterModel
-import com.david0926.mbit.ui.Retrofit.Model.UserModel
+import com.david0926.mbit.data.CommonResponse
+import com.david0926.mbit.data.LoginRequest
+import com.david0926.mbit.data.RegisterRequest
+import com.david0926.mbit.data.UserResponse
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
@@ -13,11 +12,11 @@ import retrofit2.Response
 class RemoteDataSourceImpl : RemoteDataSource {
 
     override fun login(
-        loginModel: LoginModel,
+        loginRequest: LoginRequest,
         onResponse: (CommonResponse) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
-        MbitRetrofit.authService.login(loginModel).enqueue(object : Callback<CommonResponse> {
+        MbitRetrofit.authService.login(loginRequest).enqueue(object : Callback<CommonResponse> {
             override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                 onFailure(t)
             }
@@ -32,11 +31,11 @@ class RemoteDataSourceImpl : RemoteDataSource {
     }
 
     override fun register(
-        registerModel: RegisterModel,
+        registerRequest: RegisterRequest,
         onResponse: (CommonResponse) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
-        MbitRetrofit.authService.register(registerModel).enqueue(object : Callback<CommonResponse> {
+        MbitRetrofit.authService.register(registerRequest).enqueue(object : Callback<CommonResponse> {
             override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                 onFailure(t)
             }
@@ -71,11 +70,11 @@ class RemoteDataSourceImpl : RemoteDataSource {
 
     override fun setUserData(
         token: String,
-        userModel: UserModel,
+        userResponse: UserResponse,
         onResponse: (CommonResponse) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
-        MbitRetrofit.authService.setUserData("Bearer $token", userModel).enqueue(object : Callback<CommonResponse> {
+        MbitRetrofit.authService.setUserData("Bearer $token", userResponse).enqueue(object : Callback<CommonResponse> {
             override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                 onFailure(t)
             }

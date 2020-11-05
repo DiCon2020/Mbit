@@ -1,20 +1,19 @@
-package com.david0926.mbit.ui.Retrofit
+package com.david0926.mbit.network
 
-import com.david0926.mbit.ui.Retrofit.Model.CommonResponse
-import com.david0926.mbit.ui.Retrofit.Model.LoginModel
-import com.david0926.mbit.ui.Retrofit.Model.RegisterModel
-import com.david0926.mbit.ui.Retrofit.Model.UserModel
-import retrofit2.Response
+import com.david0926.mbit.data.CommonResponse
+import com.david0926.mbit.data.LoginRequest
+import com.david0926.mbit.data.RegisterRequest
+import com.david0926.mbit.data.UserResponse
 
 interface RemoteDataSource {
     fun login(
-        loginModel: LoginModel,
+        loginRequest: LoginRequest,
         onResponse : (CommonResponse) -> Unit,
         onFailure: (Throwable) -> Unit
     )
 
     fun register(
-        registerModel: RegisterModel,
+        registerRequest: RegisterRequest,
         onResponse : (CommonResponse) -> Unit,
         onFailure: (Throwable) -> Unit
     )
@@ -27,7 +26,7 @@ interface RemoteDataSource {
 
     fun setUserData(
         token: String,
-        userModel: UserModel,
+        userResponse: UserResponse,
         onResponse : (CommonResponse) -> Unit,
         onFailure: (Throwable) -> Unit
     )

@@ -1,6 +1,6 @@
-package com.david0926.mbit.ui.Retrofit
+package com.david0926.mbit.network
 
-import com.david0926.mbit.ui.Retrofit.Auth.AuthService
+import com.david0926.mbit.network.auth.AuthService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

@@ -1,4 +1,4 @@
-package com.david0926.mbit.ui.Retrofit.Model
+package com.david0926.mbit.data
 
 data class CommonResponse (
     val status: Int,

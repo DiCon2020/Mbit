@@ -1,9 +1,9 @@
-package com.david0926.mbit.ui.Retrofit.Auth
+package com.david0926.mbit.network.auth
 
-import com.david0926.mbit.ui.Retrofit.Model.CommonResponse
-import com.david0926.mbit.ui.Retrofit.Model.LoginModel
-import com.david0926.mbit.ui.Retrofit.Model.RegisterModel
-import com.david0926.mbit.ui.Retrofit.Model.UserModel
+import com.david0926.mbit.data.CommonResponse
+import com.david0926.mbit.data.LoginRequest
+import com.david0926.mbit.data.RegisterRequest
+import com.david0926.mbit.data.UserResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -11,12 +11,12 @@ interface AuthService {
 
     @POST("/mbit/auth/signin")
     fun login(
-        @Body loginmodel: LoginModel
+        @Body loginmodel: LoginRequest
     ): Call<CommonResponse>
 
     @POST("/mbit/auth/signup")
     fun register(
-        @Body registerModel: RegisterModel
+        @Body registerRequest: RegisterRequest
     ): Call<CommonResponse>
 
     @POST("/mbit/auth/info")
@@ -27,6 +27,6 @@ interface AuthService {
     @PUT("/mbit/auth/info")
     fun setUserData(
         @Header("Authorization") token: String,
-        @Part userModel: UserModel
+        @Part userResponse: UserResponse
     ): Call<CommonResponse>
 }
