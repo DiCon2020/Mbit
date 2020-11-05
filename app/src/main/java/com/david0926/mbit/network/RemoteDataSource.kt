@@ -7,7 +7,7 @@ interface RemoteDataSource {
     // AuthService
     fun login(
         loginRequest: LoginRequest,
-        onResponse : (CommonResponse) -> Unit,
+        onResponse : (CommonResponse, UserModel?) -> Unit,
         onFailure: (Throwable) -> Unit
     )
 
@@ -19,14 +19,14 @@ interface RemoteDataSource {
 
     fun getUserData(
         token: String,
-        onResponse : (CommonResponse) -> Unit,
+        onResponse : (CommonResponse, UserModel?) -> Unit,
         onFailure: (Throwable) -> Unit
     )
 
     fun setUserData(
         token: String,
         userModel: UserModel,
-        onResponse : (CommonResponse) -> Unit,
+        onResponse : (CommonResponse, UserModel?) -> Unit,
         onFailure: (Throwable) -> Unit
     )
 
@@ -34,7 +34,7 @@ interface RemoteDataSource {
     fun getPosts(
         token: String,
         postGetRequest: PostGetRequest,
-        onResponse : (CommonResponse) -> Unit,
+        onResponse : (CommonResponse, ArrayList<Post>?) -> Unit,
         onFailure: (Throwable) -> Unit
     )
 
@@ -48,6 +48,13 @@ interface RemoteDataSource {
     fun votePost(
         token: String,
         postVoteRequest: PostVoteRequest,
+        onResponse : (CommonResponse) -> Unit,
+        onFailure: (Throwable) -> Unit
+    )
+
+    fun deletePost(
+        token: String,
+        postDeleteRequest: PostDeleteRequest,
         onResponse : (CommonResponse) -> Unit,
         onFailure: (Throwable) -> Unit
     )

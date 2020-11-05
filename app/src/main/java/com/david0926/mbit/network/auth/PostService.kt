@@ -1,9 +1,6 @@
 package com.david0926.mbit.network.auth
 
-import com.david0926.mbit.data.CommonResponse
-import com.david0926.mbit.data.PostCreateRequest
-import com.david0926.mbit.data.PostGetRequest
-import com.david0926.mbit.data.PostVoteRequest
+import com.david0926.mbit.data.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -29,9 +26,9 @@ interface PostService {
         @Body postVoteRequest: PostVoteRequest
     ): Call<CommonResponse>
 
-    @POST("/mbit/post/empathy")
+    @DELETE("/mbit/post/delete")
     fun deletePost(
         @Header("Authorization") token: String,
-        @Body postVoteRequest: PostVoteRequest
+        @Body postDeleteRequest: PostDeleteRequest
     ): Call<CommonResponse>
 }
