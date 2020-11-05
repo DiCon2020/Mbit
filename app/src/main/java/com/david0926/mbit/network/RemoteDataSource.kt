@@ -61,4 +61,19 @@ interface RemoteDataSource {
         onResponse : (CommonResponse) -> Unit,
         onFailure: (Throwable) -> Unit
     )
+
+    // CommentService
+    fun getComments(
+        token: String,
+        commentGetRequest: CommentGetRequest,
+        onResponse : (CommonResponse, ArrayList<Comment>?) -> Unit,
+        onFailure: (Throwable) -> Unit
+    )
+
+    fun addComment(
+        token: String,
+        commentAddRequest: CommentAddRequest,
+        onResponse : (CommonResponse) -> Unit,
+        onFailure: (Throwable) -> Unit
+    )
 }

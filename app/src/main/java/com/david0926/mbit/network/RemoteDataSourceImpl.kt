@@ -180,6 +180,51 @@ class RemoteDataSourceImpl : RemoteDataSource {
         })
     }
 
+    // CommentService
+
+    override fun getComments(
+        token: String,
+        commentGetRequest: CommentGetRequest,
+        onResponse: (CommonResponse, ArrayList<Comment>?) -> Unit,
+        onFailure: (Throwable) -> Unit
+    ) {
+        MbitRetrofit.commentService.getComments("Bearer $token", commentGetRequest.post_id).enqueue(object : Callback<CommonResponse> {
+            override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
+                onFailure(t)
+            }
+            override fun onResponse(call: Call<CommonResponse>, response: Response<CommonResponse>) {
+                if(response.body() == null) {
+                    onResponse(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java), null)
+                } else {
+                    val Type = object : TypeToken<ArrayList<Comment>>() {}.type
+                    val comments: ArrayList<Comment> = Gson().fromJson<ArrayList<Comment>>(
+                        Gson().toJson(response.body()!!.data), Type
+                    )
+                    onResponse(response.body()!!, comments)
+                }
+            }
+        })
+    }
+
+    override fun addComment(
+        token: String,
+        commentAddRequest: CommentAddRequest,
+        onResponse: (CommonResponse) -> Unit,
+        onFailure: (Throwable) -> Unit
+    ) {
+        MbitRetrofit.commentService.addComment("Bearer $token", commentAddRequest).enqueue(object : Callback<CommonResponse> {
+            override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
+                onFailure(t)
+            }
+            override fun onResponse(call: Call<CommonResponse>, response: Response<CommonResponse>) {
+                if(response.body() == null) {
+                    onResponse(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java))
+                } else {
+                    onResponse(response.body()!!)
+                }
+            }
+        })
+    }
 
 
 }
