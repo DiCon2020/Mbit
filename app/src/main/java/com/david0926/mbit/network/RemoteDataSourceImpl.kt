@@ -2,6 +2,7 @@ package com.david0926.mbit.network
 
 import com.david0926.mbit.data.*
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -12,7 +13,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
     // AuthService
     override fun login(
         loginRequest: LoginRequest,
-        onResponse: (CommonResponse) -> Unit,
+        onResponse: (CommonResponse, UserModel?) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
         MbitRetrofit.authService.login(loginRequest).enqueue(object : Callback<CommonResponse> {
@@ -21,9 +22,10 @@ class RemoteDataSourceImpl : RemoteDataSource {
             }
             override fun onResponse(call: Call<CommonResponse>, response: Response<CommonResponse>) {
                 if(response.body() == null) {
-                    onResponse(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java))
+                    onResponse(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java), null)
                 } else {
-                    onResponse(response.body()!!)
+                    var user: UserModel = Gson().fromJson(Gson().toJson(response.body()!!.data), UserModel::class.java)
+                    onResponse(response.body()!!, user);
                 }
             }
         })
@@ -50,7 +52,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
 
     override fun getUserData(
         token: String,
-        onResponse: (CommonResponse) -> Unit,
+        onResponse: (CommonResponse, UserModel?) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
         MbitRetrofit.authService.getUserData("Bearer $token").enqueue(object : Callback<CommonResponse> {
@@ -59,9 +61,10 @@ class RemoteDataSourceImpl : RemoteDataSource {
             }
             override fun onResponse(call: Call<CommonResponse>, response: Response<CommonResponse>) {
                 if(response.body() == null) {
-                    onResponse(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java))
+                    onResponse(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java), null)
                 } else {
-                    onResponse(response.body()!!)
+                    var user: UserModel = Gson().fromJson(Gson().toJson(response.body()!!.data), UserModel::class.java)
+                    onResponse(response.body()!!, user)
                 }
             }
         })
@@ -70,7 +73,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
     override fun setUserData(
         token: String,
         userModel: UserModel,
-        onResponse: (CommonResponse) -> Unit,
+        onResponse: (CommonResponse, UserModel?) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
         MbitRetrofit.authService.setUserData("Bearer $token", userModel).enqueue(object : Callback<CommonResponse> {
@@ -79,9 +82,10 @@ class RemoteDataSourceImpl : RemoteDataSource {
             }
             override fun onResponse(call: Call<CommonResponse>, response: Response<CommonResponse>) {
                 if(response.body() == null) {
-                    onResponse(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java))
+                    onResponse(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java), null)
                 } else {
-                    onResponse(response.body()!!)
+                    var user: UserModel = Gson().fromJson(Gson().toJson(response.body()!!.data), UserModel::class.java)
+                    onResponse(response.body()!!, user)
                 }
             }
         })
@@ -92,7 +96,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
     override fun getPosts(
         token: String,
         postGetRequest: PostGetRequest,
-        onResponse: (CommonResponse) -> Unit,
+        onResponse: (CommonResponse, ArrayList<Post>?) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
         MbitRetrofit.postService.getPosts("Bearer $token", postGetRequest.page, postGetRequest.length, postGetRequest.personalityType).enqueue(object : Callback<CommonResponse> {
@@ -101,9 +105,13 @@ class RemoteDataSourceImpl : RemoteDataSource {
             }
             override fun onResponse(call: Call<CommonResponse>, response: Response<CommonResponse>) {
                 if(response.body() == null) {
-                    onResponse(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java))
+                    onResponse(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java), null)
                 } else {
-                    onResponse(response.body()!!)
+                    val Type = object : TypeToken<ArrayList<Post>>() {}.type
+                    val posts: ArrayList<Post> = Gson().fromJson<ArrayList<Post>>(
+                        Gson().toJson(response.body()!!.data), Type
+                    )
+                    onResponse(response.body()!!, posts)
                 }
             }
         })
@@ -136,6 +144,26 @@ class RemoteDataSourceImpl : RemoteDataSource {
         onFailure: (Throwable) -> Unit
     ) {
         MbitRetrofit.postService.votePost("Bearer $token", postVoteRequest).enqueue(object : Callback<CommonResponse> {
+            override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
+                onFailure(t)
+            }
+            override fun onResponse(call: Call<CommonResponse>, response: Response<CommonResponse>) {
+                if(response.body() == null) {
+                    onResponse(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java))
+                } else {
+                    onResponse(response.body()!!)
+                }
+            }
+        })
+    }
+
+    override fun deletePost(
+        token: String,
+        postDeleteRequest: PostDeleteRequest,
+        onResponse: (CommonResponse) -> Unit,
+        onFailure: (Throwable) -> Unit
+    ) {
+        MbitRetrofit.postService.deletePost("Bearer $token", postDeleteRequest).enqueue(object : Callback<CommonResponse> {
             override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                 onFailure(t)
             }

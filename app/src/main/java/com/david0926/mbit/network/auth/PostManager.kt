@@ -11,7 +11,7 @@ class PostManager {
      *  게시글 가져올 때 사용함
      *  PostGetRequest에는 page(페이지), length(페이지 당 게시글 수), personalityType(MBTI)가 들어감
      */
-    fun getPosts(token: String, postGetRequest: PostGetRequest, onResponse : (CommonResponse) -> Unit, onFailure: (Throwable) -> Unit) {
+    fun getPosts(token: String, postGetRequest: PostGetRequest, onResponse : (CommonResponse, ArrayList<Post>?) -> Unit, onFailure: (Throwable) -> Unit) {
         retrofitRemoteDataSource.getPosts(token, postGetRequest, onResponse, onFailure)
     }
 
@@ -31,4 +31,11 @@ class PostManager {
         retrofitRemoteDataSource.votePost(token, postVoteRequest, onResponse, onFailure)
     }
 
+    /**
+     *  게시글 삭제할때 사용함
+     *  PostDeleteRequest에는 추천할 게시글의 id를 넣어주면 됨.
+     */
+    fun deletePost(token: String, postDeleteRequest: PostDeleteRequest, onResponse : (CommonResponse) -> Unit, onFailure: (Throwable) -> Unit) {
+        retrofitRemoteDataSource.deletePost(token, postDeleteRequest, onResponse, onFailure)
+    }
 }

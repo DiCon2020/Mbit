@@ -32,65 +32,15 @@ class MainActivity : AppCompatActivity() {
         val auth = AuthManager()
         var token: String = "";
         // 로그인 하는 부분
-        auth.login(LoginRequest("admin123@naver.com", "admin123"), {
-            Log.w("로그인", it.message.toString()) // 로그인 결과 메세지 (만약 실패했으면 뭐 때문에 실패했는지 들어있음)
-            Log.w("로그인", it.status.toString())// 로그인 결과 코드 (200... 202... 403... 같은 코드)
-            Log.w("로그인", it.accessToken.toString())// 액세스 토큰, 실패했으면 Null값
-            Log.w("로그인", it.success.toString()) // 로그인 성공했는지
-            token = it.accessToken.toString()
+        auth.login(LoginRequest("admin123@naver.com", "admin123"), { response, data ->
+            Log.w("로그인", response.message.toString()) // 로그인 결과 메세지 (만약 실패했으면 뭐 때문에 실패했는지 들어있음)
+            Log.w("로그인", response.status.toString())// 로그인 결과 코드 (200... 202... 403... 같은 코드)
+            if(response.success)
+                Log.w("로그인", response.accessToken.toString())// 액세스 토큰, 실패했으면 Null값
+            Log.w("로그인", response.success.toString()) // 로그인 성공했는지
 
-            //  유저정보 가져오는 부분
-            var user: UserModel = Gson().fromJson(Gson().toJson(it.data), UserModel::class.java)
-
-            Log.w("로그인(회원정보)", user.username)
-
-        }, {
-
-        })
-
-        // 가입하는 부분
-        auth.register(
-            RegisterRequest(
-                "admin12@naver.com",
-                "admin12",
-                "admin",
-                2003,
-                "ESFJ",
-                null,
-                null
-            ), {
-                Log.w("회원가입", it.message) // 회원가입 결과 메세지 (만약 실패했으면 뭐 때문에 실패했는지 들어있음)
-                Log.w("회원가입", it.status.toString())// 회원가입 결과 코드 (200... 202... 403... 같은 코드)
-                Log.w("회원가입", it.success.toString()) // 회원가입 성공했는지
-            }, {
-
-            })
-
-        // 이 아래는 게시글 레트로핏 사용법... //
-        val postManager = PostManager()
-        // 토큰 가져오는 부분
-        auth.login(LoginRequest("admin123@naver.com", "admin123"), {
-            Log.w("로그인", it.message.toString()) // 로그인 결과 메세지 (만약 실패했으면 뭐 때문에 실패했는지 들어있음)
-            Log.w("로그인", it.status.toString())// 로그인 결과 코드 (200... 202... 403... 같은 코드)
-            Log.w("로그인", it.accessToken.toString())// 액세스 토큰, 실패했으면 Null값
-            Log.w("로그인", it.success.toString()) // 로그인 성공했는지
-            token = it.accessToken.toString()
-
-            //게시글 불러오는 부분
-            postManager.getPosts(token, PostGetRequest(0,0,""), {// personalityType에 공백 집어넣으면 전체 게시글 받아옴
-                Log.w("게시글", it.message) // 게시글 Get 결과 메세지 (만약 실패했으면 뭐 때문에 실패했는지 들어있음)
-                Log.w("게시글", it.status.toString())// 게시글 Get 결과 코드 (200... 202... 403... 같은 코드)
-                Log.w("게시글", it.success.toString()) // 게시글 Get 성공했는지
-
-                val Type = object : TypeToken<ArrayList<Post>>() {}.type
-                val posts: ArrayList<Post> = Gson().fromJson<ArrayList<Post>>(
-                    Gson().toJson(it.data), Type
-                )
-
-            }, {
-
-            });
-
+            if(response.success)
+                Log.w("로그인(회원정보)", data!!.username)
 
         }, {
 

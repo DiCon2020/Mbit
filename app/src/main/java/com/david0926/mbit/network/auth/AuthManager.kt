@@ -14,7 +14,7 @@ class AuthManager {
      *  로그인 할때 사용함
      *  LoginModel에는 id와 pw가 들어감
      */
-    fun login(loginRequest: LoginRequest, onResponse : (CommonResponse) -> Unit, onFailure: (Throwable) -> Unit) {
+    fun login(loginRequest: LoginRequest, onResponse : (CommonResponse, UserModel?) -> Unit, onFailure: (Throwable) -> Unit) {
         retrofitRemoteDataSource.login(loginRequest, onResponse, onFailure)
     }
 
@@ -31,7 +31,7 @@ class AuthManager {
      * 토큰은.. 이건 뭐 언제받는건지.. 하튼 토큰 넣으세요...^^
      * CommonResponse에 data라는 객체가 있는데 여기에 유저정보 들어있습니다.
      */
-    fun getUserData(token: String, onResponse : (CommonResponse) -> Unit, onFailure: (Throwable) -> Unit) {
+    fun getUserData(token: String, onResponse : (CommonResponse, UserModel?) -> Unit, onFailure: (Throwable) -> Unit) {
         retrofitRemoteDataSource.getUserData(token, onResponse, onFailure)
     }
 
@@ -39,7 +39,7 @@ class AuthManager {
      *  정보 수정할 때 사용함
      *  토큰 넣어주고, 바뀐 유저모델 넣어주시면 반영됩니당
      */
-    fun setUserData(token: String, userModel: UserModel, onResponse : (CommonResponse) -> Unit, onFailure: (Throwable) -> Unit) {
+    fun setUserData(token: String, userModel: UserModel, onResponse : (CommonResponse, UserModel?) -> Unit, onFailure: (Throwable) -> Unit) {
         retrofitRemoteDataSource.setUserData(token, userModel, onResponse, onFailure)
     }
 }
