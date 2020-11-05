@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.david0926.mbit.R
 import com.david0926.mbit.databinding.FragmentRegister1Binding
+import com.david0926.mbit.databinding.FragmentRegister3Binding
 
 class Register3Fragment : Fragment() {
     override fun onCreateView(
@@ -17,9 +18,9 @@ class Register3Fragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val binding: FragmentRegister1Binding = DataBindingUtil.inflate(
+        val binding: FragmentRegister3Binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_register_1, container, false
+            R.layout.fragment_register_3, container, false
         )
         binding.lifecycleOwner = requireActivity()
 

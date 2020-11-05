@@ -1,17 +1,21 @@
 package com.david0926.mbit.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.david0926.mbit.R
-import com.david0926.mbit.data.network.LoginRequest
 import com.david0926.mbit.databinding.ActivityMainBinding
-import com.david0926.mbit.network.auth.AuthManager
+import com.david0926.mbit.ui.main.main1.Main1Fragment
+import com.david0926.mbit.ui.main.main2.Main2Fragment
+import com.david0926.mbit.ui.main.main3.Main3Fragment
+import com.david0926.mbit.ui.main.main4.Main4Fragment
 
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var viewModel: MainActivityViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -19,33 +23,26 @@ class MainActivity : AppCompatActivity() {
             DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
 
-        val viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
         binding.viewModel = viewModel
 
+        viewModel.fragments.addAll(
+            listOf(
+                Main1Fragment(),
+                Main2Fragment(),
+                Main3Fragment(),
+                Main4Fragment()
+            )
+        )
 
-        // ---이 아래는 로그인 레트로핏 사용법.. 확인했으면 지워...--- //
-
-        val auth = AuthManager()
-        var token: String = "";
-        // 로그인 하는 부분
-        auth.login(LoginRequest("admin123@naver.com", "admin123"), { response, data ->
-            Log.w("로그인", response.message.toString()) // 로그인 결과 메세지 (만약 실패했으면 뭐 때문에 실패했는지 들어있음)
-            Log.w("로그인", response.status.toString())// 로그인 결과 코드 (200... 202... 403... 같은 코드)
-            if(response.success)
-                Log.w("로그인", response.accessToken.toString())// 액세스 토큰, 실패했으면 Null값
-            Log.w("로그인", response.success.toString()) // 로그인 성공했는지
-
-            if(response.success)
-                Log.w("로그인(회원정보)", data!!.username)
-
-        }, {
-
-        })
-
-        // -----끝----- //
-
-
-
-
+        binding.bottomMain.setOnNavigationItemSelectedListener {
+            viewModel.page.value = when (it.itemId) {
+                R.id.action_1 -> 0
+                R.id.action_2 -> 1
+                R.id.action_3 -> 2
+                else -> 3
+            }
+            return@setOnNavigationItemSelectedListener true
+        }
     }
 }

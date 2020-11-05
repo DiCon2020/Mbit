@@ -1,6 +1,6 @@
 package com.david0926.mbit.network.auth
 
-import com.david0926.mbit.data.*
+import com.david0926.mbit.data.comment.CommonResponse
 import com.david0926.mbit.data.post.PostCreateRequest
 import com.david0926.mbit.data.post.PostDeleteRequest
 import com.david0926.mbit.data.post.PostVoteRequest

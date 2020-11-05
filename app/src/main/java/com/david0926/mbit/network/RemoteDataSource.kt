@@ -1,6 +1,10 @@
 package com.david0926.mbit.network
 
 import com.david0926.mbit.data.*
+import com.david0926.mbit.data.comment.Comment
+import com.david0926.mbit.data.comment.CommentAddRequest
+import com.david0926.mbit.data.comment.CommentGetRequest
+import com.david0926.mbit.data.comment.CommonResponse
 import com.david0926.mbit.data.network.LoginRequest
 import com.david0926.mbit.data.network.RegisterRequest
 import com.david0926.mbit.data.post.*

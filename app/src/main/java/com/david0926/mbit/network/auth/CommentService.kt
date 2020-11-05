@@ -1,7 +1,7 @@
 package com.david0926.mbit.network.auth
 
-import com.david0926.mbit.data.CommentAddRequest
-import com.david0926.mbit.data.CommonResponse
+import com.david0926.mbit.data.comment.CommentAddRequest
+import com.david0926.mbit.data.comment.CommonResponse
 import retrofit2.Call
 import retrofit2.http.*
 

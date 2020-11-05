@@ -19,7 +19,7 @@ class RegisterViewModel : ViewModel() {
 
     fun nextPage() {
         val currentPage = page.value!!
-        if (currentPage < fragments.size - 2) page.value = currentPage + 1
+        if (currentPage < fragments.size - 1) page.value = currentPage + 1
     }
 
     fun previousPage() {
@@ -32,10 +32,10 @@ class RegisterViewModel : ViewModel() {
     val nextEnabled = MutableLiveData(false)
     var onNextClick: () -> Unit = {}
 
-    object RegisterViewModelBindingOptions {
-        @BindingAdapter("bindFragment")
+    companion object{
+        @BindingAdapter("bindFragmentWithAnim")
         @JvmStatic
-        fun bindFragment(frame: FrameLayout, frag: Fragment?) {
+        fun bindFragmentWithAnim(frame: FrameLayout, frag: Fragment?) {
             val activity = frame.context as FragmentActivity
             val transaction = activity.supportFragmentManager.beginTransaction()
             transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)

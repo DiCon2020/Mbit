@@ -1,6 +1,10 @@
 package com.david0926.mbit.network
 
 import com.david0926.mbit.data.*
+import com.david0926.mbit.data.comment.Comment
+import com.david0926.mbit.data.comment.CommentAddRequest
+import com.david0926.mbit.data.comment.CommentGetRequest
+import com.david0926.mbit.data.comment.CommonResponse
 import com.david0926.mbit.data.network.LoginRequest
 import com.david0926.mbit.data.network.RegisterRequest
 import com.david0926.mbit.data.post.*
@@ -27,8 +31,8 @@ class RemoteDataSourceImpl : RemoteDataSource {
                 if(response.body() == null) {
                     onResponse(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java), null)
                 } else {
-                    var user: UserModel = Gson().fromJson(Gson().toJson(response.body()!!.data), UserModel::class.java)
-                    onResponse(response.body()!!, user);
+                    val user: UserModel = Gson().fromJson(Gson().toJson(response.body()!!.data), UserModel::class.java)
+                    onResponse(response.body()!!, user)
                 }
             }
         })
@@ -66,7 +70,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
                 if(response.body() == null) {
                     onResponse(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java), null)
                 } else {
-                    var user: UserModel = Gson().fromJson(Gson().toJson(response.body()!!.data), UserModel::class.java)
+                    val user: UserModel = Gson().fromJson(Gson().toJson(response.body()!!.data), UserModel::class.java)
                     onResponse(response.body()!!, user)
                 }
             }
@@ -87,7 +91,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
                 if(response.body() == null) {
                     onResponse(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java), null)
                 } else {
-                    var user: UserModel = Gson().fromJson(Gson().toJson(response.body()!!.data), UserModel::class.java)
+                    val user: UserModel = Gson().fromJson(Gson().toJson(response.body()!!.data), UserModel::class.java)
                     onResponse(response.body()!!, user)
                 }
             }
@@ -110,9 +114,9 @@ class RemoteDataSourceImpl : RemoteDataSource {
                 if(response.body() == null) {
                     onResponse(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java), null)
                 } else {
-                    val Type = object : TypeToken<ArrayList<Post>>() {}.type
-                    val posts: ArrayList<Post> = Gson().fromJson<ArrayList<Post>>(
-                        Gson().toJson(response.body()!!.data), Type
+                    val type = object : TypeToken<ArrayList<Post>>() {}.type
+                    val posts: ArrayList<Post> = Gson().fromJson(
+                        Gson().toJson(response.body()!!.data), type
                     )
                     onResponse(response.body()!!, posts)
                 }

@@ -44,7 +44,7 @@
                     android:id="@+id/frameRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:bindFragment="@{viewModel.fragments.get(viewModel.page)}"
+                    app:bindFragmentWithAnim="@{viewModel.fragments.get(viewModel.page)}"
                     app:layout_constraintBottom_toTopOf="@+id/tab_register"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"

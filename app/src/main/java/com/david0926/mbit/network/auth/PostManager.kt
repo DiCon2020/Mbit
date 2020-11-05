@@ -1,6 +1,6 @@
 package com.david0926.mbit.network.auth
 
-import com.david0926.mbit.data.*
+import com.david0926.mbit.data.comment.CommonResponse
 import com.david0926.mbit.data.post.*
 import com.david0926.mbit.network.RemoteDataSource
 import com.david0926.mbit.network.RemoteDataSourceImpl

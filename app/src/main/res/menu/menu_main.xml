@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_1"
+        android:icon="@drawable/icn_home"
+        android:title="게시판" />
+    <item
+        android:id="@+id/action_2"
+        android:icon="@drawable/icn_topic"
+        android:title="토픽" />
+    <item
+        android:id="@+id/action_3"
+        android:icon="@drawable/icn_smile"
+        android:title="성격유형" />
+    <item
+        android:id="@+id/action_4"
+        android:icon="@drawable/icn_etc"
+        android:title="더보기" />
+
+</menu>

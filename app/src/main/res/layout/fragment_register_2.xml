@@ -25,37 +25,40 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/circleImageView"
+            android:id="@+id/imgRegister2Profile"
             android:layout_width="96dp"
             android:layout_height="96dp"
-            android:layout_marginStart="36dp"
+            android:layout_marginStart="48dp"
             android:src="@color/materialGray4"
+            app:bindImageUri="@{viewModel.profile}"
             app:layout_constraintBottom_toBottomOf="@+id/editText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView" />
 
         <ImageView
+            android:id="@+id/btnRegister2Profile"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:background="@drawable/circle"
             android:backgroundTint="@color/colorPrimary"
             android:padding="2dp"
             android:src="@drawable/ic_baseline_add_24"
-            app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
-            app:layout_constraintEnd_toEndOf="@+id/circleImageView"
+            app:layout_constraintBottom_toBottomOf="@+id/imgRegister2Profile"
+            app:layout_constraintEnd_toEndOf="@+id/imgRegister2Profile"
             app:tint="@color/white" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/font_primary_extrabold"
             android:text="프로필"
             android:textSize="28sp"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toEndOf="@+id/circleImageView"
+            app:layout_constraintStart_toEndOf="@+id/imgRegister2Profile"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
 
@@ -64,14 +67,16 @@
             android:id="@+id/editText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="48dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="48dp"
             android:hint="닉네임"
+            android:maxLength="10"
             android:maxLines="1"
             android:text="@={viewModel.name}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/circleImageView"
+            app:layout_constraintStart_toEndOf="@+id/imgRegister2Profile"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <EditText
@@ -80,7 +85,9 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="48dp"
             android:layout_marginTop="24dp"
-            android:hint="출생 연도 (4자리)"
+            android:hint="출생연도 (4자리)"
+            android:inputType="number"
+            android:maxLength="4"
             android:maxLines="1"
             android:text="@={viewModel.birth}"
             app:layout_constraintEnd_toEndOf="parent"
@@ -108,7 +115,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:drawableTint="@color/colorPrimary"
+            android:buttonTint="@color/colorPrimary"
+            android:checked="@={viewModel.policy}"
             android:fontFamily="@font/font_primary_regular"
             android:text="개인정보 수집 약관에 동의합니다."
             android:textColor="@color/textColorDefault"
