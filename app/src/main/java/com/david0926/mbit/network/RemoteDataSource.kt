@@ -1,11 +1,10 @@
 package com.david0926.mbit.network
 
-import com.david0926.mbit.data.CommonResponse
-import com.david0926.mbit.data.LoginRequest
-import com.david0926.mbit.data.RegisterRequest
-import com.david0926.mbit.data.UserModel
+import com.david0926.mbit.data.*
 
 interface RemoteDataSource {
+
+    // AuthService
     fun login(
         loginRequest: LoginRequest,
         onResponse : (CommonResponse) -> Unit,
@@ -31,4 +30,25 @@ interface RemoteDataSource {
         onFailure: (Throwable) -> Unit
     )
 
+    // PostService
+    fun getPosts(
+        token: String,
+        postGetRequest: PostGetRequest,
+        onResponse : (CommonResponse) -> Unit,
+        onFailure: (Throwable) -> Unit
+    )
+
+    fun createPost(
+        token: String,
+        postCreateRequest: PostCreateRequest,
+        onResponse : (CommonResponse) -> Unit,
+        onFailure: (Throwable) -> Unit
+    )
+
+    fun votePost(
+        token: String,
+        postVoteRequest: PostVoteRequest,
+        onResponse : (CommonResponse) -> Unit,
+        onFailure: (Throwable) -> Unit
+    )
 }

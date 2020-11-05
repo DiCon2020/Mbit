@@ -6,12 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.david0926.mbit.R
+import com.david0926.mbit.data.*
 import com.david0926.mbit.databinding.ActivityMainBinding
 import com.david0926.mbit.network.auth.AuthManager
-import com.david0926.mbit.data.LoginRequest
-import com.david0926.mbit.data.RegisterRequest
-import com.david0926.mbit.data.UserModel
+import com.david0926.mbit.network.auth.PostManager
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,32 +30,19 @@ class MainActivity : AppCompatActivity() {
         // ---이 아래는 로그인 레트로핏 사용법.. 확인했으면 지워...--- //
 
         val auth = AuthManager()
+        var token: String = "";
         // 로그인 하는 부분
-        auth.login(LoginRequest("admin12@naver.com", "admin12"), {
+        auth.login(LoginRequest("admin123@naver.com", "admin123"), {
             Log.w("로그인", it.message.toString()) // 로그인 결과 메세지 (만약 실패했으면 뭐 때문에 실패했는지 들어있음)
             Log.w("로그인", it.status.toString())// 로그인 결과 코드 (200... 202... 403... 같은 코드)
             Log.w("로그인", it.accessToken.toString())// 액세스 토큰, 실패했으면 Null값
             Log.w("로그인", it.success.toString()) // 로그인 성공했는지
+            token = it.accessToken.toString()
 
             //  유저정보 가져오는 부분
-            auth.getUserData(it.accessToken, { userdata ->
-                Log.w("회원 정보", it.message) // 유저정보 Get 결과 메세지 (만약 실패했으면 뭐 때문에 실패했는지 들어있음)
-                Log.w("회원 정보", it.status.toString())// 유저정보 Get 결과 코드 (200... 202... 403... 같은 코드)
-                Log.w("회원 정보", it.success.toString()) // 유저정보 Get 성공했는지
+            var user: UserModel = Gson().fromJson(Gson().toJson(it.data), UserModel::class.java)
 
-                Log.w("회원 정보", userdata.data.toString())
-                Log.w("회원 정보", Gson().toJson(userdata.data))
-                val user: UserModel = Gson().fromJson(
-                    Gson().toJson(userdata.data),
-                    UserModel::class.java
-                ) // 받은 유저 정보, 실패했으면 Null값
-                Log.w("회원 정보", user.username)
-                // data타입 Any로 해둔건 앞으로 어떻게 될지 몰라서 나중에 고쳐드려요
-                // 지금 되게 과정이 난잡해 보이는데 해결하면 따로 또 표시할게유
-
-            }, {
-
-            })
+            Log.w("로그인(회원정보)", user.username)
 
         }, {
 
@@ -79,7 +66,40 @@ class MainActivity : AppCompatActivity() {
 
             })
 
+        // 이 아래는 게시글 레트로핏 사용법... //
+        val postManager = PostManager()
+        // 토큰 가져오는 부분
+        auth.login(LoginRequest("admin123@naver.com", "admin123"), {
+            Log.w("로그인", it.message.toString()) // 로그인 결과 메세지 (만약 실패했으면 뭐 때문에 실패했는지 들어있음)
+            Log.w("로그인", it.status.toString())// 로그인 결과 코드 (200... 202... 403... 같은 코드)
+            Log.w("로그인", it.accessToken.toString())// 액세스 토큰, 실패했으면 Null값
+            Log.w("로그인", it.success.toString()) // 로그인 성공했는지
+            token = it.accessToken.toString()
+
+            //게시글 불러오는 부분
+            postManager.getPosts(token, PostGetRequest(0,0,""), {// personalityType에 공백 집어넣으면 전체 게시글 받아옴
+                Log.w("게시글", it.message) // 게시글 Get 결과 메세지 (만약 실패했으면 뭐 때문에 실패했는지 들어있음)
+                Log.w("게시글", it.status.toString())// 게시글 Get 결과 코드 (200... 202... 403... 같은 코드)
+                Log.w("게시글", it.success.toString()) // 게시글 Get 성공했는지
+
+                val Type = object : TypeToken<ArrayList<Post>>() {}.type
+                val posts: ArrayList<Post> = Gson().fromJson<ArrayList<Post>>(
+                    Gson().toJson(it.data), Type
+                )
+
+            }, {
+
+            });
+
+
+        }, {
+
+        })
+
         // -----끝----- //
+
+
+
 
     }
 }
