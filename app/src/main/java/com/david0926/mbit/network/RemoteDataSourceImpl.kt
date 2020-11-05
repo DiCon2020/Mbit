@@ -206,7 +206,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
     override fun addComment(
         token: String,
         commentAddRequest: CommentAddRequest,
-        onResponse: (CommonResponse) -> Unit,
+        onResponse: (CommonResponse, ArrayList<Comment>?) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
         MbitRetrofit.commentService.addComment("Bearer $token", commentAddRequest).enqueue(object : Callback<CommonResponse> {
@@ -215,9 +215,13 @@ class RemoteDataSourceImpl : RemoteDataSource {
             }
             override fun onResponse(call: Call<CommonResponse>, response: Response<CommonResponse>) {
                 if(response.body() == null) {
-                    onResponse(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java))
+                    onResponse(Gson().fromJson(response.errorBody()!!.string(), CommonResponse::class.java), null)
                 } else {
-                    onResponse(response.body()!!)
+                    val Type = object : TypeToken<ArrayList<Comment>>() {}.type
+                    val comments: ArrayList<Comment> = Gson().fromJson<ArrayList<Comment>>(
+                        Gson().toJson(response.body()!!.data), Type
+                    )
+                    onResponse(response.body()!!, comments)
                 }
             }
         })

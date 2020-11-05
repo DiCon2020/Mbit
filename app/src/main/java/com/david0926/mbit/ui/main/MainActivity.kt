@@ -9,9 +9,6 @@ import com.david0926.mbit.R
 import com.david0926.mbit.data.*
 import com.david0926.mbit.databinding.ActivityMainBinding
 import com.david0926.mbit.network.auth.AuthManager
-import com.david0926.mbit.network.auth.PostManager
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 
 
 class MainActivity : AppCompatActivity() {

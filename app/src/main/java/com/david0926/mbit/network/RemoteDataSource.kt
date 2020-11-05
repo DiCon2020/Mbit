@@ -70,7 +70,7 @@ interface RemoteDataSource {
     fun addComment(
         token: String,
         commentAddRequest: CommentAddRequest,
-        onResponse : (CommonResponse) -> Unit,
+        onResponse : (CommonResponse, ArrayList<Comment>?) -> Unit,
         onFailure: (Throwable) -> Unit
     )
 }

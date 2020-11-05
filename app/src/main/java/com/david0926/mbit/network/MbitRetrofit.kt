@@ -1,8 +1,8 @@
 package com.david0926.mbit.network
 
 import com.david0926.mbit.network.auth.AuthService
-import com.david0926.mbit.network.auth.CommentService
-import com.david0926.mbit.network.auth.PostService
+import com.david0926.mbit.network.comment.CommentService
+import com.david0926.mbit.network.post.PostService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
