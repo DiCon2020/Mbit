@@ -13,9 +13,9 @@
         tools:context=".ui.SplashActivity">
 
         <ImageView
-            android:layout_width="128dp"
-            android:layout_height="128dp"
-            android:src="@drawable/app_logo"
+            android:layout_width="108dp"
+            android:layout_height="108dp"
+            android:src="@drawable/icn_main_logo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

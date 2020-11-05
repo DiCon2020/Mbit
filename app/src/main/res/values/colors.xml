@@ -26,4 +26,5 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="bgColorDefault">#f7f7f7</color>
+    <color name="textColorDefault">#7e7e7e</color>
 </resources>
