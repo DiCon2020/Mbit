@@ -43,94 +43,51 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     android:paddingVertical="36dp"
-                    app:layout_constraintBottom_toTopOf="@id/btnLoginLogin"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/font_primary_extrabold"
-                        android:text="로그인"
-                        android:textSize="28sp"
-                        app:layout_constrainedWidth="true"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_chainStyle="packed"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_chainStyle="packed" />
-
-
-                    <EditText
-                        android:id="@+id/editText"
+                    <FrameLayout
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tab_register"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="36dp"
-                        android:layout_marginTop="36dp"
-                        android:hint="이메일을 입력하세요"
-                        android:inputType="textEmailAddress"
-                        android:maxLines="1"
-                        android:text="@={viewModel.email}"
+                        android:clickable="false"
+                        android:focusable="false"
+                        app:bindIndicatorIndex="@{viewModel.page}"
+                        app:bindTabClickable="@{false}"
+                        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/textView" />
+                        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+                        app:tabBackground="@drawable/selector_indicator"
+                        app:tabGravity="center"
+                        app:tabIndicatorHeight="0dp"
+                        app:tabPaddingBottom="0dp"
+                        app:tabPaddingEnd="20dp"
+                        app:tabPaddingStart="0dp"
+                        app:tabPaddingTop="0dp">
 
-                    <EditText
-                        android:id="@+id/editText2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="36dp"
-                        android:layout_marginTop="16dp"
-                        android:hint="비밀번호를 입력하세요"
-                        android:inputType="textPassword"
-                        android:maxLines="1"
-                        android:text="@={viewModel.pw}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/textView" />
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="36dp"
-                        android:fontFamily="@font/font_primary_light"
-                        android:text="아직 회원이 아니신가요?" />
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:id="@+id/btnLoginRegister"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/font_primary_extrabold"
-                        android:padding="6dp"
-                        android:text="회원가입"
-                        android:textColor="@color/colorPrimary" />
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
 
-                    <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:fontFamily="@font/font_primary_extrabold"
-                        android:textColor="@color/materialRed"
-                        android:textSize="14sp"
-                        android:visibility="@{viewModel.errorMsg.length() &gt; 0, default=gone}"
-                        app:bindErrorMsg="@{viewModel.errorMsg}" />
+                    </com.google.android.material.tabs.TabLayout>
+
                 </LinearLayout>
-
-                <Button
-                    android:id="@+id/btnLoginLogin"
-                    style="@style/ButtonSquareStyleColored"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="LOGIN"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -2,22 +2,20 @@ package com.david0926.mbit.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.david0926.mbit.R
 import com.david0926.mbit.data.LoginRequest
-import com.david0926.mbit.data.Post
-import com.david0926.mbit.data.PostGetRequest
 import com.david0926.mbit.data.UserModel
 import com.david0926.mbit.databinding.ActivityLoginBinding
 import com.david0926.mbit.network.auth.AuthManager
-import com.david0926.mbit.network.auth.PostManager
 import com.david0926.mbit.ui.dialog.LoadingDialog
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.david0926.mbit.ui.main.MainActivity
 import com.david0926.mbit.ui.register.RegisterActivity
+import com.david0926.mbit.util.UserCache
+import com.google.gson.Gson
 import gun0912.tedkeyboardobserver.TedKeyboardObserver
 import kotlinx.android.synthetic.main.activity_login.*
 
