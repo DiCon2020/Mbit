@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">엠빗</string>
+    <string name="post_agree" formatted="false">공감해요 %d</string>
+    <string name="post_comment" formatted="false">댓글 %d</string>
 </resources>

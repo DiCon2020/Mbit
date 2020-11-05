@@ -5,8 +5,13 @@
     <data>
 
         <variable
+            name="user"
+            type="com.david0926.mbit.data.UserModel" />
+
+        <variable
             name="post"
             type="com.david0926.mbit.data.post.Post" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,11 +59,10 @@
             android:textColor="@color/colorSecondary"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView5"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView11"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/textView5"
             app:layout_constraintTop_toTopOf="@+id/textView5" />
-
 
         <TextView
             android:id="@+id/textView6"
@@ -66,14 +70,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
-            android:text="1 hours"
+            android:hint="time ago"
             android:textColor="@color/colorPrimary"
             android:textSize="14sp"
+            app:bindTimeAgo="@{post.createdDate}"
             app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
             app:layout_constraintStart_toEndOf="@+id/circleImageView"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
         <TextView
+            android:id="@+id/textView11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
@@ -81,6 +87,7 @@
             android:text="삭제하기"
             android:textColor="@color/materialRed"
             android:textSize="12sp"
+            android:visibility="@{user.id.equals(post.owner.id), default=gone}"
             app:layout_constraintBottom_toBottomOf="@+id/textView6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -92,7 +99,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="24dp"
-            android:text="오늘이 중간고사 첫날인데.. 완전 망한 것 같아요ㅠㅠ 다른 ENFP 여러분들은 시험을 망쳤을 때 주로 뭘 하면서 푸는 편인가요?"
+            android:lineSpacingExtra="5sp"
+            android:text="@{post.text, default=`lorem ipsum`}"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -115,7 +123,9 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icn_main_logo" />
+                android:src="@drawable/icn_main_logo"
+                android:visibility="@{post.photo!=null}"
+                app:bindImageLink="@{post.photo}" />
         </androidx.cardview.widget.CardView>
 
         <LinearLayout
@@ -138,14 +148,14 @@
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:src="@drawable/icn_heart" />
+                android:src="@{post.empathyList.contains(user)?@drawable/icn_heart_color:@drawable/icn_heart, default=@drawable/icn_heart}" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/font_primary_extrabold"
-                android:text="공감해요 12"
+                android:text="@{@string/post_agree(post.empathyList.size), default=@string/post_agree}"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -173,7 +183,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:fontFamily="@font/font_primary_extrabold"
-                android:text="댓글 3"
+                android:text="@{@string/post_comment(post.commentList.size), default=@string/post_comment}"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
