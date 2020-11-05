@@ -114,13 +114,12 @@
                         android:id="@+id/textView4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="12dp"
                         android:fontFamily="@font/font_primary_extrabold"
                         android:textColor="@color/materialRed"
                         android:textSize="14sp"
-                        android:visibility="invisible"
-                        app:bindErrorMsg="@{viewModel.errorMsg}"
-                        app:bindInvisibility="@{viewModel.errorMsg.length() &gt; 0}" />
+                        android:visibility="@{viewModel.errorMsg.length() &gt; 0, default=gone}"
+                        app:bindErrorMsg="@{viewModel.errorMsg}" />
                 </LinearLayout>
 
                 <Button

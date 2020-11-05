@@ -1,7 +1,7 @@
 package com.david0926.mbit.ui.login
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -16,6 +16,9 @@ import com.david0926.mbit.network.auth.PostManager
 import com.david0926.mbit.ui.dialog.LoadingDialog
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.david0926.mbit.ui.main.MainActivity
+import com.david0926.mbit.ui.register.RegisterActivity
+import gun0912.tedkeyboardobserver.TedKeyboardObserver
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -29,15 +32,28 @@ class LoginActivity : AppCompatActivity() {
             ViewModelProvider(this).get(LoginActivityViewModel::class.java)
         binding.viewModel = viewModel
 
+        TedKeyboardObserver(this).listen {
+            if (it) {
+                viewModel.errorMsg.value = ""
+                scrollLogin.smoothScrollTo(0, scrollLogin.bottom)
+            }
+        }
+
         btnLoginLogin.setOnClickListener {
             val dialog = LoadingDialog(this)
-            dialog.setMessage("로그인 중...")
+            dialog.setMessage("로그인 중...").show()
 
             val authManager = AuthManager()
             authManager.login(LoginRequest(viewModel.email.value!!, viewModel.pw.value!!),
                 onResponse = {
                     dialog.cancel()
-                    //TODO: replace with user caching
+                    if (it.status != 200) {
+                        viewModel.errorMsg.value = it.message
+                        return@login
+                    }
+                    //TODO: add user caching
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
                 },
                 onFailure = {
                     dialog.cancel()
@@ -68,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
 
 
         btnLoginRegister.setOnClickListener {
-
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 }

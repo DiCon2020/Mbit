@@ -12,6 +12,7 @@
     </data>
 
     <ScrollView
+        android:id="@+id/scrollLogin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -95,6 +96,17 @@
                         app:layout_constraintTop_toBottomOf="@id/textView" />
 
                     <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/font_primary_extrabold"
+                        android:textColor="@color/materialRed"
+                        android:textSize="14sp"
+                        android:visibility="@{viewModel.errorMsg.length() &gt; 0, default=gone}"
+                        app:bindErrorMsg="@{viewModel.errorMsg}" />
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="36dp"
@@ -110,17 +122,7 @@
                         android:text="회원가입"
                         android:textColor="@color/colorPrimary" />
 
-                    <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="@font/font_primary_extrabold"
-                        android:textColor="@color/materialRed"
-                        android:textSize="14sp"
-                        android:visibility="invisible"
-                        app:bindErrorMsg="@{viewModel.errorMsg}"
-                        app:bindInvisibility="@{viewModel.errorMsg.length() &gt; 0}" />
+
                 </LinearLayout>
 
                 <Button
