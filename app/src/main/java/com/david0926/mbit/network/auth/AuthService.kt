@@ -1,9 +1,9 @@
 package com.david0926.mbit.network.auth
 
-import com.david0926.mbit.data.comment.CommonResponse
 import com.david0926.mbit.data.auth.LoginRequest
 import com.david0926.mbit.data.auth.RegisterRequest
-import com.david0926.mbit.data.UserModel
+import com.david0926.mbit.data.auth.UpdateInfoRequest
+import com.david0926.mbit.data.comment.CommonResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -25,9 +25,9 @@ interface AuthService {
     ): Call<CommonResponse>
 
     @Multipart
-    @PUT("/mbit/auth/info")
+    @PUT("/mbit/auth/update_info")
     fun setUserData(
         @Header("Authorization") token: String,
-        @Part userModel: UserModel
+        @Part updateInfoRequest: UpdateInfoRequest
     ): Call<CommonResponse>
 }

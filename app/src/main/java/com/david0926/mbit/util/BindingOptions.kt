@@ -84,12 +84,6 @@ object BindingOptions {
     fun bindSecondaryButtonEnabled(v: Button, enabled: Boolean) {
         v.isClickable = enabled
         v.isFocusable = enabled
-        v.setTextColor(
-            ContextCompat.getColorStateList(
-                v.context,
-                if (enabled) R.color.colorPrimary else R.color.white
-            )
-        )
         v.backgroundTintList = ContextCompat.getColorStateList(
             v.context,
             if (enabled) R.color.colorSecondary else R.color.materialGray6
