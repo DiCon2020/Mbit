@@ -11,12 +11,15 @@ import com.david0926.mbit.data.comment.CommonResponse
 import com.david0926.mbit.data.post.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import okhttp3.MediaType
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class RemoteDataSourceImpl : RemoteDataSource {
 
+    fun toPart(obj: Any?) : RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), obj.toString())
 
     // AuthService
     override fun login(
@@ -56,7 +59,8 @@ class RemoteDataSourceImpl : RemoteDataSource {
         onResponse: (CommonResponse) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
-        MbitRetrofit.authService.register(registerRequest)
+
+        MbitRetrofit.authService.register(toPart(registerRequest.id), toPart(registerRequest.password), toPart(registerRequest.username), toPart(registerRequest.yearOfBirth), toPart(registerRequest.personalityType), registerRequest.photo)
             .enqueue(object : Callback<CommonResponse> {
                 override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                     onFailure(t)
@@ -198,7 +202,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
         onResponse: (CommonResponse) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
-        MbitRetrofit.postService.createPost("Bearer $token", postCreateRequest)
+        MbitRetrofit.postService.createPost("Bearer $token", toPart(postCreateRequest.text), toPart(postCreateRequest.personalityTypeStatus), postCreateRequest.photo)
             .enqueue(object : Callback<CommonResponse> {
                 override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                     onFailure(t)
