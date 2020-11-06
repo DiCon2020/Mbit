@@ -4,6 +4,8 @@ import com.david0926.mbit.data.comment.CommonResponse
 import com.david0926.mbit.data.post.PostCreateRequest
 import com.david0926.mbit.data.post.PostDeleteRequest
 import com.david0926.mbit.data.post.PostVoteRequest
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -17,10 +19,13 @@ interface PostService {
         @Query("personalityType") type: String
     ): Call<CommonResponse>
 
+    @Multipart
     @POST("/mbit/post/create")
     fun createPost(
         @Header("Authorization") token: String,
-        @Body postCreateRequest: PostCreateRequest
+        @Part("text") text: RequestBody,
+        @Part("personalityTypeStatus") personalityTypeStatus: RequestBody,
+        @Part photo: MultipartBody.Part?
     ): Call<CommonResponse>
 
     @POST("/mbit/post/empathy")
