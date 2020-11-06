@@ -72,5 +72,5 @@ class RegisterViewModel : ViewModel() {
     val policy = MutableLiveData(false)
 
     //fragment 3
-
+    val token = MutableLiveData("")
 }

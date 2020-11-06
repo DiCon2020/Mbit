@@ -7,4 +7,6 @@ class LoginActivityViewModel : ViewModel() {
     val email = MutableLiveData("")
     val pw = MutableLiveData("")
     val errorMsg = MutableLiveData("")
+
+    val nextEnabled = MutableLiveData(false)
 }

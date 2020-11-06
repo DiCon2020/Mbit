@@ -5,8 +5,8 @@ import com.david0926.mbit.data.comment.Comment
 import com.david0926.mbit.data.comment.CommentAddRequest
 import com.david0926.mbit.data.comment.CommentGetRequest
 import com.david0926.mbit.data.comment.CommonResponse
-import com.david0926.mbit.data.network.LoginRequest
-import com.david0926.mbit.data.network.RegisterRequest
+import com.david0926.mbit.data.auth.LoginRequest
+import com.david0926.mbit.data.auth.RegisterRequest
 import com.david0926.mbit.data.post.*
 
 interface RemoteDataSource {

@@ -30,6 +30,10 @@ class RegisterActivity : AppCompatActivity() {
             )
         )
 
+        if (intent.hasExtra("token")) {
+            viewModel.page.value = 2
+        }
+
         TedKeyboardObserver(this).listen {
             if (it) {
                 viewModel.errorMsg.value = ""

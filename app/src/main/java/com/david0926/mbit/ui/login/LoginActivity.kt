@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.david0926.mbit.R
-import com.david0926.mbit.data.network.LoginRequest
+import com.david0926.mbit.data.auth.LoginRequest
 import com.david0926.mbit.databinding.ActivityLoginBinding
 import com.david0926.mbit.network.auth.AuthManager
 import com.david0926.mbit.ui.dialog.LoadingDialog
@@ -16,14 +16,20 @@ import com.david0926.mbit.util.UserCache
 import gun0912.tedkeyboardobserver.TedKeyboardObserver
 
 class LoginActivity : AppCompatActivity() {
+
+    lateinit var viewModel: LoginActivityViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityLoginBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_login)
         binding.lifecycleOwner = this
 
-        val viewModel = ViewModelProvider(this).get(LoginActivityViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(LoginActivityViewModel::class.java)
         binding.viewModel = viewModel
+
+        viewModel.email.observe(this, {checkNextEnabled()})
+        viewModel.pw.observe(this, {checkNextEnabled()})
 
         TedKeyboardObserver(this).listen {
             if (it) {
@@ -45,7 +51,13 @@ class LoginActivity : AppCompatActivity() {
                         viewModel.errorMsg.value = response.message
                         return@login
                     }
-                    UserCache.setUser(this, data)
+                    if (data!!.personalityType.isEmpty()) {
+                        val registerIntent = Intent(this, RegisterActivity::class.java)
+                        registerIntent.putExtra("token", response.accessToken)
+                        startActivity(registerIntent)
+                        return@login
+                    }
+                    UserCache.setUser(this, data, response.accessToken)
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 },
@@ -59,5 +71,11 @@ class LoginActivity : AppCompatActivity() {
         binding.btnLoginRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
+    }
+
+    private fun checkNextEnabled() {
+        viewModel.nextEnabled.value =
+            android.util.Patterns.EMAIL_ADDRESS.matcher(viewModel.email.value!!).matches()
+                    && !(viewModel.pw.value.isNullOrEmpty())
     }
 }

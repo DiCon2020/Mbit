@@ -1,4 +1,4 @@
-package com.david0926.mbit.network.auth
+package com.david0926.mbit.network.comment
 
 import com.david0926.mbit.data.comment.Comment
 import com.david0926.mbit.data.comment.CommentAddRequest

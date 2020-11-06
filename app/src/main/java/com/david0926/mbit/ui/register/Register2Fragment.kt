@@ -8,7 +8,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.david0926.mbit.R
-import com.david0926.mbit.data.network.RegisterRequest
+import com.david0926.mbit.data.auth.LoginRequest
+import com.david0926.mbit.data.auth.RegisterRequest
 import com.david0926.mbit.databinding.FragmentRegister2Binding
 import com.david0926.mbit.network.auth.AuthManager
 import com.david0926.mbit.ui.dialog.LoadingDialog
@@ -51,21 +52,34 @@ class Register2Fragment : Fragment() {
                 RequestBody.create(MediaType.parse("multipart/form-data"), photoFile)
             photoBody = MultipartBody.Part.createFormData("photo", photoFile.name, photoFileBody)
 
+            val registerRequest = RegisterRequest(
+                viewModel.email.value!!,
+                viewModel.pw.value!!,
+                viewModel.name.value!!,
+                viewModel.birth.value!!.toInt(),
+                null,
+                photoBody
+            )
+
             authManager.register(
-                RegisterRequest(
-                    viewModel.email.value!!,
-                    viewModel.pw.value!!,
-                    viewModel.name.value!!,
-                    viewModel.birth.value!!.toInt(),
-                    null,
-                    photoBody
-                ), onResponse = {
-                    dialog.cancel()
+                registerRequest, onResponse = {
                     if (it.status != 200) {
+                        dialog.cancel()
                         viewModel.errorMsg.value = it.message
                         return@register
                     }
-                    viewModel.nextPage()
+                    dialog.setMessage("유저 정보 동기화중...")
+                    authManager.login(LoginRequest(registerRequest.id, registerRequest.password),
+                        onResponse = { response, _ ->
+                            dialog.cancel()
+                            viewModel.token.value = response.accessToken
+                            viewModel.nextPage()
+                        },
+                        onFailure = { t ->
+                            dialog.cancel()
+                            viewModel.errorMsg.value = "유저 정보 동기화에 실패했습니다."
+                            t.printStackTrace()
+                        })
                 }, onFailure = {
                     dialog.cancel()
                     viewModel.errorMsg.value = "회원가입 요청에 실패했습니다."

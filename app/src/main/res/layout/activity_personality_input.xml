@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.david0926.mbit.ui.personality.PersonalityInputActivityViewModel" />
+
+    </data>
+
+    <ScrollView
+        android:id="@+id/scrollInput"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".ui.WelcomeActivity">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/mbit_background" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/round_box_top"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_min="wrap"
+                app:layout_constraintHeight_percent="0.95"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/font_primary_extrabold"
+                    android:lineSpacingExtra="5sp"
+                    android:text="당신의 성격유형을 \n알려주세요!"
+                    android:textSize="28sp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintBottom_toTopOf="@id/textView12"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintBottom_toTopOf="@+id/btnInputFinish"
+                    app:layout_constraintTop_toBottomOf="@+id/textView12">
+
+                    <Button
+                        android:id="@+id/button"
+                        style="@style/ButtonStyleBorder"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="36dp"
+                        android:onClick="@{()->viewModel.selected.set(0, `E`)}"
+                        android:paddingHorizontal="24dp"
+                        android:text="외향적 (E)"
+                        app:bindButtonSelected="@{viewModel.selected.get(0).equals(`E`)}"
+
+                        app:layout_constraintBottom_toTopOf="@id/button3"
+                        app:layout_constraintEnd_toStartOf="@id/button2"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/button2"
+                        style="@style/ButtonStyleBorder"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="36dp"
+                        android:onClick="@{()->viewModel.selected.set(0, `I`)}"
+                        android:paddingHorizontal="24dp"
+                        android:text="내향적 (I)"
+                        app:bindButtonSelected="@{viewModel.selected.get(0).equals(`I`)}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/button"
+                        app:layout_constraintTop_toTopOf="@+id/button" />
+
+                    <Button
+                        android:id="@+id/button3"
+                        style="@style/ButtonStyleBorder"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="36dp"
+                        android:layout_marginTop="16dp"
+                        android:onClick="@{()->viewModel.selected.set(1, `S`)}"
+                        android:paddingHorizontal="24dp"
+                        android:text="현실적 (S)"
+                        app:bindButtonSelected="@{viewModel.selected.get(1).equals(`S`)}"
+                        app:layout_constraintBottom_toTopOf="@id/button5"
+                        app:layout_constraintEnd_toStartOf="@id/button4"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+                    <Button
+                        android:id="@+id/button4"
+                        style="@style/ButtonStyleBorder"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="36dp"
+                        android:onClick="@{()->viewModel.selected.set(1, `N`)}"
+                        android:paddingHorizontal="24dp"
+                        android:text="직관적 (N)"
+                        app:bindButtonSelected="@{viewModel.selected.get(1).equals(`N`)}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/button3"
+                        app:layout_constraintTop_toTopOf="@+id/button3" />
+
+                    <Button
+                        android:id="@+id/button5"
+                        style="@style/ButtonStyleBorder"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="36dp"
+                        android:layout_marginTop="16dp"
+                        android:onClick="@{()->viewModel.selected.set(2, `T`)}"
+                        android:paddingHorizontal="24dp"
+                        android:text="사고적 (T)"
+                        app:bindButtonSelected="@{viewModel.selected.get(2).equals(`T`)}"
+                        app:layout_constraintBottom_toTopOf="@id/button7"
+                        app:layout_constraintEnd_toStartOf="@id/button6"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/button3" />
+
+                    <Button
+                        android:id="@+id/button6"
+                        style="@style/ButtonStyleBorder"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="36dp"
+                        android:onClick="@{()->viewModel.selected.set(2, `F`)}"
+                        android:paddingHorizontal="24dp"
+                        android:text="감정적 (F)"
+                        app:bindButtonSelected="@{viewModel.selected.get(2).equals(`F`)}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/button5"
+                        app:layout_constraintTop_toTopOf="@+id/button5" />
+
+                    <Button
+                        android:id="@+id/button7"
+                        style="@style/ButtonStyleBorder"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="36dp"
+                        android:layout_marginTop="16dp"
+                        android:onClick="@{()->viewModel.selected.set(3, `J`)}"
+                        android:paddingHorizontal="24dp"
+                        android:text="계획적 (J)"
+                        app:bindButtonSelected="@{viewModel.selected.get(3).equals(`J`)}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/button8"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/button5" />
+
+                    <Button
+                        android:id="@+id/button8"
+                        style="@style/ButtonStyleBorder"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="36dp"
+                        android:onClick="@{()->viewModel.selected.set(3, `P`)}"
+                        android:paddingHorizontal="24dp"
+                        android:text="즉흥적(P)"
+                        app:bindButtonSelected="@{viewModel.selected.get(3).equals(`P`)}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/button7"
+                        app:layout_constraintTop_toTopOf="@+id/button7" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/round_box_secondary"
+                    android:elevation="4dp"
+                    android:fontFamily="@font/font_primary_extrabold"
+                    android:hint="  "
+                    android:padding="16dp"
+                    android:text="@{viewModel.selected.get(0)}"
+                    android:textAlignment="center"
+                    android:textSize="64sp"
+                    app:layout_constraintBottom_toTopOf="@id/constraintLayout2"
+                    app:layout_constraintEnd_toStartOf="@id/textView13"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/round_box_secondary"
+                    android:elevation="4dp"
+                    android:fontFamily="@font/font_primary_extrabold"
+                    android:hint="  "
+                    android:padding="16dp"
+                    android:text="@{viewModel.selected.get(1)}"
+                    android:textAlignment="center"
+                    android:textSize="64sp"
+                    app:layout_constraintEnd_toStartOf="@id/textView14"
+                    app:layout_constraintStart_toEndOf="@+id/textView12"
+                    app:layout_constraintTop_toTopOf="@+id/textView12" />
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/round_box_secondary"
+                    android:elevation="4dp"
+                    android:fontFamily="@font/font_primary_extrabold"
+                    android:hint="  "
+                    android:padding="16dp"
+                    android:text="@{viewModel.selected.get(2)}"
+                    android:textAlignment="center"
+                    android:textSize="64sp"
+                    app:layout_constraintEnd_toStartOf="@id/textView15"
+                    app:layout_constraintStart_toEndOf="@+id/textView13"
+                    app:layout_constraintTop_toTopOf="@+id/textView12" />
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/round_box_secondary"
+                    android:elevation="4dp"
+                    android:fontFamily="@font/font_primary_extrabold"
+                    android:hint="  "
+                    android:padding="16dp"
+                    android:text="@{viewModel.selected.get(3)}"
+                    android:textAlignment="center"
+                    android:textSize="64sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView14"
+                    app:layout_constraintTop_toTopOf="@+id/textView12" />
+
+                <Button
+                    android:id="@+id/btnInputFinish"
+                    style="@style/ButtonSquareStyleColored"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="등록 완료!"
+                    app:bindSecondaryButtonEnabled="@{!viewModel.selected.contains(``)}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+</layout>
