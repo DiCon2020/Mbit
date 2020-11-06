@@ -11,19 +11,20 @@ class CommentManager {
     private val retrofitRemoteDataSource: RemoteDataSource = RemoteDataSourceImpl()
 
     /**
-     * 정보 가져올 때 사용함
-     * 토큰은.. 이건 뭐 언제받는건지.. 하튼 토큰 넣으세요...^^
-     * CommonResponse에 data라는 객체가 있는데 여기에 유저정보 들어있습니다.
+     * 게시글의 댓글 가져올때 사용
+     * CommentGetRequest에 post_id넣어주면 그 게시글의 댓글들 들어옴
      */
     fun getComments(token: String, commentGetRequest: CommentGetRequest, onResponse : (CommonResponse, ArrayList<Comment>?) -> Unit, onFailure: (Throwable) -> Unit) {
         retrofitRemoteDataSource.getComments(token, commentGetRequest, onResponse, onFailure)
     }
 
     /**
-     *  정보 수정할 때 사용함
-     *  토큰 넣어주고, 바뀐 유저모델 넣어주시면 반영됩니당
+     *  게시글에 댓글 추가함
+     *  CommentAddRequest에 post_id(댓글 달 게시글), comment_id, text(댓글 내용) 들어감.
+     *  comment_id에 null이나 공백 넣어주면 일반 댓글로 인식,
+     *  만약 값이 들어있으면 답글로 인식
      */
-    fun addComment(token: String, commentAddRequest: CommentAddRequest, onResponse : (CommonResponse) -> Unit, onFailure: (Throwable) -> Unit) {
+    fun addComment(token: String, commentAddRequest: CommentAddRequest, onResponse : (CommonResponse, ArrayList<Comment>?) -> Unit, onFailure: (Throwable) -> Unit) {
         retrofitRemoteDataSource.addComment(token, commentAddRequest, onResponse, onFailure)
     }
 }
