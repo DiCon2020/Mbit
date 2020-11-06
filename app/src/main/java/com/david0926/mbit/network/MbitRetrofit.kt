@@ -4,6 +4,7 @@ import com.david0926.mbit.network.auth.AuthService
 import com.david0926.mbit.network.comment.CommentService
 import com.david0926.mbit.network.personality.PersonalityService
 import com.david0926.mbit.network.post.PostService
+import com.david0926.mbit.network.topic.TopicService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -19,5 +20,6 @@ object MbitRetrofit {
     val postService: PostService = retrofit.create(PostService::class.java)
     val commentService: CommentService = retrofit.create(CommentService::class.java)
     val personalityService: PersonalityService = retrofit.create(PersonalityService::class.java)
+    val topicService: TopicService = retrofit.create(TopicService::class.java)
 
 }
