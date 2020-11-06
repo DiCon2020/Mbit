@@ -50,7 +50,7 @@ class Main1PrivateFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getPostFromRepo(
+        viewModel.getPrivatePostFromRepo(
             UserCache.getToken(requireContext()),
             UserCache.getUser(requireContext()).personalityType
         )

@@ -19,7 +19,7 @@
             android:id="@+id/recyclerMain1Public"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:bindPosts="@{viewModel.postList}"
+            app:bindPosts="@{viewModel.publicPostList}"
             tools:listitem="@layout/row_post" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

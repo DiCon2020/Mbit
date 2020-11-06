@@ -17,21 +17,43 @@ class Main1ViewModel : ViewModel() {
     val fragments = ObservableArrayList<Fragment>()
 
     //private
-    val postList = ObservableArrayList<Post>()
+    val privatePostList = ObservableArrayList<Post>()
 
-    fun getPostFromRepo(token: String, personality: String) {
+    fun getPrivatePostFromRepo(token: String, personality: String) {
         val postManager = PostManager()
         postManager.getPosts(
             token,
             PostGetRequest(0, 0, personality),
             onResponse = { response, posts ->
                 if (response.status != 200 || posts == null) {
-                    Log.d("baam", "getPostFromRepo: "+response.message)
+                    Log.d("baam", "getPostFromRepo: " + response.message)
                     return@getPosts
                 }
-                postList.clear()
-                postList.addAll(posts)
-                Log.d("baam", "getPostFromRepo: "+Gson().toJson(posts))
+                privatePostList.clear()
+                privatePostList.addAll(posts)
+                Log.d("baam", "getPostFromRepo: " + Gson().toJson(posts))
+            },
+            onFailure = {
+                it.printStackTrace()
+            })
+    }
+
+    //public
+    val publicPostList = ObservableArrayList<Post>()
+
+    fun getPublicPostFromRepo(token: String) {
+        val postManager = PostManager()
+        postManager.getPosts(
+            token,
+            PostGetRequest(0, 0, ""),
+            onResponse = { response, posts ->
+                if (response.status != 200 || posts == null) {
+                    Log.d("baam", "getPostFromRepo: " + response.message)
+                    return@getPosts
+                }
+                publicPostList.clear()
+                publicPostList.addAll(posts)
+                Log.d("baam", "getPostFromRepo: " + Gson().toJson(posts))
             },
             onFailure = {
                 it.printStackTrace()

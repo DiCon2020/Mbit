@@ -68,7 +68,7 @@ class ArticleUploadActivity : AppCompatActivity() {
             val postManager = PostManager()
             postManager.createPost(
                 UserCache.getToken(this),
-                PostCreateRequest(viewModel.text.value!!, viewModel.private.value!!, photoBody!!),
+                PostCreateRequest(viewModel.text.value!!, viewModel.private.value!!, photoBody),
                 onResponse = {
                     dialog.cancel()
                     if (it.status != 200) {
@@ -85,5 +85,7 @@ class ArticleUploadActivity : AppCompatActivity() {
                 }
             )
         }
+
+        binding.btnArticleUploadBack.setOnClickListener { onBackPressed() }
     }
 }

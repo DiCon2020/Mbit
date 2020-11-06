@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
+        android:layout_marginHorizontal="24dp"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="8dp"
         android:background="@color/white">
@@ -36,7 +36,7 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:fontFamily="@font/font_primary_extrabold"
             android:text="@{post.owner.username, default=`Username`}"
             android:textColor="@color/colorPrimary"
@@ -68,14 +68,13 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:hint="time ago"
             android:textColor="@color/colorPrimary"
             android:textSize="14sp"
             app:bindTimeAgo="@{post.createdDate}"
             app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
-            app:layout_constraintStart_toEndOf="@+id/circleImageView"
+            app:layout_constraintStart_toStartOf="@+id/textView5"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
         <TextView
@@ -124,7 +123,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/icn_main_logo"
-                android:visibility="@{post.photo!=null}"
+                android:visibility="@{!(post.photo==null||post.photo.empty)}"
                 app:bindImageLink="@{post.photo}" />
         </androidx.cardview.widget.CardView>
 
@@ -134,7 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="24dp"
             android:background="@drawable/round_box_secondary"
             android:backgroundTint="@color/colorSecondary"

@@ -50,6 +50,6 @@ class Main1PublicFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getPostFromRepo(UserCache.getToken(requireContext()), "")
+        viewModel.getPublicPostFromRepo(UserCache.getToken(requireContext()))
     }
 }
