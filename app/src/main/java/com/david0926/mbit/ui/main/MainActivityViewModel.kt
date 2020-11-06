@@ -14,8 +14,8 @@ class MainActivityViewModel : ViewModel() {
     val page = MutableLiveData(0)
 
     companion object {
-        @BindingAdapter("bindFragment")
         @JvmStatic
+        @BindingAdapter("bindFragment")
         fun bindFragment(frame: FrameLayout, frag: Fragment?) {
             val activity = frame.context as FragmentActivity
             val transaction = activity.supportFragmentManager.beginTransaction()

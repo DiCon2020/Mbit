@@ -2,12 +2,13 @@ package com.david0926.mbit.ui.personality
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.david0926.mbit.R
-import com.david0926.mbit.data.UserModel
+import com.david0926.mbit.data.auth.UpdateInfoRequest
 import com.david0926.mbit.databinding.ActivityPersonalityInputBinding
 import com.david0926.mbit.network.auth.AuthManager
 import com.david0926.mbit.ui.dialog.LoadingDialog
@@ -26,14 +27,22 @@ class PersonalityInputActivity : AppCompatActivity() {
         binding.btnInputFinish.setOnClickListener {
             val bundle = intent.extras
             val token = bundle!!.getString("token")
-            val user = bundle.getSerializable("user") as UserModel
-            user.personalityType = viewModel.selected.joinToString()
+//            val user = bundle.getSerializable("user") as UserModel
+//            user.personalityType = viewModel.selected.joinToString()
 
             val dialog = LoadingDialog(this)
             dialog.setMessage("성격 유형 등록중...").show()
 
             val authManager = AuthManager()
-            authManager.setUserData(token!!, user,
+
+            authManager.setUserData(token!!,
+                UpdateInfoRequest(
+                    null,
+                    viewModel.selected.joinToString(""),
+                    null,
+                    null,
+                    null
+                ),
                 onResponse = { response, data ->
                     dialog.cancel()
                     if (response.status != 200) {

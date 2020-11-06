@@ -7,6 +7,7 @@ import com.david0926.mbit.data.comment.CommentGetRequest
 import com.david0926.mbit.data.comment.CommonResponse
 import com.david0926.mbit.data.auth.LoginRequest
 import com.david0926.mbit.data.auth.RegisterRequest
+import com.david0926.mbit.data.auth.UpdateInfoRequest
 import com.david0926.mbit.data.post.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -79,11 +80,11 @@ class RemoteDataSourceImpl : RemoteDataSource {
 
     override fun setUserData(
         token: String,
-        userModel: UserModel,
+        updateInfoRequest: UpdateInfoRequest,
         onResponse: (CommonResponse, UserModel?) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
-        MbitRetrofit.authService.setUserData("Bearer $token", userModel).enqueue(object : Callback<CommonResponse> {
+        MbitRetrofit.authService.setUserData("Bearer $token", updateInfoRequest).enqueue(object : Callback<CommonResponse> {
             override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                 onFailure(t)
             }

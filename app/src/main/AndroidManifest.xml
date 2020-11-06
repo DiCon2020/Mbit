@@ -14,7 +14,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mbit">
-        <activity android:name=".ui.personality.PersonalityInputActivity"></activity>
+        <activity
+            android:name=".ui.main.article.ArticleUploadActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.personality.PersonalityInputActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.onboard.OnBoardActivity"
             android:screenOrientation="portrait" />

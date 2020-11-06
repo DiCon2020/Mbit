@@ -24,10 +24,10 @@ interface AuthService {
         @Header("Authorization") token: String
     ): Call<CommonResponse>
 
-    @Multipart
+
     @PUT("/mbit/auth/update_info")
     fun setUserData(
         @Header("Authorization") token: String,
-        @Part updateInfoRequest: UpdateInfoRequest
+        @Body updateInfoRequest: UpdateInfoRequest
     ): Call<CommonResponse>
 }

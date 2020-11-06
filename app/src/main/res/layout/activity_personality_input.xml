@@ -272,7 +272,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="등록 완료!"
-                    app:bindSecondaryButtonEnabled="@{!viewModel.selected.contains(``)}"
+                    app:bindSecondaryButtonWhiteEnabled="@{!viewModel.selected.contains(``)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />

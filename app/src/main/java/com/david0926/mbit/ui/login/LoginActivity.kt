@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
 
             val authManager = AuthManager()
             authManager.login(
-                LoginRequest(viewModel.email.value!!, viewModel.pw.value!!),
+                LoginRequest(viewModel.email.value!!, viewModel.pw.value!!, "test"),
                 onResponse = { response, data ->
                     dialog.cancel()
                     if (response.status != 200) {

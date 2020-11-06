@@ -69,7 +69,7 @@ class Register2Fragment : Fragment() {
                         return@register
                     }
                     dialog.setMessage("유저 정보 동기화중...")
-                    authManager.login(LoginRequest(registerRequest.id, registerRequest.password),
+                    authManager.login(LoginRequest(registerRequest.id, registerRequest.password, "test"),
                         onResponse = { response, data ->
                             dialog.cancel()
                             if (response.status != 200) {

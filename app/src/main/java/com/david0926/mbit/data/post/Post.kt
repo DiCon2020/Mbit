@@ -1,6 +1,7 @@
 package com.david0926.mbit.data.post
 
 import com.david0926.mbit.data.UserModel
+import com.david0926.mbit.data.comment.Comment
 
 data class Post (
     var commentList: ArrayList<Comment>,

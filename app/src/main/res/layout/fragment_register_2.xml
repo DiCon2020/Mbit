@@ -127,17 +127,16 @@
 
         <Button
             android:id="@+id/btnRegister2Next"
-            style="@style/ButtonSecondaryStyleColored"
+            style="@style/ButtonSecondaryStyleColoredText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="48dp"
             android:layout_marginTop="16dp"
             android:text="다음"
             android:textSize="20sp"
-            app:bindSecondaryButtonEnabled="@{viewModel.nextEnabled}"
+            app:bindSecondaryButtonColorEnabled="@{viewModel.nextEnabled}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBox"
-            tools:layout_editor_absoluteX="36dp" />
+            app:layout_constraintTop_toBottomOf="@+id/checkBox" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

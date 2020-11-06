@@ -4,6 +4,7 @@ import com.david0926.mbit.data.comment.CommonResponse
 import com.david0926.mbit.data.auth.LoginRequest
 import com.david0926.mbit.data.auth.RegisterRequest
 import com.david0926.mbit.data.UserModel
+import com.david0926.mbit.data.auth.UpdateInfoRequest
 import com.david0926.mbit.network.RemoteDataSource
 import com.david0926.mbit.network.RemoteDataSourceImpl
 
@@ -39,7 +40,7 @@ class AuthManager {
      *  정보 수정할 때 사용함
      *  토큰 넣어주고, 바뀐 유저모델 넣어주시면 반영됩니당
      */
-    fun setUserData(token: String, userModel: UserModel, onResponse : (CommonResponse, UserModel?) -> Unit, onFailure: (Throwable) -> Unit) {
-        retrofitRemoteDataSource.setUserData(token, userModel, onResponse, onFailure)
+    fun setUserData(token: String, updateInfoRequest: UpdateInfoRequest, onResponse : (CommonResponse, UserModel?) -> Unit, onFailure: (Throwable) -> Unit) {
+        retrofitRemoteDataSource.setUserData(token, updateInfoRequest, onResponse, onFailure)
     }
 }

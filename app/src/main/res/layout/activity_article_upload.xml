@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.david0926.mbit.ui.main.article.ArticleUploadActivityViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.main.article.ArticleUploadActivity">
+
+        <ImageView
+            android:id="@+id/btnArticleUploadBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:fontFamily="@font/font_primary_extrabold"
+            android:text="게시물 작성하기"
+            android:textColor="@color/colorPrimary"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnArticleUploadBack" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/font_primary_regular"
+            android:lineSpacingExtra="5sp"
+            android:text="@{viewModel.private?@string/upload_article_private:@string/upload_article_public, default=@string/upload_article_private}"
+            android:textSize="14sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textView16"
+            app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+
+        <EditText
+            android:id="@+id/editText4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginVertical="16dp"
+            android:background="@drawable/round_box_secondary"
+            android:fontFamily="@font/nanumsquare_regular"
+            android:gravity="top"
+            android:hint="공유하고 싶은 이야기, 궁금한 내용에 대한 질문 등을 자유롭게 남겨주세요!"
+            android:lineSpacingExtra="5sp"
+            android:padding="24dp"
+            android:text="@={viewModel.text}"
+            android:textColorHint="@color/materialGray4"
+            app:layout_constraintBottom_toTopOf="@+id/btnArticleUploadImage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+        <ImageView
+            android:id="@+id/btnArticleUploadImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="@color/colorPrimary"
+            android:padding="10dp"
+            android:src="@drawable/ic_round_photo_camera_24"
+            app:layout_constraintBottom_toBottomOf="@+id/btnArticleUploadUpload"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnArticleUploadUpload"
+            app:tint="@color/colorSecondary" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView2"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="12dp"
+            android:visibility="@{viewModel.photo!=null, default=gone}"
+            app:cardCornerRadius="@dimen/app_radius_secondary"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/btnArticleUploadImage"
+            app:layout_constraintStart_toEndOf="@+id/btnArticleUploadImage"
+            app:layout_constraintTop_toTopOf="@+id/btnArticleUploadImage">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:bindImageUri="@{viewModel.photo}" />
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/btnArticleUploadUpload"
+            style="@style/ButtonSecondaryStyleColoredText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:text="등록"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/cardView2" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

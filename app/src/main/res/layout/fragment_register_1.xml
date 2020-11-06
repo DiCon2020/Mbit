@@ -99,7 +99,7 @@
 
         <Button
             android:id="@+id/btnRegister1Next"
-            style="@style/ButtonSecondaryStyleColored"
+            style="@style/ButtonSecondaryStyleColoredText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="48dp"
@@ -107,7 +107,7 @@
             android:layout_marginBottom="16dp"
             android:text="다음"
             android:textSize="20sp"
-            app:bindSecondaryButtonEnabled="@{viewModel.nextEnabled}" />
+            app:bindSecondaryButtonColorEnabled="@{viewModel.nextEnabled}" />
 
     </LinearLayout>
 </layout>

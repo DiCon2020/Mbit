@@ -73,6 +73,12 @@ object BindingOptions {
     fun bindButtonEnabled(v: Button, enabled: Boolean) {
         v.isClickable = enabled
         v.isFocusable = enabled
+        v.setTextColor(
+            ContextCompat.getColorStateList(
+                v.context,
+                if (enabled) R.color.white else R.color.colorPrimary
+            )
+        )
         v.backgroundTintList = ContextCompat.getColorStateList(
             v.context,
             if (enabled) R.color.colorPrimary else R.color.materialGray6
@@ -80,8 +86,25 @@ object BindingOptions {
     }
 
     @JvmStatic
-    @BindingAdapter("bindSecondaryButtonEnabled")
-    fun bindSecondaryButtonEnabled(v: Button, enabled: Boolean) {
+    @BindingAdapter("bindSecondaryButtonColorEnabled")
+    fun bindSecondaryButtonColorEnabled(v: Button, enabled: Boolean) {
+        v.isClickable = enabled
+        v.isFocusable = enabled
+        v.setTextColor(
+            ContextCompat.getColorStateList(
+                v.context,
+                if (enabled) R.color.colorPrimary else R.color.white
+            )
+        )
+        v.backgroundTintList = ContextCompat.getColorStateList(
+            v.context,
+            if (enabled) R.color.colorSecondary else R.color.materialGray6
+        )
+    }
+
+    @JvmStatic
+    @BindingAdapter("bindSecondaryButtonWhiteEnabled")
+    fun bindSecondaryButtonWhiteEnabled(v: Button, enabled: Boolean) {
         v.isClickable = enabled
         v.isFocusable = enabled
         v.backgroundTintList = ContextCompat.getColorStateList(
@@ -121,7 +144,7 @@ object BindingOptions {
         try {
             val past = format.parse(time)
             val now = Date()
-            val seconds = TimeUnit.MILLISECONDS.toSeconds(now.time - past.time)
+            val seconds = TimeUnit.MILLISECONDS.toSeconds(now.time - past!!.time)
             val minutes = TimeUnit.MILLISECONDS.toMinutes(now.time - past.time)
             val hours = TimeUnit.MILLISECONDS.toHours(now.time - past.time)
             val days = TimeUnit.MILLISECONDS.toDays(now.time - past.time)

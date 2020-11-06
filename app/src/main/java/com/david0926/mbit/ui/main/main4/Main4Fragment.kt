@@ -1,5 +1,6 @@
 package com.david0926.mbit.ui.main.main4
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.david0926.mbit.R
 import com.david0926.mbit.databinding.FragmentMain4Binding
+import com.david0926.mbit.ui.login.LoginActivity
+import com.david0926.mbit.util.UserCache
 
 class Main4Fragment : Fragment() {
     override fun onCreateView(
@@ -25,6 +28,12 @@ class Main4Fragment : Fragment() {
 
         val viewModel = ViewModelProvider(requireActivity()).get(Main4FragmentViewModel::class.java)
         binding.viewModel = viewModel
+
+        binding.btnMain4Logout.setOnClickListener {
+            UserCache.clearUser(requireContext())
+            startActivity(Intent(requireContext(), LoginActivity::class.java))
+            requireActivity().finish()
+        }
 
         return binding.root
     }
