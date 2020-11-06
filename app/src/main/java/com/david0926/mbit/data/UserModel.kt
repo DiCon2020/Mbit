@@ -4,7 +4,7 @@ import java.io.Serializable
 
 data class UserModel(
     var _id: String,
-    var id: String,
+    var email: String,
     var password: String,
     var username: String,
     var yearOfBirth: Int,

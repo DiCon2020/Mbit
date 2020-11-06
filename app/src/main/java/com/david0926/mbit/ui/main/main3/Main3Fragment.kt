@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.david0926.mbit.R
 import com.david0926.mbit.databinding.FragmentMain3Binding
+import com.david0926.mbit.util.UserCache
 
 class Main3Fragment : Fragment() {
     override fun onCreateView(
@@ -25,6 +26,8 @@ class Main3Fragment : Fragment() {
 
         val viewModel = ViewModelProvider(requireActivity()).get(Main3FragmentViewModel::class.java)
         binding.viewModel = viewModel
+
+        viewModel.getPersonality(UserCache.getToken(requireContext()))
 
         return binding.root
     }

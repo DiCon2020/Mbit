@@ -11,7 +11,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.david0926.mbit.R
 import com.david0926.mbit.databinding.FragmentMain1PublicBinding
+import com.david0926.mbit.ui.dialog.WorkingDialog
+import com.david0926.mbit.ui.main.article.ArticleActivity
 import com.david0926.mbit.ui.main.article.ArticleUploadActivity
+import com.david0926.mbit.ui.main.comment.CommentBottomSheet
 import com.david0926.mbit.util.UserCache
 
 class Main1PublicFragment : Fragment() {
@@ -36,8 +39,28 @@ class Main1PublicFragment : Fragment() {
         binding.recyclerMain1Public.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        binding.recyclerMain1Public.adapter =
-            Main1PrivateRecyclerAdapter(UserCache.getUser(requireContext()))
+        val adapter = Main1RecyclerAdapter(UserCache.getUser(requireContext()))
+        adapter.onItemClick = {
+            val articleIntent = Intent(requireContext(), ArticleActivity::class.java)
+            articleIntent.putExtra("post", viewModel.privatePostList[it])
+            articleIntent.putExtra("user", UserCache.getUser(requireContext()))
+            startActivity(articleIntent)
+        }
+
+        adapter.onCommentClick = {
+            val commentSheet = CommentBottomSheet(viewModel.privatePostList[it]._id)
+            commentSheet.show(requireActivity().supportFragmentManager, commentSheet.tag)
+        }
+
+        adapter.onLikeClick = {
+            WorkingDialog.working(requireActivity())
+        }
+        adapter.onDeleteClick = {
+            WorkingDialog.working(requireActivity())
+        }
+
+
+        binding.recyclerMain1Public.adapter = adapter
 
         binding.btnMain1PublicWrite.setOnClickListener {
             val uploadIntent = Intent(requireContext(), ArticleUploadActivity::class.java)

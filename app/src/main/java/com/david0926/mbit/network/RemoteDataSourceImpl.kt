@@ -1,5 +1,6 @@
 package com.david0926.mbit.network
 
+import android.util.Log
 import com.david0926.mbit.data.UserModel
 import com.david0926.mbit.data.auth.LoginRequest
 import com.david0926.mbit.data.auth.RegisterRequest
@@ -186,6 +187,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
                             ), null
                         )
                     } else {
+                        Log.d("baam", "onResponse: "+response.body())
                         val type = object : TypeToken<ArrayList<Post>>() {}.type
                         val posts: ArrayList<Post> = Gson().fromJson(
                             Gson().toJson(response.body()!!.data), type

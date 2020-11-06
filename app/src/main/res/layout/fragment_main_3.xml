@@ -42,7 +42,7 @@
                 android:fontFamily="@font/font_primary_extrabold"
                 android:letterSpacing="0.3"
                 android:padding="16dp"
-                android:text="ENFP"
+                android:text="@{viewModel.personality.myInfo.personalityType}"
                 android:textColor="@color/colorSecondary"
                 android:textSize="64sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -57,7 +57,7 @@
                 android:layout_marginHorizontal="48dp"
                 android:layout_marginTop="24dp"
                 android:lineSpacingExtra="10sp"
-                android:text="따뜻하고 정열적이고 활기가 넘치며 재능이 많고 상상력이 풍부하다. 온정적이고 창의적이며 항상 새로운 가능성을 찾고 시도하는 형이다. 문제 해결에 재빠르고 관심이 있는 일은 무엇이든지 수행해내는 능력과 열성이 있다. 다른 사람들에게 관심을 쏟으며 사람들을 잘 다루고 뛰어난 통찰력으로 도움을 준다." />
+                android:text="@{viewModel.personality.myInfo.text}" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -80,7 +80,7 @@
                 android:fontFamily="@font/font_primary_extrabold"
                 android:letterSpacing="0.3"
                 android:padding="16dp"
-                android:text="INTJ"
+                android:text="@{viewModel.personality.goodInfo.personalityType}"
                 android:textColor="@color/colorPrimary"
                 android:textSize="64sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -90,6 +90,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
+                android:id="@+id/btnMain3More"
                 style="@style/ButtonStyleColored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

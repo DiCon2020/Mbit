@@ -64,7 +64,7 @@ class Main1ViewModel : ViewModel() {
         @JvmStatic
         @BindingAdapter("bindPosts")
         fun bindPosts(r: RecyclerView, posts: ObservableArrayList<Post>?) {
-            val adapter: Main1PrivateRecyclerAdapter? = r.adapter as Main1PrivateRecyclerAdapter?
+            val adapter: Main1RecyclerAdapter? = r.adapter as Main1RecyclerAdapter?
             if (adapter == null || posts == null) return
             adapter.setPosts(posts)
         }

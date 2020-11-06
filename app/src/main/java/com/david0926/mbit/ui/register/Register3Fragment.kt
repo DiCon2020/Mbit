@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.david0926.mbit.R
 import com.david0926.mbit.databinding.FragmentRegister3Binding
+import com.david0926.mbit.ui.dialog.WorkingDialog
 import com.david0926.mbit.ui.personality.PersonalityInputActivity
 
 class Register3Fragment : Fragment() {
@@ -41,6 +42,7 @@ class Register3Fragment : Fragment() {
         }
 
         binding.btnRegister3Survey.setOnClickListener {
+            WorkingDialog.working(requireActivity())
             // TODO: 2020/11/06 성격유형 설문 기능 추가
         }
 

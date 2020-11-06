@@ -8,13 +8,18 @@ import com.david0926.mbit.data.UserModel
 import com.david0926.mbit.data.post.Post
 import com.david0926.mbit.databinding.RowPostBinding
 
-class Main1PrivateRecyclerAdapter(userModel: UserModel) :
-    RecyclerView.Adapter<Main1PrivateRecyclerAdapter.ChatHolder>() {
+class Main1RecyclerAdapter(userModel: UserModel) :
+    RecyclerView.Adapter<Main1RecyclerAdapter.ChatHolder>() {
 
     class ChatHolder(var binding: RowPostBinding) : RecyclerView.ViewHolder(binding.root)
 
     private var posts: List<Post> = ArrayList()
     private var user = userModel
+
+    var onItemClick: (position: Int) -> Unit = {}
+    var onDeleteClick: (position: Int) -> Unit = {}
+    var onCommentClick: (position: Int) -> Unit = {}
+    var onLikeClick: (position: Int) -> Unit = {}
 
     fun setPosts(posts: ObservableArrayList<Post>) {
         this.posts = posts
@@ -28,6 +33,11 @@ class Main1PrivateRecyclerAdapter(userModel: UserModel) :
     }
 
     override fun onBindViewHolder(holder: ChatHolder, position: Int) {
+        holder.binding.root.setOnClickListener { onItemClick.invoke(position) }
+        holder.binding.btnRowPostLike.setOnClickListener { onLikeClick.invoke(position) }
+        holder.binding.btnRowPostComment.setOnClickListener { onCommentClick.invoke(position) }
+        holder.binding.btnRowPostDelete.setOnClickListener { onDeleteClick.invoke(position) }
+
         holder.binding.post = posts[position]
         holder.binding.user = user
     }
