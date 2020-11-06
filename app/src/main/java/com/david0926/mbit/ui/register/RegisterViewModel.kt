@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.david0926.mbit.R
+import com.david0926.mbit.data.UserModel
 import com.google.android.material.tabs.TabLayout
 
 class RegisterViewModel : ViewModel() {
@@ -32,7 +33,7 @@ class RegisterViewModel : ViewModel() {
     val nextEnabled = MutableLiveData(false)
     var onNextClick: () -> Unit = {}
 
-    companion object{
+    companion object {
         @BindingAdapter("bindFragmentWithAnim")
         @JvmStatic
         fun bindFragmentWithAnim(frame: FrameLayout, frag: Fragment?) {
@@ -72,5 +73,6 @@ class RegisterViewModel : ViewModel() {
     val policy = MutableLiveData(false)
 
     //fragment 3
+    val user = MutableLiveData<UserModel>()
     val token = MutableLiveData("")
 }

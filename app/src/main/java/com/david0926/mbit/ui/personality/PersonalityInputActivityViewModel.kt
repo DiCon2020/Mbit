@@ -9,8 +9,6 @@ import androidx.lifecycle.ViewModel
 import com.david0926.mbit.R
 
 class PersonalityInputActivityViewModel : ViewModel() {
-
-    val personality = MutableLiveData("")
     val selected = ObservableArrayList<String>()
 
     init {

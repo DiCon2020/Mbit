@@ -29,7 +29,14 @@ class Register3Fragment : Fragment() {
         binding.viewModel = viewModel
 
         binding.btnRegister3Input.setOnClickListener {
-            startActivity(Intent(requireContext(), PersonalityInputActivity::class.java))
+            val inputIntent = Intent(requireContext(), PersonalityInputActivity::class.java)
+            val bundle = Bundle()
+
+            bundle.putString("token", viewModel.token.value)
+            bundle.putSerializable("user", viewModel.user.value)
+            inputIntent.putExtras(bundle)
+
+            startActivity(inputIntent)
             requireActivity().finish()
         }
 

@@ -28,8 +28,8 @@ class LoginActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(LoginActivityViewModel::class.java)
         binding.viewModel = viewModel
 
-        viewModel.email.observe(this, {checkNextEnabled()})
-        viewModel.pw.observe(this, {checkNextEnabled()})
+        viewModel.email.observe(this, { checkNextEnabled() })
+        viewModel.pw.observe(this, { checkNextEnabled() })
 
         TedKeyboardObserver(this).listen {
             if (it) {
@@ -53,8 +53,14 @@ class LoginActivity : AppCompatActivity() {
                     }
                     if (data!!.personalityType.isEmpty()) {
                         val registerIntent = Intent(this, RegisterActivity::class.java)
-                        registerIntent.putExtra("token", response.accessToken)
+                        val bundle = Bundle()
+
+                        bundle.putString("token", response.accessToken)
+                        bundle.putSerializable("user", data)
+                        registerIntent.putExtras(bundle)
+
                         startActivity(registerIntent)
+                        finish()
                         return@login
                     }
                     UserCache.setUser(this, data, response.accessToken)

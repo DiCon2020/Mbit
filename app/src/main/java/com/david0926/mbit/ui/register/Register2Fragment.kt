@@ -70,9 +70,14 @@ class Register2Fragment : Fragment() {
                     }
                     dialog.setMessage("유저 정보 동기화중...")
                     authManager.login(LoginRequest(registerRequest.id, registerRequest.password),
-                        onResponse = { response, _ ->
+                        onResponse = { response, data ->
                             dialog.cancel()
+                            if (response.status != 200) {
+                                viewModel.errorMsg.value = it.message
+                                return@login
+                            }
                             viewModel.token.value = response.accessToken
+                            viewModel.user.value  = data
                             viewModel.nextPage()
                         },
                         onFailure = { t ->

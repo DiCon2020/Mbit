@@ -1,8 +1,8 @@
 package com.david0926.mbit.data
 
-import okhttp3.MultipartBody
+import java.io.Serializable
 
-data class UserModel (
+data class UserModel(
     var _id: String,
     var id: String,
     var password: String,
@@ -19,4 +19,4 @@ data class UserModel (
     var commentNotificationStatus: Boolean,
     var token: String? //  가입할때 토큰과 photo는 Null로 둬도 됩니다
 
-)
+) : Serializable
