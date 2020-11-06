@@ -8,6 +8,7 @@ import com.david0926.mbit.data.comment.Comment
 import com.david0926.mbit.data.comment.CommentAddRequest
 import com.david0926.mbit.data.comment.CommentGetRequest
 import com.david0926.mbit.data.comment.CommonResponse
+import com.david0926.mbit.data.personality.PersonalityResponse
 import com.david0926.mbit.data.post.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -351,6 +352,40 @@ class RemoteDataSourceImpl : RemoteDataSource {
                             Gson().toJson(response.body()!!.data), Type
                         )
                         onResponse(response.body()!!, comments)
+                    }
+                }
+            })
+    }
+
+    // PersonalityService
+
+    override fun getPersonalityType(
+        token: String,
+        onResponse: (CommonResponse, PersonalityResponse?) -> Unit,
+        onFailure: (Throwable) -> Unit
+    ) {
+        MbitRetrofit.personalityService.getPersonalityType("Bearer $token")
+            .enqueue(object : Callback<CommonResponse> {
+                override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
+                    onFailure(t)
+                }
+
+                override fun onResponse(
+                    call: Call<CommonResponse>,
+                    response: Response<CommonResponse>
+                ) {
+                    if (response.body() == null) {
+                        onResponse(
+                            Gson().fromJson(
+                                response.errorBody()!!.string(),
+                                CommonResponse::class.java
+                            ), null
+                        )
+                    } else {
+                        val data: PersonalityResponse = Gson().fromJson(
+                            Gson().toJson(response.body()!!.data), PersonalityResponse::class.java
+                        )
+                        onResponse(response.body()!!, data)
                     }
                 }
             })

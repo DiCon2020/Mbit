@@ -8,6 +8,7 @@ import com.david0926.mbit.data.comment.CommonResponse
 import com.david0926.mbit.data.auth.LoginRequest
 import com.david0926.mbit.data.auth.RegisterRequest
 import com.david0926.mbit.data.auth.UpdateInfoRequest
+import com.david0926.mbit.data.personality.PersonalityResponse
 import com.david0926.mbit.data.post.*
 
 interface RemoteDataSource {
@@ -79,6 +80,13 @@ interface RemoteDataSource {
         token: String,
         commentAddRequest: CommentAddRequest,
         onResponse : (CommonResponse, ArrayList<Comment>?) -> Unit,
+        onFailure: (Throwable) -> Unit
+    )
+
+    // PersonalityService
+    fun getPersonalityType(
+        token: String,
+        onResponse : (CommonResponse, PersonalityResponse?) -> Unit,
         onFailure: (Throwable) -> Unit
     )
 }
