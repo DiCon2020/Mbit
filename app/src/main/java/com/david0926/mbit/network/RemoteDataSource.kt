@@ -8,7 +8,11 @@ import com.david0926.mbit.data.comment.CommonResponse
 import com.david0926.mbit.data.auth.LoginRequest
 import com.david0926.mbit.data.auth.RegisterRequest
 import com.david0926.mbit.data.auth.UpdateInfoRequest
+import com.david0926.mbit.data.personality.PersonalityResponse
 import com.david0926.mbit.data.post.*
+import com.david0926.mbit.data.topic.Topic
+import com.david0926.mbit.data.topic.TopicCreateRequest
+import com.david0926.mbit.data.topic.TopicVoteRequest
 
 interface RemoteDataSource {
 
@@ -79,6 +83,40 @@ interface RemoteDataSource {
         token: String,
         commentAddRequest: CommentAddRequest,
         onResponse : (CommonResponse, ArrayList<Comment>?) -> Unit,
+        onFailure: (Throwable) -> Unit
+    )
+
+    // PersonalityService
+    fun getPersonalityType(
+        token: String,
+        onResponse : (CommonResponse, PersonalityResponse?) -> Unit,
+        onFailure: (Throwable) -> Unit
+    )
+
+    //  TopicService
+    fun getLastTopics(
+        token: String,
+        onResponse : (CommonResponse, ArrayList<Topic>?) -> Unit,
+        onFailure: (Throwable) -> Unit
+    )
+
+    fun getAllTopics(
+        token: String,
+        onResponse : (CommonResponse, ArrayList<Topic>?) -> Unit,
+        onFailure: (Throwable) -> Unit
+    )
+
+    fun createTopic(
+        token: String,
+        topicCreateRequest: TopicCreateRequest,
+        onResponse : (CommonResponse) -> Unit,
+        onFailure: (Throwable) -> Unit
+    )
+
+    fun voteTopic(
+        token: String,
+        topicVoteRequest: TopicVoteRequest,
+        onResponse : (CommonResponse, ArrayList<Topic>?) -> Unit,
         onFailure: (Throwable) -> Unit
     )
 }
