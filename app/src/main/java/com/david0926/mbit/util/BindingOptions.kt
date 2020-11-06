@@ -136,6 +136,7 @@ object BindingOptions {
         Glide.with(view!!).load(link).into(view)
     }
 
+    @JvmStatic
     @BindingAdapter("bindTimeAgo")
     fun bindTimeAgo(view: TextView, time: String?) {
         if (time == null) return

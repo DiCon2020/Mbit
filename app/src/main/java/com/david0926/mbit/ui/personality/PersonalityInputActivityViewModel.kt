@@ -16,9 +16,9 @@ class PersonalityInputActivityViewModel : ViewModel() {
     }
 
     companion object {
-        @BindingAdapter("bindButtonSelected")
+        @BindingAdapter("bindButtonPersonalitySelected")
         @JvmStatic
-        fun bindButtonSelected(btn: Button?, selected: Boolean?) {
+        fun bindButtonPersonalitySelected(btn: Button?, selected: Boolean?) {
             if (btn == null || selected == null) return
             val context = btn.context
 

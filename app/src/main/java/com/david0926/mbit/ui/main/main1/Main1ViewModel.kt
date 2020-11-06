@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.david0926.mbit.data.post.Post
 import com.david0926.mbit.data.post.PostGetRequest
 import com.david0926.mbit.network.post.PostManager
+import com.google.gson.Gson
 
 class Main1ViewModel : ViewModel() {
 
@@ -30,6 +31,7 @@ class Main1ViewModel : ViewModel() {
                 }
                 postList.clear()
                 postList.addAll(posts)
+                Log.d("baam", "getPostFromRepo: "+Gson().toJson(posts))
             },
             onFailure = {
                 it.printStackTrace()

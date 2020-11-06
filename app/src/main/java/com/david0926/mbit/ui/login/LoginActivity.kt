@@ -92,6 +92,7 @@ class LoginActivity : AppCompatActivity() {
 
         binding.btnLoginRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
+            finish()
         }
     }
 

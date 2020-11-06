@@ -1,6 +1,7 @@
 package com.david0926.mbit.ui.main.article
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -67,13 +68,14 @@ class ArticleUploadActivity : AppCompatActivity() {
             val postManager = PostManager()
             postManager.createPost(
                 UserCache.getToken(this),
-                PostCreateRequest(viewModel.text.value!!, photoBody),
+                PostCreateRequest(viewModel.text.value!!, viewModel.private.value!!, photoBody!!),
                 onResponse = {
                     dialog.cancel()
                     if (it.status != 200) {
                         dialog.cancel()
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                     }
+                    Log.d("baam", "onCreate: " + it.message)
                     finish()
                 },
                 onFailure = {
