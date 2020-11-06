@@ -57,7 +57,6 @@ class PersonalityInputActivity : AppCompatActivity() {
                     Toast.makeText(this, "성격 유형 등록에 실패했습니다.", Toast.LENGTH_SHORT).show()
                     it.printStackTrace()
                 })
-            startActivity(Intent(this, LoginActivity::class.java))
         }
     }
 }

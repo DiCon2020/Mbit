@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.david0926.mbit.BuildConfig
 import com.david0926.mbit.R
 import com.david0926.mbit.databinding.FragmentMain4Binding
 import com.david0926.mbit.ui.login.LoginActivity
@@ -29,11 +30,16 @@ class Main4Fragment : Fragment() {
         val viewModel = ViewModelProvider(requireActivity()).get(Main4FragmentViewModel::class.java)
         binding.viewModel = viewModel
 
+        viewModel.user.value = UserCache.getUser(requireContext())
+        viewModel.version.value = BuildConfig.VERSION_CODE.toDouble().toString()
+
         binding.btnMain4Logout.setOnClickListener {
             UserCache.clearUser(requireContext())
             startActivity(Intent(requireContext(), LoginActivity::class.java))
             requireActivity().finish()
         }
+
+
 
         return binding.root
     }

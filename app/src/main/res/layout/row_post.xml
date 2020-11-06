@@ -20,7 +20,7 @@
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/white">
+        android:background="@drawable/round_box_secondary">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/circleImageView"
@@ -55,6 +55,7 @@
             android:backgroundTint="@color/colorPrimary"
             android:paddingHorizontal="12dp"
             android:paddingVertical="4dp"
+            android:fontFamily="@font/font_primary_extrabold"
             android:text="@{post.owner.personalityType}"
             android:textColor="@color/colorSecondary"
             android:textSize="12sp"
@@ -122,7 +123,6 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icn_main_logo"
                 android:visibility="@{!(post.photo==null||post.photo.empty)}"
                 app:bindImageLink="@{post.photo}" />
         </androidx.cardview.widget.CardView>
