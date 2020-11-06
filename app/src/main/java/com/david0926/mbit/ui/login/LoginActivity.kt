@@ -2,6 +2,7 @@ package com.david0926.mbit.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +14,8 @@ import com.david0926.mbit.ui.dialog.LoadingDialog
 import com.david0926.mbit.ui.main.MainActivity
 import com.david0926.mbit.ui.register.RegisterActivity
 import com.david0926.mbit.util.UserCache
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import gun0912.tedkeyboardobserver.TedKeyboardObserver
 
 class LoginActivity : AppCompatActivity() {
@@ -43,35 +46,48 @@ class LoginActivity : AppCompatActivity() {
             dialog.setMessage("로그인 중...").show()
 
             val authManager = AuthManager()
-            authManager.login(
-                LoginRequest(viewModel.email.value!!, viewModel.pw.value!!, "test"),
-                onResponse = { response, data ->
-                    dialog.cancel()
-                    if (response.status != 200) {
-                        viewModel.errorMsg.value = response.message
-                        return@login
-                    }
-                    if (data!!.personalityType.isEmpty()) {
-                        val registerIntent = Intent(this, RegisterActivity::class.java)
-                        val bundle = Bundle()
 
-                        bundle.putString("token", response.accessToken)
-                        bundle.putSerializable("user", data)
-                        registerIntent.putExtras(bundle)
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w("[Login]", "Fetching FCM registration token failed", task.exception)
+                    return@OnCompleteListener
+                }
+                // Get new FCM registration token
+                val token = task.result
 
-                        startActivity(registerIntent)
+                authManager.login(
+                    LoginRequest(viewModel.email.value!!, viewModel.pw.value!!, token!!),
+                    onResponse = { response, data ->
+                        dialog.cancel()
+                        if (response.status != 200) {
+                            viewModel.errorMsg.value = response.message
+                            return@login
+                        }
+                        if (data!!.personalityType.isEmpty()) {
+                            val registerIntent = Intent(this, RegisterActivity::class.java)
+                            val bundle = Bundle()
+
+                            bundle.putString("token", response.accessToken)
+                            bundle.putSerializable("user", data)
+                            registerIntent.putExtras(bundle)
+
+                            startActivity(registerIntent)
+                            finish()
+                            return@login
+                        }
+                        UserCache.setUser(this, data, response.accessToken)
+                        startActivity(Intent(this, MainActivity::class.java))
                         finish()
-                        return@login
-                    }
-                    UserCache.setUser(this, data, response.accessToken)
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
-                },
-                onFailure = {
-                    dialog.cancel()
-                    viewModel.errorMsg.value = "로그인 요청에 실패했습니다."
-                    it.printStackTrace()
-                })
+                    },
+                    onFailure = {
+                        dialog.cancel()
+                        viewModel.errorMsg.value = "로그인 요청에 실패했습니다."
+                        it.printStackTrace()
+                    })
+
+            })
+
+
         }
 
         binding.btnLoginRegister.setOnClickListener {
