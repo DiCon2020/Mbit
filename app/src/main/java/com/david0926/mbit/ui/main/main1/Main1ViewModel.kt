@@ -15,21 +15,32 @@ class Main1ViewModel : ViewModel() {
 
     //fragment
     val fragments = ObservableArrayList<Fragment>()
+    val COUNT_POST_PAGE = 5; // 한 페이지당 N개
+
+    var hasPublicNext = true;
+    var hasPrivateNext = true;
+
+    var PUBLIC_PAGE = 0;
+    var PRIVATE_PAGE = 0;
 
     //private
     val privatePostList = ObservableArrayList<Post>()
 
-    fun getPrivatePostFromRepo(token: String, personality: String) {
+    fun getPrivatePostFromRepo(token: String, personality: String, page: Int) {
         val postManager = PostManager()
         postManager.getPosts(
             token,
-            PostGetRequest(0, 0, personality),
+            PostGetRequest(page, COUNT_POST_PAGE, personality),
             onResponse = { response, posts ->
                 if (response.status != 200 || posts == null) {
                     Log.d("baam", "getPostFromRepo: " + response.message)
+                    hasPrivateNext = false
                     return@getPosts
                 }
-                privatePostList.clear()
+                if(page == 0)
+                    privatePostList.clear()
+                if(posts.size < COUNT_POST_PAGE)
+                    hasPrivateNext=false;
                 privatePostList.addAll(posts)
                 Log.d("baam", "getPostFromRepo: " + Gson().toJson(posts))
             },
@@ -41,23 +52,43 @@ class Main1ViewModel : ViewModel() {
     //public
     val publicPostList = ObservableArrayList<Post>()
 
-    fun getPublicPostFromRepo(token: String) {
+    fun getPublicPostFromRepo(token: String, page: Int) {
         val postManager = PostManager()
         postManager.getPosts(
             token,
-            PostGetRequest(0, 0, ""),
+            PostGetRequest(page, COUNT_POST_PAGE, ""),
             onResponse = { response, posts ->
                 if (response.status != 200 || posts == null) {
                     Log.d("baam", "getPostFromRepo: " + response.message)
+                    hasPublicNext=false;
                     return@getPosts
                 }
-                publicPostList.clear()
+                if(page == 0)
+                    publicPostList.clear()
+                if(posts.size != COUNT_POST_PAGE)
+                    hasPublicNext=false;
                 publicPostList.addAll(posts)
                 Log.d("baam", "getPostFromRepo: " + Gson().toJson(posts))
             },
             onFailure = {
                 it.printStackTrace()
             })
+    }
+
+    fun nextPublicPage(token: String, finish: () -> Unit) {
+        if(hasPublicNext) {
+            getPublicPostFromRepo(token, ++PUBLIC_PAGE);
+            if(hasPublicNext)
+                finish()
+        }
+    }
+
+    fun nextPrivatePage(token: String, personality: String, finish: () -> Unit ) {
+        if(hasPrivateNext) {
+            getPrivatePostFromRepo(token, personality, ++PRIVATE_PAGE);
+            if(hasPrivateNext)
+                finish()
+        }
     }
 
     companion object {
