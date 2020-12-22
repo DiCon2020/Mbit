@@ -2,6 +2,7 @@ package com.david0926.mbit.ui.main.main1
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.david0926.mbit.R
 import com.david0926.mbit.databinding.FragmentMain1PrivateBinding
 import com.david0926.mbit.ui.dialog.WorkingDialog
@@ -47,6 +49,30 @@ class Main1PrivateFragment : Fragment() {
             startActivity(articleIntent)
         }
 
+        binding.recyclerMain1Private.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val lm =
+                    (recyclerView.layoutManager as LinearLayoutManager?)
+                val visibleItemCount = lm!!.childCount
+                val totalItemCount = lm!!.itemCount
+                val firstVisibleItemPosition = lm!!.findFirstVisibleItemPosition()
+
+
+                Log.w("[WOW]", "$visibleItemCount $totalItemCount $firstVisibleItemPosition")
+                if ((visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0)) {
+
+                    viewModel.nextPrivatePage(
+                        UserCache.getToken(requireContext()), UserCache.getUser(
+                            requireContext()
+                        ).personalityType
+                    ) {
+                        adapter.notifyDataSetChanged()
+                    }
+                }
+            }
+        })
+
         adapter.onCommentClick = {
             val commentSheet = CommentBottomSheet(viewModel.privatePostList[it]._id)
             commentSheet.show(requireActivity().supportFragmentManager, commentSheet.tag)
@@ -73,9 +99,11 @@ class Main1PrivateFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        viewModel.hasPrivateNext=true;
+        viewModel.PRIVATE_PAGE=0;
         viewModel.getPrivatePostFromRepo(
             UserCache.getToken(requireContext()),
-            UserCache.getUser(requireContext()).personalityType
+            UserCache.getUser(requireContext()).personalityType, 0
         )
     }
 }

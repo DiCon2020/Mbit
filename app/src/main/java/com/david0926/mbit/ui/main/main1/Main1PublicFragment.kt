@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.david0926.mbit.R
 import com.david0926.mbit.databinding.FragmentMain1PublicBinding
 import com.david0926.mbit.ui.dialog.WorkingDialog
@@ -47,8 +48,21 @@ class Main1PublicFragment : Fragment() {
             startActivity(articleIntent)
         }
 
+        binding.recyclerMain1Public.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                    UserCache.getToken(requireContext()).run {
+                        viewModel.nextPublicPage(this) {
+                            adapter.notifyDataSetChanged()
+                        }
+                    }
+
+            }
+        })
+
         adapter.onCommentClick = {
-            val commentSheet = CommentBottomSheet(viewModel.privatePostList[it]._id)
+            val commentSheet = CommentBottomSheet(viewModel.publicPostList[it]._id)
             commentSheet.show(requireActivity().supportFragmentManager, commentSheet.tag)
         }
 
@@ -73,6 +87,10 @@ class Main1PublicFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getPublicPostFromRepo(UserCache.getToken(requireContext()))
+        viewModel.hasPublicNext=true;
+        viewModel.PUBLIC_PAGE=0;
+        viewModel.getPublicPostFromRepo(UserCache.getToken(requireContext()),
+        0)
+
     }
 }
