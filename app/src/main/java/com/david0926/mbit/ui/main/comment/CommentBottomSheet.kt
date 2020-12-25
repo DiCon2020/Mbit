@@ -1,11 +1,14 @@
 package com.david0926.mbit.ui.main.comment
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.david0926.mbit.R
@@ -13,18 +16,21 @@ import com.david0926.mbit.data.comment.CommentGetRequest
 import com.david0926.mbit.databinding.BottomSheetCommentBinding
 import com.david0926.mbit.network.comment.CommentManager
 import com.david0926.mbit.util.UserCache
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class CommentBottomSheet(private val postId: String) : BottomSheetDialogFragment() {
 
     lateinit var viewModel: CommentBottomSheetViewModel
+    lateinit var binding: BottomSheetCommentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: BottomSheetCommentBinding =
+        binding =
             DataBindingUtil.inflate(inflater, R.layout.bottom_sheet_comment, container, false)
         binding.lifecycleOwner = this
 
@@ -32,7 +38,10 @@ class CommentBottomSheet(private val postId: String) : BottomSheetDialogFragment
             ViewModelProvider(requireActivity()).get(CommentBottomSheetViewModel::class.java)
         binding.viewModel = viewModel
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.AppBottomSheetDialogTheme)
+
+        binding.recyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.recyclerView.adapter = CommentRecyclerAdapter()
 
         val commentManger = CommentManager()
@@ -57,6 +66,17 @@ class CommentBottomSheet(private val postId: String) : BottomSheetDialogFragment
         }
 
         return binding.root
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
+        dialog.setOnShowListener {
+            val bottomSheetDialog = it as BottomSheetDialog
+            val bottomSheet =
+                bottomSheetDialog.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
+            BottomSheetBehavior.from(bottomSheet!!).state = BottomSheetBehavior.STATE_EXPANDED
+        }
+        return dialog
     }
 
 }

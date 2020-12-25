@@ -42,13 +42,13 @@ class Main1PublicFragment : Fragment() {
         val adapter = Main1RecyclerAdapter(UserCache.getUser(requireContext()))
         adapter.onItemClick = {
             val articleIntent = Intent(requireContext(), ArticleActivity::class.java)
-            articleIntent.putExtra("post", viewModel.privatePostList[it])
+            articleIntent.putExtra("post", viewModel.publicPostList[it])
             articleIntent.putExtra("user", UserCache.getUser(requireContext()))
             startActivity(articleIntent)
         }
 
         adapter.onCommentClick = {
-            val commentSheet = CommentBottomSheet(viewModel.privatePostList[it]._id)
+            val commentSheet = CommentBottomSheet(viewModel.publicPostList[it]._id)
             commentSheet.show(requireActivity().supportFragmentManager, commentSheet.tag)
         }
 
@@ -64,7 +64,7 @@ class Main1PublicFragment : Fragment() {
 
         binding.btnMain1PublicWrite.setOnClickListener {
             val uploadIntent = Intent(requireContext(), ArticleUploadActivity::class.java)
-            uploadIntent.putExtra("private", false)
+            uploadIntent.putExtra("public", false)
             startActivity(uploadIntent)
         }
 

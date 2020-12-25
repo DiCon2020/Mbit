@@ -16,6 +16,7 @@ import com.david0926.mbit.ui.main.article.ArticleActivity
 import com.david0926.mbit.ui.main.article.ArticleUploadActivity
 import com.david0926.mbit.ui.main.comment.CommentBottomSheet
 import com.david0926.mbit.util.UserCache
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class Main1PrivateFragment : Fragment() {
 
@@ -49,6 +50,7 @@ class Main1PrivateFragment : Fragment() {
 
         adapter.onCommentClick = {
             val commentSheet = CommentBottomSheet(viewModel.privatePostList[it]._id)
+            //val bottomSheetBehavior = BottomSheetBehavior.from(commentSheet.)
             commentSheet.show(requireActivity().supportFragmentManager, commentSheet.tag)
         }
 
