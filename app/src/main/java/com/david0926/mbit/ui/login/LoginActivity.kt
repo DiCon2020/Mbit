@@ -63,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
                             viewModel.errorMsg.value = response.message
                             return@login
                         }
-                        if (data!!.personalityType.isEmpty()) {
+                        if (data!!.personalityType.isEmpty()|| data.personalityType == "null") {
                             val registerIntent = Intent(this, RegisterActivity::class.java)
                             val bundle = Bundle()
 

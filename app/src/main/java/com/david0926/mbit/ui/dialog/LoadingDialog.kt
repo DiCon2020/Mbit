@@ -1,49 +1,55 @@
-package com.david0926.mbit.ui.dialog;
+package com.david0926.mbit.ui.dialog
 
-import android.app.Dialog;
-import android.os.Bundle;
+import android.app.Dialog
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
+import com.david0926.mbit.R
+import com.david0926.mbit.databinding.DialogLoadingBinding
 
-import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProvider;
+class LoadingDialog(fragmentActivity: FragmentActivity) : Dialog(fragmentActivity) {
 
-import com.david0926.mbit.R;
-import com.david0926.mbit.databinding.DialogLoadingBinding;
+    private val mActivity: FragmentActivity
+    private var msg = ""
 
-public class LoadingDialog extends Dialog {
+    lateinit var binding: DialogLoadingBinding
+    var viewModel: LoadingDialogViewModel? = null
 
-    private FragmentActivity mActivity;
-    private String msg = "";
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    private DialogLoadingBinding binding;
-    private LoadingDialogViewModel viewModel;
+        binding = DataBindingUtil.inflate(layoutInflater, R.layout.dialog_loading, null, false)
+        setContentView(binding.root)
+        binding.lifecycleOwner = mActivity
 
-    public LoadingDialog(@NonNull FragmentActivity fragmentActivity) {
-        super(fragmentActivity);
-        super.setCancelable(false);
-        mActivity = fragmentActivity;
+        viewModel = NewInstanceFactory().create(LoadingDialogViewModel::class.java)
+        binding.viewModel = viewModel
+
+        viewModel!!.msg.value = msg
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.dialog_loading, null, false);
-        setContentView(binding.getRoot());
-
-        binding.setLifecycleOwner(mActivity);
-
-        ViewModelProvider.NewInstanceFactory f = new ViewModelProvider.NewInstanceFactory();
-        viewModel = f.create(LoadingDialogViewModel.class);
-
-        binding.setViewModel(viewModel);
-
-        viewModel.msg.setValue(msg);
+    fun setMessage(msg: String): LoadingDialog {
+        if (viewModel == null) this.msg = msg
+        else viewModel!!.msg.value = msg
+        return this
     }
 
-    public LoadingDialog setMessage(String msg) {
-        if (viewModel != null) viewModel.msg.setValue(msg);
-        else this.msg = msg;
-        return this;
+    fun success(msg: String, onSuccess: () -> Unit) {
+        if(viewModel == null) return
+
+        viewModel!!.isSuccess.value = true
+        setMessage(msg)
+        Handler(Looper.getMainLooper()).postDelayed({
+            onSuccess.invoke()
+            cancel()
+        }, 1500)
+    }
+
+    init {
+        super.setCancelable(false)
+        mActivity = fragmentActivity
     }
 }

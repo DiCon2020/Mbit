@@ -2,11 +2,13 @@ package com.david0926.mbit.ui.main.main1
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
 import com.david0926.mbit.R
 import com.david0926.mbit.databinding.FragmentMain1Binding
 import com.david0926.mbit.util.UserCache
@@ -18,7 +20,7 @@ class Main1Fragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val binding: FragmentMain1Binding = DataBindingUtil.inflate(
             inflater,
@@ -43,6 +45,8 @@ class Main1Fragment : Fragment() {
                 else -> "전체"
             }
         }.attach()
+
+        binding.pagerMain1.isUserInputEnabled = false
 
         return binding.root
     }

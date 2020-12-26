@@ -1,5 +1,6 @@
 package com.david0926.mbit.ui.register
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -7,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.david0926.mbit.R
 import com.david0926.mbit.data.UserModel
 import com.david0926.mbit.databinding.ActivityRegisterBinding
+import com.david0926.mbit.ui.login.LoginActivity
 import gun0912.tedkeyboardobserver.TedKeyboardObserver
 
 class RegisterActivity : AppCompatActivity() {
@@ -47,10 +49,15 @@ class RegisterActivity : AppCompatActivity() {
                 binding.scrollRegister.smoothScrollTo(0, binding.scrollRegister.bottom)
             }
         }
+
+        binding.btnRegisterBack.setOnClickListener { onBackPressed() }
     }
 
     override fun onBackPressed() {
         if (viewModel.page.value != 0 && viewModel.page.value != 2) viewModel.previousPage()
-        else super.onBackPressed()
+        else {
+            startActivity(Intent(this, LoginActivity::class.java))
+            super.onBackPressed()
+        }
     }
 }

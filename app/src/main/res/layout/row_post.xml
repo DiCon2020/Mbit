@@ -18,14 +18,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/round_box_secondary">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/circleImageView"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
             android:layout_margin="24dp"
             android:src="@color/colorPrimary"
             app:bindImageLink="@{post.owner.photo}"
@@ -40,7 +40,7 @@
             android:fontFamily="@font/font_primary_extrabold"
             android:text="@{post.owner.username, default=`Username`}"
             android:textColor="@color/colorPrimary"
-            android:textSize="18sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/textView6"
             app:layout_constraintStart_toEndOf="@+id/circleImageView"
             app:layout_constraintTop_toTopOf="@+id/circleImageView"
@@ -72,7 +72,7 @@
             android:layout_marginTop="4dp"
             android:hint="time ago"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
+            android:textSize="12sp"
             app:bindTimeAgo="@{post.createdDate}"
             app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
             app:layout_constraintStart_toStartOf="@+id/textView5"
@@ -101,7 +101,7 @@
             android:layout_margin="24dp"
             android:lineSpacingExtra="5sp"
             android:text="@{post.text, default=`lorem ipsum`}"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
@@ -122,7 +122,8 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="164dp"
+                android:scaleType="centerCrop"
                 android:visibility="@{!(post.photo==null||post.photo.empty)}"
                 app:bindImageLink="@{post.photo}" />
         </androidx.cardview.widget.CardView>

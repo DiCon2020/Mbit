@@ -20,7 +20,7 @@ class Register1Fragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val binding: FragmentRegister1Binding = DataBindingUtil.inflate(
             inflater,

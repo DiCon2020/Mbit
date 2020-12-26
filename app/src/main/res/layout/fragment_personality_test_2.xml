@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.david0926.mbit.ui.personality.PersonalityTestViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/round_box_top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_min="wrap"
+        app:layout_constraintHeight_percent="0.95"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:fontFamily="@font/font_primary_extrabold"
+            android:lineSpacingExtra="5sp"
+            android:text="엠빗이 알아본 \n나의 성격유형은?"
+            android:textSize="26sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.216"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="36dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView">
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/round_box_secondary"
+                android:elevation="4dp"
+                android:fontFamily="@font/font_primary_extrabold"
+                android:maxLength="1"
+                android:padding="16dp"
+                android:text="@{viewModel.personality.get(0), default=`A`}"
+                android:textAlignment="center"
+                android:textSize="64sp" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/round_box_secondary"
+                android:elevation="4dp"
+                android:fontFamily="@font/font_primary_extrabold"
+                android:maxLength="1"
+                android:padding="16dp"
+                android:text="@{viewModel.personality.get(1), default=`A`}"
+                android:textAlignment="center"
+                android:textSize="64sp" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/round_box_secondary"
+                android:elevation="4dp"
+                android:fontFamily="@font/font_primary_extrabold"
+                android:maxLength="1"
+                android:padding="16dp"
+                android:text="@{viewModel.personality.get(2), default=`A`}"
+                android:textAlignment="center"
+                android:textSize="64sp" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/round_box_secondary"
+                android:elevation="4dp"
+                android:fontFamily="@font/font_primary_extrabold"
+                android:maxLength="1"
+                android:padding="16dp"
+                android:text="@{viewModel.personality.get(3), default=`A`}"
+                android:textAlignment="center"
+                android:textSize="64sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView29"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/nanumsquare_extrabold"
+            android:text="※ 앗, 실제 내 성격과 다른가요?"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout6"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
+
+        <TextView
+            android:lineSpacingExtra="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:breakStrategy="balanced"
+            android:text="테스트 결과는 정확하지 않거나, 실제 성격유형과 다를 수 있어요. \n엠빗은 미리 정확한 ‘성격유형 검사’를 진행하는 것을 권장합니다!"
+            android:textSize="12sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout6"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textView29"
+            app:layout_constraintTop_toBottomOf="@+id/textView29" />
+
+        <LinearLayout
+            android:id="@+id/btnPersonalityTestMore"
+            style="@style/ButtonSquareStyleBorderSecondary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/btnPersonalityTestFinish"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumsquare_extrabold"
+                android:text="더 알아보고 올게요..."
+                android:textColor="@color/colorSecondary"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="성격유형 관련 사이트로 이동합니다"
+                android:textColor="@color/colorSecondary"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnPersonalityTestFinish"
+            style="@style/ButtonSquareStyleColored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="이 성격유형으로 할래요!"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

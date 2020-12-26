@@ -14,8 +14,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mbit">
-        <activity android:name=".ui.main.article.ArticleActivity"
-            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".ui.personality.PersonalityTestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.main.article.ArticleActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.main.article.ArticleUploadActivity"
             android:screenOrientation="portrait"
@@ -48,7 +53,8 @@
         </activity>
         <activity
             android:name=".ui.main.MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing" />
     </application>
 
 </manifest>

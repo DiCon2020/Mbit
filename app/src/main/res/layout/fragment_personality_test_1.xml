@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.david0926.mbit.ui.personality.PersonalityTestViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/round_box_top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_min="wrap"
+        app:layout_constraintHeight_percent="0.95"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:fontFamily="@font/font_primary_extrabold"
+            android:lineSpacingExtra="5sp"
+            android:text="나의 성격유형은? \n성격유형 테스트"
+            android:textSize="26sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.216"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="10dp"
+            android:lineSpacingExtra="5sp"
+            android:text="두 개의 선택지 중, 자신의 성격에 \n더 가깝다고 생각되는 항목을 선택해 주세요!"
+            android:textSize="12sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/btnPersonalityTestNext"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+            <Button
+                android:id="@+id/btnPersonalityTest1"
+                style="@style/ButtonStyleBorder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="36dp"
+                android:lineSpacingExtra="5sp"
+                android:padding="16dp"
+                android:text="@{viewModel.questions1.get(viewModel.question), default=`lorem ipsum`}"
+                app:bindButtonPersonalitySelected="@{viewModel.personality.get(viewModel.question).contains(`1`)}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/font_primary_extrabold"
+                android:text="VS"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/btnPersonalityTest2"
+                style="@style/ButtonStyleColored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="36dp"
+                android:lineSpacingExtra="5sp"
+                android:padding="16dp"
+                android:text="@{viewModel.questions2.get(viewModel.question), default=`lorem ipsum`}"
+                app:bindButtonPersonalitySelected="@{viewModel.personality.get(viewModel.question).contains(`2`)}" />
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btnPersonalityTestPrevious"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_baseline_keyboard_arrow_left_24"
+            android:drawablePadding="-28dp"
+            android:fontFamily="@font/nanumsquare_extrabold"
+            android:text="이전"
+            android:textColor="@color/textColorDefault"
+            android:textSize="16sp"
+            android:visibility="@{viewModel.question!=0}"
+            app:layout_constraintBottom_toTopOf="@+id/progressBar"
+            app:layout_constraintStart_toStartOf="@+id/progressBar" />
+
+        <Button
+            android:id="@+id/btnPersonalityTestNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:clickable="@{viewModel.isNextQuestionEnabled}"
+            android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
+            android:drawablePadding="-28dp"
+            android:fontFamily="@font/nanumsquare_extrabold"
+            android:text="@{viewModel.isLastQuestion ? @string/personality_test_finish : @string/personality_test_next, default=`next`}"
+            android:textColor="@{viewModel.isNextQuestionEnabled ? @color/textColorDefault : @color/materialGray4, default=@color/textColorDefault}"
+            android:textSize="16sp"
+            app:bindDrawableTint="@{viewModel.isNextQuestionEnabled ? @color/textColorDefault : @color/materialGray4}"
+            app:layout_constraintBottom_toTopOf="@+id/progressBar"
+            app:layout_constraintEnd_toEndOf="@+id/progressBar" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="6dp"
+            android:layout_margin="24dp"
+            android:max="@{viewModel.maxQuestion}"
+            android:progress="@{viewModel.question+1}"
+            android:progressDrawable="@drawable/background_progress"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

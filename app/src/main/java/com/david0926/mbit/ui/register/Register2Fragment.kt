@@ -11,6 +11,7 @@ import com.david0926.mbit.R
 import com.david0926.mbit.data.auth.LoginRequest
 import com.david0926.mbit.data.auth.RegisterRequest
 import com.david0926.mbit.databinding.FragmentRegister2Binding
+
 import com.david0926.mbit.network.auth.AuthManager
 import com.david0926.mbit.ui.dialog.LoadingDialog
 import com.gun0912.tedpermission.PermissionListener
@@ -29,7 +30,7 @@ class Register2Fragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val binding: FragmentRegister2Binding = DataBindingUtil.inflate(
             inflater,
@@ -46,11 +47,14 @@ class Register2Fragment : Fragment() {
 
             val authManager = AuthManager()
 
-            val photoBody: MultipartBody.Part?
-            val photoFile = File(viewModel.profile.value!!.path!!)
-            val photoFileBody =
-                RequestBody.create(MediaType.parse("multipart/form-data"), photoFile)
-            photoBody = MultipartBody.Part.createFormData("photo", photoFile.name, photoFileBody)
+            var photoBody: MultipartBody.Part? = null
+            if (viewModel.profile.value != null) {
+                val photoFile = File(viewModel.profile.value!!.path!!)
+                val photoFileBody =
+                    RequestBody.create(MediaType.parse("multipart/form-data"), photoFile)
+                photoBody =
+                    MultipartBody.Part.createFormData("photo", photoFile.name, photoFileBody)
+            }
 
             val registerRequest = RegisterRequest(
                 viewModel.email.value!!,
@@ -69,16 +73,20 @@ class Register2Fragment : Fragment() {
                         return@register
                     }
                     dialog.setMessage("유저 정보 동기화중...")
-                    authManager.login(LoginRequest(registerRequest.id, registerRequest.password, "test"),
+                    authManager.login(LoginRequest(
+                        registerRequest.id,
+                        registerRequest.password,
+                        "test"
+                    ),
                         onResponse = { response, data ->
-                            dialog.cancel()
                             if (response.status != 200) {
+                                dialog.cancel()
                                 viewModel.errorMsg.value = it.message
                                 return@login
                             }
                             viewModel.token.value = response.accessToken
-                            viewModel.user.value  = data
-                            viewModel.nextPage()
+                            viewModel.user.value = data
+                            dialog.success("회원가입 성공!") { viewModel.nextPage() }
                         },
                         onFailure = { t ->
                             dialog.cancel()
@@ -92,7 +100,7 @@ class Register2Fragment : Fragment() {
                 })
         }
 
-        viewModel.profile.observe(viewLifecycleOwner, { checkNextEnabled() })
+        //viewModel.profile.observe(viewLifecycleOwner, { checkNextEnabled() })
         viewModel.name.observe(viewLifecycleOwner, { checkNextEnabled() })
         viewModel.birth.observe(viewLifecycleOwner, { checkNextEnabled() })
         viewModel.policy.observe(viewLifecycleOwner, { checkNextEnabled() })
@@ -124,7 +132,7 @@ class Register2Fragment : Fragment() {
 
     private fun checkNextEnabled() {
         viewModel.nextEnabled.value =
-            viewModel.profile.value != null && viewModel.name.value!!.trim().isNotEmpty()
+            viewModel.name.value!!.trim().isNotEmpty()
                     && viewModel.birth.value!!.length > 3 && viewModel.policy.value!!
     }
 }

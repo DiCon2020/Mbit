@@ -47,12 +47,13 @@
                     android:fontFamily="@font/font_primary_extrabold"
                     android:lineSpacingExtra="5sp"
                     android:text="당신의 성격유형을 \n알려주세요!"
-                    android:textSize="28sp"
+                    android:textSize="26sp"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintBottom_toTopOf="@id/textView12"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintHorizontal_chainStyle="packed"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/textView12"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_chainStyle="packed" />
 

@@ -9,17 +9,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.david0926.mbit.R
+import com.david0926.mbit.data.UserModel
 import com.david0926.mbit.databinding.FragmentRegister3Binding
-import com.david0926.mbit.ui.dialog.WorkingDialog
 import com.david0926.mbit.ui.personality.PersonalityInputActivity
+import com.david0926.mbit.ui.personality.PersonalityTestActivity
 
 class Register3Fragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
         val binding: FragmentRegister3Binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_register_3, container, false
@@ -30,22 +30,32 @@ class Register3Fragment : Fragment() {
         binding.viewModel = viewModel
 
         binding.btnRegister3Input.setOnClickListener {
-            val inputIntent = Intent(requireContext(), PersonalityInputActivity::class.java)
-            val bundle = Bundle()
-
-            bundle.putString("token", viewModel.token.value)
-            bundle.putSerializable("user", viewModel.user.value)
-            inputIntent.putExtras(bundle)
-
-            startActivity(inputIntent)
-            requireActivity().finish()
+            startActivityWithUser(
+                Intent(requireContext(), PersonalityInputActivity::class.java),
+                viewModel.token.value!!,
+                viewModel.user.value!!
+            )
         }
 
         binding.btnRegister3Survey.setOnClickListener {
-            WorkingDialog.working(requireActivity())
-            // TODO: 2020/11/06 성격유형 설문 기능 추가
+            startActivityWithUser(
+                Intent(requireContext(), PersonalityTestActivity::class.java),
+                viewModel.token.value!!,
+                viewModel.user.value!!
+            )
         }
 
         return binding.root
+    }
+
+    private fun startActivityWithUser(intent: Intent, token: String, user: UserModel) {
+        val bundle = Bundle()
+
+        bundle.putString("token", token)
+        bundle.putSerializable("user", user)
+        intent.putExtras(bundle)
+
+        startActivity(intent)
+        requireActivity().finish()
     }
 }

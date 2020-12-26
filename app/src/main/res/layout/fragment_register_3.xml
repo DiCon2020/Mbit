@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/font_primary_regular"
             android:text="잠깐, 혹시 나의"
-            android:textSize="28sp"
+            android:textSize="24sp"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="packed"
@@ -36,7 +36,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/font_primary_extrabold"
             android:text="성격 유형"
-            android:textSize="28sp"
+            android:textSize="24sp"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toStartOf="@id/textView3"
             app:layout_constraintHorizontal_chainStyle="packed"
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/font_primary_regular"
             android:text="을 알고 있나요?"
-            android:textSize="28sp"
+            android:textSize="24sp"
             app:layout_constrainedWidth="true"
             app:layout_constraintBottom_toBottomOf="@+id/textView2"
             app:layout_constraintEnd_toEndOf="parent"
@@ -74,7 +74,8 @@
                 android:layout_marginTop="36dp"
                 android:lineSpacingExtra="5dp"
                 android:text="아직 성격 유형을 모른다면, \n간단한 테스트를 통해 알아볼 수 있어요."
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/btnRegister3Input"

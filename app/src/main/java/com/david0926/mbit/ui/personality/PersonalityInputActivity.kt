@@ -2,7 +2,6 @@ package com.david0926.mbit.ui.personality
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -13,6 +12,7 @@ import com.david0926.mbit.databinding.ActivityPersonalityInputBinding
 import com.david0926.mbit.network.auth.AuthManager
 import com.david0926.mbit.ui.dialog.LoadingDialog
 import com.david0926.mbit.ui.login.LoginActivity
+import com.david0926.mbit.ui.register.RegisterActivity
 
 class PersonalityInputActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,8 +27,6 @@ class PersonalityInputActivity : AppCompatActivity() {
         binding.btnInputFinish.setOnClickListener {
             val bundle = intent.extras
             val token = bundle!!.getString("token")
-//            val user = bundle.getSerializable("user") as UserModel
-//            user.personalityType = viewModel.selected.joinToString()
 
             val dialog = LoadingDialog(this)
             dialog.setMessage("성격 유형 등록중...").show()
@@ -44,13 +42,15 @@ class PersonalityInputActivity : AppCompatActivity() {
                     null
                 ),
                 onResponse = { response, data ->
-                    dialog.cancel()
                     if (response.status != 200) {
+                        dialog.cancel()
                         Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
                         return@setUserData
                     }
-                    startActivity(Intent(this, LoginActivity::class.java))
-                    finish()
+                    dialog.success("성격유형 등록 성공!") {
+                        startActivity(Intent(this, LoginActivity::class.java))
+                        finish()
+                    }
                 },
                 onFailure = {
                     dialog.cancel()
@@ -58,5 +58,13 @@ class PersonalityInputActivity : AppCompatActivity() {
                     it.printStackTrace()
                 })
         }
+    }
+
+    override fun onBackPressed() {
+        val userIntent = Intent(this, RegisterActivity::class.java)
+        userIntent.putExtras(intent.extras!!)
+        startActivity(userIntent)
+
+        super.onBackPressed()
     }
 }

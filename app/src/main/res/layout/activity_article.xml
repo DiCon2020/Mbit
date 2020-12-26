@@ -80,7 +80,7 @@
             android:layout_marginTop="4dp"
             android:hint="time ago"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
+            android:textSize="12sp"
             app:bindTimeAgo="@{post.createdDate}"
             app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
             app:layout_constraintStart_toStartOf="@+id/textView5"
@@ -109,7 +109,7 @@
             android:layout_margin="24dp"
             android:lineSpacingExtra="5sp"
             android:text="@{post.text, default=`lorem ipsum`}"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
@@ -118,7 +118,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
             android:layout_marginVertical="16dp"
             app:cardCornerRadius="@dimen/app_radius_secondary"
@@ -127,7 +127,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10">
+            app:layout_constraintTop_toBottomOf="@+id/textView10"
+            app:layout_constraintVertical_bias="0.0">
 
             <ImageView
                 android:layout_width="match_parent"

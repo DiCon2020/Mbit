@@ -2,6 +2,7 @@ package com.david0926.mbit.util
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.ColorStateList
 import android.net.Uri
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -24,6 +25,12 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 object BindingOptions {
+
+    @JvmStatic
+    @BindingAdapter("bindDrawableTint")
+    fun bindDrawableTint(v: Button, color: Int?) {
+        if (color != null) v.compoundDrawableTintList = ColorStateList.valueOf(color)
+    }
 
     @JvmStatic
     @BindingConversion
@@ -156,9 +163,33 @@ object BindingOptions {
                 else -> days.toString() + "일"
             }
             ago += " 전"
-            view.text = ago
+            view.text = if (seconds != 0L) ago else "방금"
         } catch (e: ParseException) {
             e.printStackTrace()
         }
     }
+
+    @BindingAdapter("bindButtonPersonalitySelected")
+    @JvmStatic
+    fun bindButtonPersonalitySelected(btn: Button?, selected: Boolean?) {
+        if (btn == null || selected == null) return
+        val context = btn.context
+
+        btn.background = ContextCompat.getDrawable(
+            context,
+            if (selected) R.drawable.round_box else R.drawable.round_box_border
+        )
+
+        btn.backgroundTintList =
+            if (selected) ContextCompat.getColorStateList(context, R.color.colorPrimary)
+            else null
+
+        btn.setTextColor(
+            ContextCompat.getColor(
+                context,
+                if (selected) R.color.white else R.color.colorPrimary
+            )
+        )
+    }
+
 }
