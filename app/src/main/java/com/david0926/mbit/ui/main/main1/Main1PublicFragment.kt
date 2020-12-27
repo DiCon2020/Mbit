@@ -58,9 +58,7 @@ class Main1PublicFragment : Fragment() {
 
                 if ((visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0)) {
                     UserCache.getToken(requireContext()).run {
-                        viewModel.nextPublicPage(this) {
-                            adapter.notifyDataSetChanged()
-                        }
+                        viewModel.nextPublicPage(this) {  }
                     }
                 }
             }
@@ -98,7 +96,9 @@ class Main1PublicFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         viewModel.hasPublicNext = true
-        viewModel.publicPage = 0
-        viewModel.getPublicPostFromRepo(UserCache.getToken(requireContext()), 0)
+        viewModel.publicPage = -1
+        viewModel.nextPublicPage(UserCache.getToken(requireContext())) {
+
+        }
     }
 }
