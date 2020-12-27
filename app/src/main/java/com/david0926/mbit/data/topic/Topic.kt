@@ -11,5 +11,5 @@ data class Topic (
     var firstAnswer: String,
     var secondAnswer: String,
     var __v: Int,
-    var click: Int
+    var click: String
 )
