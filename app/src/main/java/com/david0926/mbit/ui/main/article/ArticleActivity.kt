@@ -27,7 +27,7 @@ class ArticleActivity : AppCompatActivity() {
         binding.user = intent.getSerializableExtra("user") as UserModel
 
         binding.btnRowPostComment.setOnClickListener {
-            val commentSheet = CommentBottomSheet(post._id, onDismiss = { finish() })
+            val commentSheet = CommentBottomSheet(post._id, false, onDismiss = { finish() })
             commentSheet.show(supportFragmentManager, commentSheet.tag)
         }
 

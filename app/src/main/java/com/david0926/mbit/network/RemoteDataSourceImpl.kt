@@ -523,7 +523,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
                         )
                     } else {
                         val Type = object : TypeToken<ArrayList<Topic>>() {}.type
-                        val topics: ArrayList<Topic> = Gson().fromJson<ArrayList<Topic>>(
+                        val topics: ArrayList<Topic>? = Gson().fromJson(
                             Gson().toJson(response.body()!!.data), Type
                         )
                         onResponse(response.body()!!, topics)

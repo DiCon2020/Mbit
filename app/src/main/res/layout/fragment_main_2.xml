@@ -11,32 +11,37 @@
 
     </data>
 
-    <ScrollView
-        android:id="@+id/scrollInput"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        tools:context=".ui.WelcomeActivity">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:context=".ui.WelcomeActivity">
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/mbit_background" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/mbit_background" />
+        <ScrollView
+            android:id="@+id/scrollInput"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_min="wrap"
+            app:layout_constraintHeight_percent="0.95"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/round_box_top"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_min="wrap"
-                app:layout_constraintHeight_percent="0.95"
                 app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
@@ -79,6 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="36dp"
                     android:background="@drawable/round_box"
+                    android:clickable="@{viewModel.isLoaded}"
                     android:elevation="8dp"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -99,7 +105,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="2020 / 11 / 02"
+                            android:text="@{viewModel.todayTopic.date, default=`2020-00-00`}"
                             android:textColor="@color/white" />
 
                         <TextView
@@ -107,13 +113,14 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:fontFamily="@font/font_primary_extrabold"
-                            android:text="친구와의 약속이 취소됐을 때, 나는?"
+                            android:text="@{viewModel.todayTopic.question, default=`lorem ipsum`}"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
 
                     </LinearLayout>
 
                     <Button
+                        android:id="@+id/btnMain2Q1"
                         style="@style/ButtonStyleBorder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -121,7 +128,8 @@
                         android:layout_marginTop="36dp"
                         android:lineSpacingExtra="5sp"
                         android:padding="16dp"
-                        android:text="심심한 건 못 참지! \n바로 다른 약속을 잡는다" />
+                        android:text="@{viewModel.todayTopic.firstAnswer, default=`lorem ipsum`}"
+                        app:bindButtonPersonalitySelected="@{viewModel.todayTopic.click.equals(`first`)}" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -133,6 +141,7 @@
                         android:textSize="20sp" />
 
                     <Button
+                        android:id="@+id/btnMain2Q2"
                         style="@style/ButtonStyleColored"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -141,10 +150,12 @@
                         android:layout_marginBottom="36dp"
                         android:lineSpacingExtra="5sp"
                         android:padding="16dp"
-                        android:text="기왕 취소된 김에, \n혼자만의 시간을 즐긴다!" />
+                        android:text="@{viewModel.todayTopic.secondAnswer, default=`lorem ipsum`}"
+                        app:bindButtonPersonalitySelected="@{viewModel.todayTopic.click.equals(`second`)}" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/btnMain2Comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -178,9 +189,159 @@
                         app:layout_constraintTop_toTopOf="@+id/imageView2" />
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/textView30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="36dp"
+                    android:fontFamily="@font/font_primary_extrabold"
+                    android:lineSpacingExtra="5sp"
+                    android:text="지난 투표 결과"
+                    android:textSize="26sp"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btnMain2Comment"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="36dp"
+                    android:background="@drawable/round_box"
+                    android:clickable="@{viewModel.isLoaded}"
+                    android:elevation="8dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView30">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/round_box_top"
+                        android:backgroundTint="@color/colorSecondary"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="24dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.lastTopic.date, default=`2020-00-00`}"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="@font/font_primary_extrabold"
+                            android:text="@{viewModel.lastTopic.question, default=`lorem ipsum`}"
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        style="@style/ButtonStyleBorder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="24dp"
+                        android:layout_marginTop="36dp"
+                        android:background="@{viewModel.lastTopic.click.equals(`first`) ? @drawable/round_box_primary : @drawable/round_box_border}"
+                        android:lineSpacingExtra="5sp"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/textView32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/font_primary_extrabold"
+                            android:text="@{viewModel.lastTopic.firstAnswer, default=`lorem ipsum`}"
+                            android:textColor="@{viewModel.lastTopic.click.equals(`first`) ? @color/white : @color/colorPrimary, default=@color/colorPrimary}"
+                            android:textSize="16sp"
+                            app:layout_constrainedWidth="true"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/textView31"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textView31"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:fontFamily="@font/font_primary_extrabold"
+                            android:text="@{viewModel.lastTopic.firstPercent+`%`, default=`70%`}"
+                            android:textColor="@{viewModel.lastTopic.click.equals(`first`) ? @color/white : @color/colorPrimary, default=@color/colorPrimary}"
+                            android:textSize="28sp"
+                            app:layout_constrainedWidth="true"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/textView32"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/font_primary_extrabold"
+                        android:text="VS"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        style="@style/ButtonStyleBorder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="24dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="36dp"
+                        android:background="@{viewModel.lastTopic.click.equals(`second`) ? @drawable/round_box_primary : @drawable/round_box_border}"
+                        android:lineSpacingExtra="5sp"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/textView33"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/font_primary_extrabold"
+                            android:text="@{viewModel.lastTopic.secondAnswer, default=`lorem ipsum`}"
+                            android:textColor="@{viewModel.lastTopic.click.equals(`second`) ? @color/white : @color/colorPrimary, default=@color/colorPrimary}"
+                            android:textSize="16sp"
+                            app:layout_constrainedWidth="true"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/textView34"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textView34"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:fontFamily="@font/font_primary_extrabold"
+                            android:text="@{viewModel.lastTopic.secondPercent+`%`, default=`30%`}"
+                            android:textColor="@{viewModel.lastTopic.click.equals(`second`) ? @color/white : @color/colorPrimary, default=@color/colorPrimary}"
+                            android:textSize="28sp"
+                            app:layout_constrainedWidth="true"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/textView33"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

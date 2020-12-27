@@ -70,7 +70,7 @@ class Main1PrivateFragment : Fragment() {
 
         adapter.onCommentClick = {
             val commentSheet =
-                CommentBottomSheet(viewModel.privatePostList[it]._id, onDismiss = { onResume() })
+                CommentBottomSheet(viewModel.privatePostList[it]._id, false, onDismiss = { onResume() })
             commentSheet.show(requireActivity().supportFragmentManager, commentSheet.tag)
         }
 

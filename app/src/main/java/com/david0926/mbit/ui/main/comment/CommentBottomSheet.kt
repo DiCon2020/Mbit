@@ -21,7 +21,11 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class CommentBottomSheet(private val postId: String, private val onDismiss: () -> Unit) :
+class CommentBottomSheet(
+    private val postId: String,
+    private val topic: Boolean,
+    private val onDismiss: () -> Unit
+) :
     BottomSheetDialogFragment() {
 
     lateinit var viewModel: CommentBottomSheetViewModel
@@ -66,7 +70,7 @@ class CommentBottomSheet(private val postId: String, private val onDismiss: () -
             })
 
         binding.btnCommentSend.setOnClickListener {
-            viewModel.sendComment(UserCache.getToken(requireContext()), postId, finish = {
+            viewModel.sendComment(UserCache.getToken(requireContext()), postId, topic, finish = {
                 binding.recyclerView.smoothScrollToPosition(viewModel.commentList.size - 1)
             })
         }

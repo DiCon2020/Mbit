@@ -1,6 +1,5 @@
 package com.david0926.mbit.ui.main.comment
 
-import android.util.Log
 import androidx.databinding.BindingAdapter
 import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.MutableLiveData
@@ -15,11 +14,11 @@ class CommentBottomSheetViewModel : ViewModel() {
     val commentList = ObservableArrayList<Comment>()
     val text = MutableLiveData("")
 
-    fun sendComment(token: String, postId: String, finish: () -> Unit) {
+    fun sendComment(token: String, postId: String, topic: Boolean, finish: () -> Unit) {
         val sendText = text.value
         text.value = ""
         val commentManager = CommentManager()
-        commentManager.addComment(token, CommentAddRequest(postId, "", sendText!!),
+        commentManager.addComment(token, CommentAddRequest(postId, "", sendText!!, topic),
             onResponse = { response, data ->
                 if (response.status != 200) {
                     return@addComment
