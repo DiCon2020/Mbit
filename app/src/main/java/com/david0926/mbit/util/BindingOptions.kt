@@ -203,6 +203,7 @@ object BindingOptions {
 
     @JvmStatic
     @BindingAdapter("bindTextColorPersonality")
+
     fun bindTextColorPersonality(v: TextView, p: String?) {
         if (p != null) {
             v.setTextColor(PersonalityUtil.valueOf(p).getBackgroundColor())

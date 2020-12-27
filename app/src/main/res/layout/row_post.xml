@@ -149,7 +149,7 @@
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:src="@{post.empathyList.contains(user)?@drawable/icn_heart_color:@drawable/icn_heart, default=@drawable/icn_heart}" />
+                android:src="@{post.empathyList.contains(user._id)?@drawable/icn_heart_color:@drawable/icn_heart, default=@drawable/icn_heart}" />
 
             <TextView
                 android:layout_width="wrap_content"

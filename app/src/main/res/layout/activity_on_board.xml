@@ -44,7 +44,7 @@
                 android:padding="24dp"
                 android:text="건너뛰기"
                 android:textColor="@color/colorPrimary"
-                android:textSize="17sp"
+                android:textSize="16sp"
                 app:bindInvisibility="@{viewModel.currentPage &lt; viewModel.fragments.size()-1}"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView4"
                 app:layout_constraintEnd_toEndOf="parent"

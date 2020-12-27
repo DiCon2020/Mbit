@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -57,23 +59,29 @@ class Main1PrivateFragment : Fragment() {
                 val firstVisibleItemPosition = lm.findFirstVisibleItemPosition()
 
                 if ((visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0)) {
-
+                    if (recyclerView.canScrollVertically(-1)) viewModel.isPrivateBottom.value = true
                     viewModel.nextPrivatePage(
                         UserCache.getToken(requireContext()),
                         UserCache.getUser(requireContext()).personalityType
                     ) { }
-                }
+                } else viewModel.isPrivateBottom.value = false
             }
         })
 
         adapter.onCommentClick = {
-            val commentSheet = CommentBottomSheet(viewModel.privatePostList[it]._id)
-            //val bottomSheetBehavior = BottomSheetBehavior.from(commentSheet.)
+            val commentSheet =
+                CommentBottomSheet(viewModel.privatePostList[it]._id, onDismiss = { onResume() })
             commentSheet.show(requireActivity().supportFragmentManager, commentSheet.tag)
         }
 
         adapter.onLikeClick = {
-            WorkingDialog.working(requireActivity())
+            viewModel.votePost(
+                UserCache.getToken(requireContext()),
+                viewModel.privatePostList[it]._id,
+                UserCache.getUser(requireContext()).personalityType,
+                failed = {
+                    Toast.makeText(requireContext(), "공감 전송에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                })
         }
 
         adapter.onDeleteClick = {
@@ -93,6 +101,17 @@ class Main1PrivateFragment : Fragment() {
             binding.swipeMain1Private.isRefreshing = !isLoaded
         }
 
+        requireActivity()
+            .onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (isEnabled && !binding.recyclerMain1Private.canScrollVertically(-1)) {
+                        isEnabled = false
+                        requireActivity().onBackPressed()
+                    } else binding.recyclerMain1Private.smoothScrollToPosition(0)
+                }
+            })
+
         return binding.root
     }
 
@@ -100,7 +119,10 @@ class Main1PrivateFragment : Fragment() {
         super.onResume()
         viewModel.hasPrivateNext = true
         viewModel.privatePage = -1
-        viewModel.nextPrivatePage(UserCache.getToken(requireContext()),UserCache.getUser(requireContext()).personalityType) {
+        viewModel.nextPrivatePage(
+            UserCache.getToken(requireContext()),
+            UserCache.getUser(requireContext()).personalityType
+        ) {
 
         }
     }

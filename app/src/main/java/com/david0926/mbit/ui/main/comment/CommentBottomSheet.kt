@@ -1,6 +1,7 @@
 package com.david0926.mbit.ui.main.comment
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +21,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class CommentBottomSheet(private val postId: String) : BottomSheetDialogFragment() {
+class CommentBottomSheet(private val postId: String, private val onDismiss: () -> Unit) :
+    BottomSheetDialogFragment() {
 
     lateinit var viewModel: CommentBottomSheetViewModel
     lateinit var binding: BottomSheetCommentBinding
@@ -29,7 +31,7 @@ class CommentBottomSheet(private val postId: String) : BottomSheetDialogFragment
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.bottom_sheet_comment, container, false)
         binding.lifecycleOwner = this
@@ -55,6 +57,8 @@ class CommentBottomSheet(private val postId: String) : BottomSheetDialogFragment
                 }
                 viewModel.commentList.clear()
                 viewModel.commentList.addAll(data!!)
+                if (viewModel.commentList.isNotEmpty())
+                    binding.recyclerView.smoothScrollToPosition(viewModel.commentList.size - 1)
             },
             onFailure = {
                 Toast.makeText(requireContext(), "댓글을 불러오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
@@ -62,7 +66,9 @@ class CommentBottomSheet(private val postId: String) : BottomSheetDialogFragment
             })
 
         binding.btnCommentSend.setOnClickListener {
-            viewModel.sendComment(UserCache.getToken(requireContext()), postId)
+            viewModel.sendComment(UserCache.getToken(requireContext()), postId, finish = {
+                binding.recyclerView.smoothScrollToPosition(viewModel.commentList.size - 1)
+            })
         }
 
         return binding.root
@@ -77,6 +83,11 @@ class CommentBottomSheet(private val postId: String) : BottomSheetDialogFragment
             BottomSheetBehavior.from(bottomSheet!!).state = BottomSheetBehavior.STATE_EXPANDED
         }
         return dialog
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        onDismiss.invoke()
+        super.onDismiss(dialog)
     }
 
 }

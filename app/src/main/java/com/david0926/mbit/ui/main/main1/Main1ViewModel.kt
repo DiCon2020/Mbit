@@ -8,13 +8,14 @@ import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.david0926.mbit.data.post.Post
 import com.david0926.mbit.data.post.PostGetRequest
+import com.david0926.mbit.data.post.PostVoteRequest
 import com.david0926.mbit.network.post.PostManager
 
 class Main1ViewModel : ViewModel() {
 
     //fragment
     val fragments = ObservableArrayList<Fragment>()
-    val COUNT_POST_PAGE = 5 // 한 페이지당 N개
+    val COUNT_POST_PAGE = 100 // 한 페이지당 N개
 
     var hasPublicNext = true
     var hasPrivateNext = true
@@ -25,6 +26,7 @@ class Main1ViewModel : ViewModel() {
     //private
     val privatePostList = ObservableArrayList<Post>()
     val isPrivateLoaded = MutableLiveData(false)
+    val isPrivateBottom = MutableLiveData(false)
 
     fun getPrivatePostFromRepo(token: String, personality: String, page: Int) {
         isPrivateLoaded.value = false
@@ -53,6 +55,7 @@ class Main1ViewModel : ViewModel() {
     //public
     val publicPostList = ObservableArrayList<Post>()
     val isPublicLoaded = MutableLiveData(false)
+    val isPublicBottom = MutableLiveData(false)
 
     fun getPublicPostFromRepo(token: String, page: Int) {
         isPublicLoaded.value = false
@@ -92,6 +95,19 @@ class Main1ViewModel : ViewModel() {
             if (hasPrivateNext)
                 finish()
         }
+    }
+
+    fun votePost(token: String, id: String, p: String?, failed: () -> Unit) {
+        val postManager = PostManager()
+        postManager.votePost(token, PostVoteRequest(id),
+            onResponse = {
+                if (p != null) getPrivatePostFromRepo(token, p, publicPage)
+                else getPublicPostFromRepo(token, publicPage)
+            },
+            onFailure = {
+                it.printStackTrace()
+                failed.invoke()
+            })
     }
 
     companion object {

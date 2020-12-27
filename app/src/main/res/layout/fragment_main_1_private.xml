@@ -33,13 +33,13 @@
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <LinearLayout
-            android:visibility="@{viewModel.isPrivateLoaded &amp;&amp; viewModel.privatePostList.empty, default=gone}"
-            android:padding="16dp"
-            android:background="@drawable/round_box_secondary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/round_box_secondary"
             android:gravity="center"
             android:orientation="vertical"
+            android:padding="16dp"
+            android:visibility="@{viewModel.isPrivateLoaded &amp;&amp; viewModel.privatePostList.empty, default=gone}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +59,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/nanumsquare_extrabold"
-                android:text="아직 작성된 게시물이 없어요."
+                android:lineSpacingExtra="5dp"
+                android:text="우측 하단의 버튼으로 \n게시물을 작성해 보세요!"
+                android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/swipeMain1Private"
@@ -77,6 +79,7 @@
             android:elevation="8dp"
             android:src="@drawable/ic_round_edit_24"
             android:tint="@color/white"
+            android:visibility="@{!viewModel.isPrivateBottom}"
             app:backgroundTint="@color/colorSecondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

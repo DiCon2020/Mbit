@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -57,20 +59,28 @@ class Main1PublicFragment : Fragment() {
                 val firstVisibleItemPosition = lm.findFirstVisibleItemPosition()
 
                 if ((visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0)) {
+                    if (recyclerView.canScrollVertically(-1)) viewModel.isPublicBottom.value = true
                     UserCache.getToken(requireContext()).run {
-                        viewModel.nextPublicPage(this) {  }
+                        viewModel.nextPublicPage(this) { }
                     }
-                }
+                } else viewModel.isPublicBottom.value = false
             }
         })
 
         adapter.onCommentClick = {
-            val commentSheet = CommentBottomSheet(viewModel.publicPostList[it]._id)
+            val commentSheet =
+                CommentBottomSheet(viewModel.publicPostList[it]._id, onDismiss = { onResume() })
             commentSheet.show(requireActivity().supportFragmentManager, commentSheet.tag)
         }
 
         adapter.onLikeClick = {
-            WorkingDialog.working(requireActivity())
+            viewModel.votePost(
+                UserCache.getToken(requireContext()),
+                viewModel.publicPostList[it]._id,
+                null,
+                failed = {
+                    Toast.makeText(requireContext(), "공감 전송에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                })
         }
         adapter.onDeleteClick = {
             WorkingDialog.working(requireActivity())
@@ -89,6 +99,17 @@ class Main1PublicFragment : Fragment() {
         viewModel.isPublicLoaded.observe(viewLifecycleOwner) { isLoaded ->
             binding.swipeMain1Public.isRefreshing = !isLoaded
         }
+
+        requireActivity()
+            .onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (isEnabled && !binding.recyclerMain1Public.canScrollVertically(-1)) {
+                        isEnabled = false
+                        requireActivity().onBackPressed()
+                    } else binding.recyclerMain1Public.smoothScrollToPosition(0)
+                }
+            })
 
         return binding.root
     }
