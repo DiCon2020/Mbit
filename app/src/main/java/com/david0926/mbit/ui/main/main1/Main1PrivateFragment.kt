@@ -61,9 +61,7 @@ class Main1PrivateFragment : Fragment() {
                     viewModel.nextPrivatePage(
                         UserCache.getToken(requireContext()),
                         UserCache.getUser(requireContext()).personalityType
-                    ) {
-                        adapter.notifyDataSetChanged()
-                    }
+                    ) { }
                 }
             }
         })
@@ -101,10 +99,9 @@ class Main1PrivateFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         viewModel.hasPrivateNext = true
-        viewModel.privatePage = 0
-        viewModel.getPrivatePostFromRepo(
-            UserCache.getToken(requireContext()),
-            UserCache.getUser(requireContext()).personalityType, 0
-        )
+        viewModel.privatePage = -1
+        viewModel.nextPrivatePage(UserCache.getToken(requireContext()),UserCache.getUser(requireContext()).personalityType) {
+
+        }
     }
 }
