@@ -8,6 +8,10 @@ import com.david0926.mbit.data.comment.CommonResponse
 import com.david0926.mbit.data.auth.LoginRequest
 import com.david0926.mbit.data.auth.RegisterRequest
 import com.david0926.mbit.data.auth.UpdateInfoRequest
+import com.david0926.mbit.data.mail.Mail
+import com.david0926.mbit.data.mail.MailGetRequest
+import com.david0926.mbit.data.mail.MailItem
+import com.david0926.mbit.data.mail.MailSendRequest
 import com.david0926.mbit.data.personality.PersonalityResponse
 import com.david0926.mbit.data.post.*
 import com.david0926.mbit.data.topic.Topic
@@ -117,6 +121,27 @@ interface RemoteDataSource {
         token: String,
         topicVoteRequest: TopicVoteRequest,
         onResponse : (CommonResponse, ArrayList<Topic>?) -> Unit,
+        onFailure: (Throwable) -> Unit
+    )
+
+    //  MailService
+    fun getMails(
+        token: String,
+        mailGetRequest: MailGetRequest,
+        onResponse : (CommonResponse, ArrayList<Mail>?) -> Unit,
+        onFailure: (Throwable) -> Unit
+    )
+
+    fun getMailList(
+        token: String,
+        onResponse : (CommonResponse, ArrayList<MailItem>?) -> Unit,
+        onFailure: (Throwable) -> Unit
+    )
+
+    fun sendMail(
+        token: String,
+        mailSendRequest: MailSendRequest,
+        onResponse : (CommonResponse, ArrayList<Mail>?) -> Unit,
         onFailure: (Throwable) -> Unit
     )
 }

@@ -2,6 +2,7 @@ package com.david0926.mbit.network
 
 import com.david0926.mbit.network.auth.AuthService
 import com.david0926.mbit.network.comment.CommentService
+import com.david0926.mbit.network.mail.MailService
 import com.david0926.mbit.network.personality.PersonalityService
 import com.david0926.mbit.network.post.PostService
 import com.david0926.mbit.network.topic.TopicService
@@ -21,5 +22,6 @@ object MbitRetrofit {
     val commentService: CommentService = retrofit.create(CommentService::class.java)
     val personalityService: PersonalityService = retrofit.create(PersonalityService::class.java)
     val topicService: TopicService = retrofit.create(TopicService::class.java)
+    val mailService: MailService = retrofit.create(MailService::class.java)
 
 }

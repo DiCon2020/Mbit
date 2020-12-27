@@ -18,6 +18,7 @@ data class UserModel(
     var topicNotificationStatus: Boolean,
     var commentNotificationStatus: Boolean,
     var deviceId: String,
+    var isDeleted: Boolean,
     var token: String? //  가입할때 토큰과 photo는 Null로 둬도 됩니다
 
 

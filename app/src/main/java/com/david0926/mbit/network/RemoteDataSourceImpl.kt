@@ -9,6 +9,10 @@ import com.david0926.mbit.data.comment.Comment
 import com.david0926.mbit.data.comment.CommentAddRequest
 import com.david0926.mbit.data.comment.CommentGetRequest
 import com.david0926.mbit.data.comment.CommonResponse
+import com.david0926.mbit.data.mail.Mail
+import com.david0926.mbit.data.mail.MailGetRequest
+import com.david0926.mbit.data.mail.MailItem
+import com.david0926.mbit.data.mail.MailSendRequest
 import com.david0926.mbit.data.personality.PersonalityResponse
 import com.david0926.mbit.data.post.*
 import com.david0926.mbit.data.topic.Topic
@@ -523,6 +527,108 @@ class RemoteDataSourceImpl : RemoteDataSource {
                             Gson().toJson(response.body()!!.data), Type
                         )
                         onResponse(response.body()!!, topics)
+                    }
+                }
+            })
+    }
+
+    override fun getMails(
+        token: String,
+        mailGetRequest: MailGetRequest,
+        onResponse: (CommonResponse, ArrayList<Mail>?) -> Unit,
+        onFailure: (Throwable) -> Unit
+    ) {
+
+        MbitRetrofit.mailService.getMail("Bearer $token", mailGetRequest.your_id)
+            .enqueue(object : Callback<CommonResponse> {
+                override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
+                    onFailure(t)
+                }
+
+                override fun onResponse(
+                    call: Call<CommonResponse>,
+                    response: Response<CommonResponse>
+                ) {
+                    if (response.body() == null) {
+                        onResponse(
+                            Gson().fromJson(
+                                response.errorBody()!!.string(),
+                                CommonResponse::class.java
+                            ), null
+                        )
+                    } else {
+                        val Type = object : TypeToken<ArrayList<Mail>>() {}.type
+                        val mails: ArrayList<Mail> = Gson().fromJson<ArrayList<Mail>>(
+                            Gson().toJson(response.body()!!.data), Type
+                        )
+                        onResponse(response.body()!!, mails)
+                    }
+                }
+            })
+    }
+
+    override fun getMailList(
+        token: String,
+        onResponse: (CommonResponse, ArrayList<MailItem>?) -> Unit,
+        onFailure: (Throwable) -> Unit
+    ) {
+        MbitRetrofit.mailService.getMyMail("Bearer $token")
+            .enqueue(object : Callback<CommonResponse> {
+                override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
+                    onFailure(t)
+                }
+
+                override fun onResponse(
+                    call: Call<CommonResponse>,
+                    response: Response<CommonResponse>
+                ) {
+                    if (response.body() == null) {
+                        onResponse(
+                            Gson().fromJson(
+                                response.errorBody()!!.string(),
+                                CommonResponse::class.java
+                            ), null
+                        )
+                    } else {
+                        val Type = object : TypeToken<ArrayList<Mail>>() {}.type
+                        val mails: ArrayList<MailItem> = Gson().fromJson<ArrayList<MailItem>>(
+                            Gson().toJson(response.body()!!.data), Type
+                        )
+                        onResponse(response.body()!!, mails)
+                    }
+                }
+            })
+    }
+
+    override fun sendMail(
+        token: String,
+        mailSendRequest: MailSendRequest,
+        onResponse: (CommonResponse, ArrayList<Mail>?) -> Unit,
+        onFailure: (Throwable) -> Unit
+    ) {
+        MbitRetrofit.mailService.sendMail("Bearer $token", mailSendRequest)
+            .enqueue(object : Callback<CommonResponse> {
+                override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
+                    onFailure(t)
+                }
+
+                override fun onResponse(
+                    call: Call<CommonResponse>,
+                    response: Response<CommonResponse>
+                ) {
+                    if (response.body() == null) {
+                        onResponse(
+                            Gson().fromJson(
+                                response.errorBody()!!.string(),
+                                CommonResponse::class.java
+                            ), null
+                        )
+                    } else {
+                        val Type = object : TypeToken<ArrayList<Mail>>() {}.type
+                        val mails: ArrayList<Mail> = Gson().fromJson<ArrayList<Mail>>(
+                            Gson().toJson(response.body()!!.data), Type
+                        )
+                        onResponse(response.body()!!, mails)
                     }
                 }
             })
