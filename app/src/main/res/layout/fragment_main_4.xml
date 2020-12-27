@@ -77,6 +77,7 @@
                     android:text="@{viewModel.user.personalityType, default=`ASDF`}"
                     android:textColor="@color/colorSecondary"
                     android:textSize="12sp"
+                    app:bindTextViewPersonality="@{viewModel.user.personalityType}"
                     app:layout_constraintBottom_toBottomOf="@+id/circleImageView2"
                     app:layout_constraintEnd_toEndOf="@+id/circleImageView2" />
 

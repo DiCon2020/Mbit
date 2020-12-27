@@ -29,113 +29,131 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/circleImageView"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="8dp"
-            android:src="@color/colorPrimary"
-            app:bindImageLink="@{post.owner.photo}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnArticleBack" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:fontFamily="@font/font_primary_extrabold"
-            android:text="@{post.owner.username, default=`Username`}"
-            android:textColor="@color/colorPrimary"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@id/textView6"
-            app:layout_constraintStart_toEndOf="@+id/circleImageView"
-            app:layout_constraintTop_toTopOf="@+id/circleImageView"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/round_box"
-            android:backgroundTint="@color/colorPrimary"
-            android:fontFamily="@font/font_primary_extrabold"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="4dp"
-            android:text="@{post.owner.personalityType}"
-            android:textColor="@color/colorSecondary"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView5"
-            app:layout_constraintEnd_toStartOf="@+id/btnRowPostDelete"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/textView5"
-            app:layout_constraintTop_toTopOf="@+id/textView5" />
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:hint="time ago"
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp"
-            app:bindTimeAgo="@{post.createdDate}"
-            app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
-            app:layout_constraintStart_toStartOf="@+id/textView5"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-        <TextView
-            android:id="@+id/btnRowPostDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:padding="8dp"
-            android:text="삭제하기"
-            android:textColor="@color/materialRed"
-            android:textSize="14sp"
-            android:visibility="@{user._id.equals(post.owner._id), default=gone}"
-            app:layout_constraintBottom_toBottomOf="@+id/textView6"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/textView6"
-            app:layout_constraintTop_toTopOf="@+id/textView5" />
-
-        <TextView
-            android:id="@+id/textView10"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="24dp"
-            android:lineSpacingExtra="5sp"
-            android:text="@{post.text, default=`lorem ipsum`}"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
-
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginVertical="16dp"
-            app:cardCornerRadius="@dimen/app_radius_secondary"
-            app:cardElevation="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="16dp"
+            android:fillViewport="true"
             app:layout_constraintBottom_toTopOf="@+id/btnRowPostLike"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintTop_toBottomOf="@+id/btnArticleBack">
 
-            <ImageView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="@{!(post.photo==null||post.photo.empty)}"
-                app:bindImageLink="@{post.photo}" />
-        </androidx.cardview.widget.CardView>
+                android:layout_height="wrap_content">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/circleImageView"
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@color/colorPrimary"
+                    app:bindImageLink="@{post.owner.photo}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/font_primary_extrabold"
+                    android:text="@{post.owner.username, default=`Username`}"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toTopOf="@id/textView6"
+                    app:layout_constraintStart_toEndOf="@+id/circleImageView"
+                    app:layout_constraintTop_toTopOf="@+id/circleImageView"
+                    app:layout_constraintVertical_chainStyle="packed" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/round_box"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:fontFamily="@font/font_primary_extrabold"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="4dp"
+                    android:text="@{post.owner.personalityType}"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="12sp"
+                    app:bindTextViewPersonality="@{post.owner.personalityType}"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView5"
+                    app:layout_constraintEnd_toStartOf="@+id/btnRowPostDelete"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/textView5"
+                    app:layout_constraintTop_toTopOf="@+id/textView5" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:hint="time ago"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp"
+                    app:bindTimeAgo="@{post.createdDate}"
+                    app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
+                    app:layout_constraintStart_toStartOf="@+id/textView5"
+                    app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+                <TextView
+                    android:id="@+id/btnRowPostDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:padding="8dp"
+                    android:text="삭제하기"
+                    android:textColor="@color/materialRed"
+                    android:textSize="14sp"
+                    android:visibility="@{user._id.equals(post.owner._id), default=gone}"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView6"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/textView6"
+                    app:layout_constraintTop_toTopOf="@+id/textView5" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="24dp"
+                    android:lineSpacingExtra="5sp"
+                    android:text="@{post.text, default=`lorem ipsum`}"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginVertical="16dp"
+                    app:cardCornerRadius="@dimen/app_radius_secondary"
+                    app:cardElevation="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView10"
+                    app:layout_constraintVertical_bias="0.0">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{!(post.photo==null||post.photo.empty)}"
+                        app:bindImageLink="@{post.photo}" />
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
 
         <LinearLayout
             android:id="@+id/btnRowPostLike"

@@ -16,7 +16,7 @@ class Main3Fragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val binding: FragmentMain3Binding = DataBindingUtil.inflate(
             inflater,

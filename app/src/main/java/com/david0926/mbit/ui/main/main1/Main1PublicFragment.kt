@@ -51,13 +51,18 @@ class Main1PublicFragment : Fragment() {
         binding.recyclerMain1Public.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
+                val lm = (recyclerView.layoutManager as LinearLayoutManager?)
+                val visibleItemCount = lm!!.childCount
+                val totalItemCount = lm.itemCount
+                val firstVisibleItemPosition = lm.findFirstVisibleItemPosition()
 
+                if ((visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0)) {
                     UserCache.getToken(requireContext()).run {
                         viewModel.nextPublicPage(this) {
                             adapter.notifyDataSetChanged()
                         }
                     }
-
+                }
             }
         })
 
@@ -82,15 +87,18 @@ class Main1PublicFragment : Fragment() {
             startActivity(uploadIntent)
         }
 
+        binding.swipeMain1Public.setOnRefreshListener { onResume() }
+        viewModel.isPublicLoaded.observe(viewLifecycleOwner) { isLoaded ->
+            binding.swipeMain1Public.isRefreshing = !isLoaded
+        }
+
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.hasPublicNext=true;
-        viewModel.PUBLIC_PAGE=0;
-        viewModel.getPublicPostFromRepo(UserCache.getToken(requireContext()),
-        0)
-
+        viewModel.hasPublicNext = true
+        viewModel.publicPage = 0
+        viewModel.getPublicPostFromRepo(UserCache.getToken(requireContext()), 0)
     }
 }

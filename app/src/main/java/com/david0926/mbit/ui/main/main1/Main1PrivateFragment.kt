@@ -2,7 +2,6 @@ package com.david0926.mbit.ui.main.main1
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,6 @@ import com.david0926.mbit.ui.main.article.ArticleActivity
 import com.david0926.mbit.ui.main.article.ArticleUploadActivity
 import com.david0926.mbit.ui.main.comment.CommentBottomSheet
 import com.david0926.mbit.util.UserCache
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class Main1PrivateFragment : Fragment() {
 
@@ -53,20 +51,16 @@ class Main1PrivateFragment : Fragment() {
         binding.recyclerMain1Private.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                val lm =
-                    (recyclerView.layoutManager as LinearLayoutManager?)
+                val lm = (recyclerView.layoutManager as LinearLayoutManager?)
                 val visibleItemCount = lm!!.childCount
-                val totalItemCount = lm!!.itemCount
-                val firstVisibleItemPosition = lm!!.findFirstVisibleItemPosition()
+                val totalItemCount = lm.itemCount
+                val firstVisibleItemPosition = lm.findFirstVisibleItemPosition()
 
-
-                Log.w("[WOW]", "$visibleItemCount $totalItemCount $firstVisibleItemPosition")
                 if ((visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0)) {
 
                     viewModel.nextPrivatePage(
-                        UserCache.getToken(requireContext()), UserCache.getUser(
-                            requireContext()
-                        ).personalityType
+                        UserCache.getToken(requireContext()),
+                        UserCache.getUser(requireContext()).personalityType
                     ) {
                         adapter.notifyDataSetChanged()
                     }
@@ -96,13 +90,18 @@ class Main1PrivateFragment : Fragment() {
             startActivity(uploadIntent)
         }
 
+        binding.swipeMain1Private.setOnRefreshListener { onResume() }
+        viewModel.isPrivateLoaded.observe(viewLifecycleOwner) { isLoaded ->
+            binding.swipeMain1Private.isRefreshing = !isLoaded
+        }
+
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.hasPrivateNext=true;
-        viewModel.PRIVATE_PAGE=0;
+        viewModel.hasPrivateNext = true
+        viewModel.privatePage = 0
         viewModel.getPrivatePostFromRepo(
             UserCache.getToken(requireContext()),
             UserCache.getUser(requireContext()).personalityType, 0

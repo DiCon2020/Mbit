@@ -192,4 +192,21 @@ object BindingOptions {
         )
     }
 
+    @JvmStatic
+    @BindingAdapter("bindTextViewPersonality")
+    fun bindTextViewPersonality(v: TextView, p: String?) {
+        if (p != null) {
+            v.background.setTint(PersonalityUtil.valueOf(p).getBackgroundColor())
+            v.setTextColor(PersonalityUtil.valueOf(p).getTextColor())
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("bindTextColorPersonality")
+    fun bindTextColorPersonality(v: TextView, p: String?) {
+        if (p != null) {
+            v.setTextColor(PersonalityUtil.valueOf(p).getBackgroundColor())
+        }
+    }
+
 }
