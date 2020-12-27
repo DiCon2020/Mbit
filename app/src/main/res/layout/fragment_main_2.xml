@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:lineSpacingExtra="5sp"
-                    android:text="나와 더 가깝다고 생각하는 답변에 투표해 주세요. \n토픽 주제는 매일 오전 6시에 발표됩니다!"
+                    android:text="나와 더 가깝다고 생각하는 답변에 투표해 주세요. \n토픽 주제는 매일 새롭게 갱신됩니다!"
                     android:textSize="14sp"
                     app:layout_constrainedWidth="true"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -88,6 +88,7 @@
                     android:elevation="8dp"
                     android:gravity="center"
                     android:orientation="vertical"
+                    app:bindInvisibility="@{viewModel.isLoaded}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -113,7 +114,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:fontFamily="@font/font_primary_extrabold"
+                            android:lineSpacingExtra="8dp"
                             android:text="@{viewModel.todayTopic.question, default=`lorem ipsum`}"
+                            android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
 
@@ -154,13 +157,27 @@
                         app:bindButtonPersonalitySelected="@{viewModel.todayTopic.click.equals(`second`)}" />
                 </LinearLayout>
 
+                <ProgressBar
+                    android:id="@+id/progressBar2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminateTint="@color/colorPrimary"
+                    android:translationZ="8dp"
+                    android:visibility="@{!viewModel.isLoaded, default=gone}"
+                    app:layout_constraintBottom_toBottomOf="@+id/linearLayout5"
+                    app:layout_constraintEnd_toEndOf="@+id/linearLayout5"
+                    app:layout_constraintStart_toStartOf="@+id/linearLayout5"
+                    app:layout_constraintTop_toTopOf="@+id/linearLayout5" />
+
                 <LinearLayout
                     android:id="@+id/btnMain2Comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:clickable="@{viewModel.isLoaded}"
                     android:gravity="center"
                     android:padding="16dp"
+                    app:bindInvisibility="@{viewModel.isLoaded}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
@@ -207,6 +224,7 @@
                     app:layout_constraintVertical_chainStyle="packed" />
 
                 <LinearLayout
+                    android:id="@+id/linearLayout7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="36dp"
@@ -228,7 +246,8 @@
                         android:backgroundTint="@color/colorSecondary"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:padding="24dp">
+                        android:padding="24dp"
+                        app:bindInvisibility="@{viewModel.isLoaded}">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -241,7 +260,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:fontFamily="@font/font_primary_extrabold"
-                            android:text="@{viewModel.lastTopic.question, default=`lorem ipsum`}"
+                            android:lineSpacingExtra="8dp"
+                            android:text="@{viewModel.lastTopic.question+`\n`+viewModel.personality, default=`lorem ipsum\nAAAA`}"
+                            android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
 
@@ -340,6 +361,17 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
 
+                <ProgressBar
+                    android:id="@+id/progressBar3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminateTint="@color/colorPrimary"
+                    android:translationZ="8dp"
+                    android:visibility="@{!viewModel.isLoaded, default=gone}"
+                    app:layout_constraintBottom_toBottomOf="@+id/linearLayout7"
+                    app:layout_constraintEnd_toEndOf="@+id/linearLayout7"
+                    app:layout_constraintStart_toStartOf="@+id/linearLayout7"
+                    app:layout_constraintTop_toTopOf="@+id/linearLayout7" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

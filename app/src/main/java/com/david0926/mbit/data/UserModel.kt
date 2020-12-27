@@ -1,5 +1,6 @@
 package com.david0926.mbit.data
 
+import com.david0926.mbit.data.notification.Notification
 import java.io.Serializable
 
 data class UserModel(
@@ -14,7 +15,7 @@ data class UserModel(
     var lastLoginDate: String,
     var createdDate: String,
     var loginCount: Int,
-    var notificationList: ArrayList<Any>,
+    var notificationList: ArrayList<Notification>,
     var topicNotificationStatus: Boolean,
     var commentNotificationStatus: Boolean,
     var deviceId: String,

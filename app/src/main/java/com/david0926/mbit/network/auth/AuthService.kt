@@ -1,8 +1,6 @@
 package com.david0926.mbit.network.auth
 
 import com.david0926.mbit.data.auth.LoginRequest
-import com.david0926.mbit.data.auth.RegisterRequest
-import com.david0926.mbit.data.auth.UpdateInfoRequest
 import com.david0926.mbit.data.comment.CommonResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -32,10 +30,21 @@ interface AuthService {
         @Header("Authorization") token: String
     ): Call<CommonResponse>
 
-
+    @Multipart
     @PUT("/mbit/auth/update_info")
     fun setUserData(
         @Header("Authorization") token: String,
-        @Body updateInfoRequest: UpdateInfoRequest
+        @Part("username") username: RequestBody?,
+        @Part("personalityType") personalityType: RequestBody?,
+        @Part("topicNotificationStatus") topicNotificationStatus: RequestBody?,
+        @Part("commentNotificationStatus") commentNotificationStatus: RequestBody?,
+        @Part photo: MultipartBody.Part?,
+        @Part("time") time: RequestBody?,
     ): Call<CommonResponse>
+
+    @DELETE("/mbit/auth/delete")
+    fun deleteUser(
+        @Header("Authorization") token: String,
+    ): Call<CommonResponse>
+
 }

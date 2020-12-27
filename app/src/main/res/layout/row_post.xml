@@ -55,14 +55,12 @@
             android:backgroundTint="@color/colorPrimary"
             android:fontFamily="@font/font_primary_extrabold"
             android:paddingHorizontal="12dp"
-            android:paddingVertical="4dp"
+            android:paddingVertical="2dp"
             android:text="@{post.owner.personalityType}"
             android:textColor="@color/colorSecondary"
             android:textSize="12sp"
             app:bindTextViewPersonality="@{post.owner.personalityType}"
             app:layout_constraintBottom_toBottomOf="@+id/textView5"
-            app:layout_constraintEnd_toStartOf="@+id/btnRowPostDelete"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/textView5"
             app:layout_constraintTop_toTopOf="@+id/textView5" />
 
@@ -70,8 +68,7 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:hint="time ago"
+            android:layout_marginTop="6dp"
             android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             app:bindTimeAgo="@{post.createdDate}"
@@ -83,17 +80,14 @@
             android:id="@+id/btnRowPostDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:padding="8dp"
-            android:text="삭제하기"
+            android:padding="4dp"
+            android:text="· 삭제"
             android:textColor="@color/materialRed"
             android:textSize="12sp"
             android:visibility="@{user._id.equals(post.owner._id), default=gone}"
             app:layout_constraintBottom_toBottomOf="@+id/textView6"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/textView6"
-            app:layout_constraintTop_toTopOf="@+id/textView5" />
+            app:layout_constraintTop_toTopOf="@id/textView6" />
 
         <TextView
             android:id="@+id/textView10"

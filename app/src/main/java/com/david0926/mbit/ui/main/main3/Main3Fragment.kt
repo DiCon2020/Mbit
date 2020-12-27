@@ -1,5 +1,7 @@
 package com.david0926.mbit.ui.main.main3
 
+import android.app.SearchManager
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +30,15 @@ class Main3Fragment : Fragment() {
         binding.viewModel = viewModel
 
         viewModel.getPersonality(UserCache.getToken(requireContext()))
+
+        binding.btnMain3More.setOnClickListener {
+            val intent = Intent(Intent.ACTION_WEB_SEARCH)
+            intent.putExtra(
+                SearchManager.QUERY,
+                viewModel.personality.value!!.myInfo.personalityType
+            )
+            startActivity(intent)
+        }
 
         return binding.root
     }

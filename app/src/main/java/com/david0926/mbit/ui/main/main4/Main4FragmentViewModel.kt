@@ -7,4 +7,7 @@ import com.david0926.mbit.data.UserModel
 class Main4FragmentViewModel : ViewModel() {
     val user = MutableLiveData<UserModel>()
     val version = MutableLiveData("")
+
+    val topicChecked = MutableLiveData(false)
+    val commentChecked = MutableLiveData(false)
 }

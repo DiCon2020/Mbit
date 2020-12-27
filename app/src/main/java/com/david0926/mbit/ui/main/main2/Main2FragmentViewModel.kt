@@ -7,6 +7,8 @@ import com.david0926.mbit.data.topic.TopicVoteRequest
 import com.david0926.mbit.network.topic.TopicManager
 
 class Main2FragmentViewModel : ViewModel() {
+    var personality = ""
+
     val todayTopic = MutableLiveData<Topic>()
     val lastTopic = MutableLiveData<Topic>()
 

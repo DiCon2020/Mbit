@@ -39,7 +39,8 @@ class PersonalityInputActivity : AppCompatActivity() {
                     viewModel.selected.joinToString(""),
                     null,
                     null,
-                    null
+                    null,
+                    true
                 ),
                 onResponse = { response, data ->
                     if (response.status != 200) {

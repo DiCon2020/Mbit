@@ -31,6 +31,8 @@ class Main2Fragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity()).get(Main2FragmentViewModel::class.java)
         binding.viewModel = viewModel
 
+        viewModel.personality = UserCache.getUser(requireContext()).personalityType
+
         viewModel.getLastTopic(UserCache.getToken(requireContext()))
 
         binding.btnMain2Q1.setOnClickListener {

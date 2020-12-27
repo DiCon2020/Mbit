@@ -43,7 +43,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/imageView5"
+                    android:id="@+id/btnMain4Noti"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/icn_bell"
@@ -106,7 +106,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
                 <Button
-                    android:id="@+id/button10"
+                    android:id="@+id/btnMain4EditProfile"
                     style="@style/ButtonSecondaryStyleWhiteText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -160,6 +160,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
+                    android:checked="@={viewModel.topicChecked}"
                     android:theme="@style/SwitchStyle"
                     app:layout_constraintBottom_toBottomOf="@+id/textView27"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -184,6 +185,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
+                    android:checked="@={viewModel.commentChecked}"
                     android:theme="@style/SwitchStyle"
                     app:layout_constraintBottom_toBottomOf="@+id/textView26"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -230,7 +232,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
                 <TextView
-                    android:id="@+id/textView25"
+                    android:id="@+id/btnMain4Delete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"

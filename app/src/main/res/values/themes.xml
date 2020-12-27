@@ -19,6 +19,7 @@
         <item name="editTextStyle">@style/EditTextStyle</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
+        <item name="spinnerStyle">@style/SpinnerStyle</item>
     </style>
 
     <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
@@ -59,6 +60,16 @@
     </style>
 
     <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:padding">18dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@drawable/round_box</item>
+        <item name="android:fontFamily">@font/font_secondary_regular</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textColor">@color/textColorDefault</item>
+        <item name="android:elevation">4dp</item>
+    </style>
+
+    <style name="SpinnerStyle" parent="Widget.AppCompat.Spinner">
         <item name="android:padding">18dp</item>
         <item name="android:textSize">16sp</item>
         <item name="android:background">@drawable/round_box</item>

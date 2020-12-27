@@ -7,5 +7,6 @@ data class UpdateInfoRequest(
     var personalityType: String?,
     var topicNotificationStatus: Boolean?,
     var commentNotificationStatus: Boolean?,
-    var photo: MultipartBody.Part?
+    var photo: MultipartBody.Part?,
+    var time: Boolean?,
 )

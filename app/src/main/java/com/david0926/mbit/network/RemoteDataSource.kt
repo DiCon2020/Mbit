@@ -46,6 +46,12 @@ interface RemoteDataSource {
         onFailure: (Throwable) -> Unit
     )
 
+    fun deleteUser(
+        token: String,
+        onResponse : (CommonResponse) -> Unit,
+        onFailure: (Throwable) -> Unit
+    )
+
     // PostService
     fun getPosts(
         token: String,

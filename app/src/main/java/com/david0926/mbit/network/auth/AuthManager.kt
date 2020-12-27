@@ -43,4 +43,8 @@ class AuthManager {
     fun setUserData(token: String, updateInfoRequest: UpdateInfoRequest, onResponse : (CommonResponse, UserModel?) -> Unit, onFailure: (Throwable) -> Unit) {
         retrofitRemoteDataSource.setUserData(token, updateInfoRequest, onResponse, onFailure)
     }
+
+    fun deleteUser(token: String, onResponse : (CommonResponse) -> Unit, onFailure: (Throwable) -> Unit) {
+        retrofitRemoteDataSource.deleteUser(token, onResponse, onFailure)
+    }
 }

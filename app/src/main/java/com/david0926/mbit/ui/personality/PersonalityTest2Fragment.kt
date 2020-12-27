@@ -57,7 +57,8 @@ class PersonalityTest2Fragment : Fragment() {
                         .replace("1", "").replace("2", ""),
                     null,
                     null,
-                    null
+                    null,
+                    true
                 ),
                 onResponse = { response, data ->
                     if (response.status != 200) {

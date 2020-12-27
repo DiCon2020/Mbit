@@ -9,9 +9,9 @@ import com.david0926.mbit.data.post.Post
 import com.david0926.mbit.databinding.RowPostBinding
 
 class Main1RecyclerAdapter(userModel: UserModel) :
-    RecyclerView.Adapter<Main1RecyclerAdapter.ChatHolder>() {
+    RecyclerView.Adapter<Main1RecyclerAdapter.Main1RecyclerHolder>() {
 
-    class ChatHolder(var binding: RowPostBinding) : RecyclerView.ViewHolder(binding.root)
+    class Main1RecyclerHolder(var binding: RowPostBinding) : RecyclerView.ViewHolder(binding.root)
 
     private var posts = ArrayList<Post>()
     private var user = userModel
@@ -31,13 +31,13 @@ class Main1RecyclerAdapter(userModel: UserModel) :
         diffResult.dispatchUpdatesTo(this)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatHolder {
-        return ChatHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Main1RecyclerHolder {
+        return Main1RecyclerHolder(
             RowPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: ChatHolder, position: Int) {
+    override fun onBindViewHolder(holder: Main1RecyclerHolder, position: Int) {
         holder.binding.root.setOnClickListener { onItemClick.invoke(position) }
         holder.binding.btnRowPostLike.setOnClickListener { onLikeClick.invoke(position) }
         holder.binding.btnRowPostComment.setOnClickListener { onCommentClick.invoke(position) }

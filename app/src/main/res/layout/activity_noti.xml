@@ -7,27 +7,51 @@
 
         <variable
             name="viewModel"
-            type="com.david0926.mbit.ui.main.main1.Main1ViewModel" />
-
+            type="com.david0926.mbit.ui.notification.NotiActivityViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeMain1Public"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/btnNotiBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerMain1Public"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:bindPosts="@{viewModel.publicPostList}"
-                tools:listitem="@layout/row_post" />
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:fontFamily="@font/font_primary_extrabold"
+            android:text="알림"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnNotiBack" />
 
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerNoti"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="12dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/round_box_secondary"
+            app:bindNotis="@{viewModel.notiList}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView16"
+            tools:listitem="@layout/row_noti" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -35,11 +59,11 @@
             android:gravity="center"
             android:orientation="vertical"
             android:padding="16dp"
-            android:visibility="@{viewModel.isPublicLoaded &amp;&amp; viewModel.publicPostList.empty, default=gone}"
+            android:visibility="@{viewModel.notiList.empty, default=gone}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/textView16">
 
             <ImageView
                 android:layout_width="64dp"
@@ -56,7 +80,7 @@
                 android:layout_marginTop="12dp"
                 android:fontFamily="@font/nanumsquare_extrabold"
                 android:lineSpacingExtra="5dp"
-                android:text="우측 하단의 버튼으로 \n게시물을 작성해 보세요!"
+                android:text="아직 도착한 \n알림이 없어요."
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp"
@@ -65,19 +89,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnMain1PublicWrite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="24dp"
-            android:elevation="8dp"
-            android:src="@drawable/ic_round_edit_24"
-            android:tint="@color/white"
-            android:visibility="@{!viewModel.isPublicBottom}"
-            app:backgroundTint="@color/colorSecondary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

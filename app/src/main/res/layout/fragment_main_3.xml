@@ -99,6 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="48dp"
                 android:layout_marginVertical="36dp"
+                android:clickable="@{viewModel.isLoaded}"
                 android:text="더 알아보기" />
         </LinearLayout>
     </ScrollView>

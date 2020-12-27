@@ -35,7 +35,6 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/round_box_secondary"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="16dp"
@@ -46,8 +45,8 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:layout_width="56dp"
-                android:layout_height="56dp"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:src="@drawable/icn_main_logo"
                 app:layout_constraintBottom_toBottomOf="@+id/swipeMain1Private"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +56,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 android:fontFamily="@font/nanumsquare_extrabold"
                 android:lineSpacingExtra="5dp"
                 android:text="우측 하단의 버튼으로 \n게시물을 작성해 보세요!"

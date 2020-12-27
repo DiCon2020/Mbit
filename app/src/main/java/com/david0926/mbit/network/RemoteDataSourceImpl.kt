@@ -28,7 +28,10 @@ import retrofit2.Response
 
 class RemoteDataSourceImpl : RemoteDataSource {
 
-    fun toPart(obj: Any?) : RequestBody = RequestBody.create(MediaType.parse("multipart/form-data"), obj.toString())
+    private fun toPart(obj: Any?): RequestBody? {
+        if (obj == null) return null
+        return RequestBody.create(MediaType.parse("multipart/form-data"), obj.toString())
+    }
 
     // AuthService
     override fun login(
@@ -69,7 +72,14 @@ class RemoteDataSourceImpl : RemoteDataSource {
         onFailure: (Throwable) -> Unit
     ) {
 
-        MbitRetrofit.authService.register(toPart(registerRequest.id), toPart(registerRequest.password), toPart(registerRequest.username), toPart(registerRequest.yearOfBirth), toPart(registerRequest.personalityType), registerRequest.photo)
+        MbitRetrofit.authService.register(
+            toPart(registerRequest.id)!!,
+            toPart(registerRequest.password)!!,
+            toPart(registerRequest.username)!!,
+            toPart(registerRequest.yearOfBirth)!!,
+            toPart(registerRequest.personalityType),
+            registerRequest.photo
+        )
             .enqueue(object : Callback<CommonResponse> {
                 override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                     onFailure(t)
@@ -132,7 +142,15 @@ class RemoteDataSourceImpl : RemoteDataSource {
         onResponse: (CommonResponse, UserModel?) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
-        MbitRetrofit.authService.setUserData("Bearer $token", updateInfoRequest)
+        MbitRetrofit.authService.setUserData(
+            "Bearer $token",
+            toPart(updateInfoRequest.username),
+            toPart(updateInfoRequest.personalityType),
+            toPart(updateInfoRequest.topicNotificationStatus),
+            toPart(updateInfoRequest.commentNotificationStatus),
+            updateInfoRequest.photo,
+            toPart(updateInfoRequest.time)
+        )
             .enqueue(object : Callback<CommonResponse> {
                 override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                     onFailure(t)
@@ -158,6 +176,40 @@ class RemoteDataSourceImpl : RemoteDataSource {
                     }
                 }
             })
+    }
+
+    override fun deleteUser(
+        token: String,
+        onResponse: (CommonResponse) -> Unit,
+        onFailure: (Throwable) -> Unit
+    ) {
+        MbitRetrofit.authService.deleteUser(
+            "Bearer $token",
+        ).enqueue(object : Callback<CommonResponse> {
+            override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
+                onFailure(t)
+            }
+
+            override fun onResponse(
+                call: Call<CommonResponse>,
+                response: Response<CommonResponse>
+            ) {
+                try {
+                    if (response.body() == null) {
+                        onResponse(
+                            Gson().fromJson(
+                                response.errorBody()!!.string(),
+                                CommonResponse::class.java
+                            )
+                        )
+                    } else {
+                        onResponse(response.body()!!)
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        })
     }
 
     // PostService
@@ -191,7 +243,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
                             ), null
                         )
                     } else {
-                        Log.d("baam", "onResponse: "+response.body())
+                        Log.d("baam", "onResponse: " + response.body())
                         val type = object : TypeToken<ArrayList<Post>>() {}.type
                         val posts: ArrayList<Post> = Gson().fromJson(
                             Gson().toJson(response.body()!!.data), type
@@ -212,7 +264,12 @@ class RemoteDataSourceImpl : RemoteDataSource {
         onResponse: (CommonResponse) -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
-        MbitRetrofit.postService.createPost("Bearer $token", toPart(postCreateRequest.text), toPart(postCreateRequest.personalityTypeStatus), postCreateRequest.photo)
+        MbitRetrofit.postService.createPost(
+            "Bearer $token",
+            toPart(postCreateRequest.text)!!,
+            toPart(postCreateRequest.personalityTypeStatus)!!,
+            postCreateRequest.photo
+        )
             .enqueue(object : Callback<CommonResponse> {
                 override fun onFailure(call: Call<CommonResponse>, t: Throwable) {
                     onFailure(t)
@@ -625,7 +682,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
                         )
                     } else {
                         val Type = object : TypeToken<ArrayList<Mail>>() {}.type
-                        val mails: ArrayList<Mail> = Gson().fromJson<ArrayList<Mail>>(
+                        val mails: ArrayList<Mail> = Gson().fromJson(
                             Gson().toJson(response.body()!!.data), Type
                         )
                         onResponse(response.body()!!, mails)
@@ -633,5 +690,4 @@ class RemoteDataSourceImpl : RemoteDataSource {
                 }
             })
     }
-
 }
