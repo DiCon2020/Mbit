@@ -108,7 +108,7 @@
                     android:padding="8dp"
                     android:text="삭제하기"
                     android:textColor="@color/materialRed"
-                    android:textSize="14sp"
+                    android:textSize="12sp"
                     android:visibility="@{user._id.equals(post.owner._id), default=gone}"
                     app:layout_constraintBottom_toBottomOf="@+id/textView6"
                     app:layout_constraintEnd_toEndOf="parent"

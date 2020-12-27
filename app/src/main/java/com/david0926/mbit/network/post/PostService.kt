@@ -34,7 +34,7 @@ interface PostService {
         @Body postVoteRequest: PostVoteRequest
     ): Call<CommonResponse>
 
-    @DELETE("/mbit/post/delete")
+    @HTTP(method = "DELETE", path = "/mbit/post/delete", hasBody = true)
     fun deletePost(
         @Header("Authorization") token: String,
         @Body postDeleteRequest: PostDeleteRequest

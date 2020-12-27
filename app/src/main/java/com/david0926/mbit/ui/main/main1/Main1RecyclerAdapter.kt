@@ -29,7 +29,6 @@ class Main1RecyclerAdapter(userModel: UserModel) :
         this.posts.addAll(posts)
 
         diffResult.dispatchUpdatesTo(this)
-        //notifyDataSetChanged() //IQ 200 code
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatHolder {
@@ -67,12 +66,12 @@ class Main1RecyclerAdapter(userModel: UserModel) :
         }
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            if (oldListSize != newListSize) return false
+            if (oldListSize != newListSize || newList.isEmpty()) return false
             return oldList[oldItemPosition]._id == newList[newItemPosition]._id
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            if (oldListSize != newListSize) return false
+            if (oldListSize != newListSize || newList.isEmpty()) return false
             return oldList[oldItemPosition] == newList[newItemPosition]
         }
 

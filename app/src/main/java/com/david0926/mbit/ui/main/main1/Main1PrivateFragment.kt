@@ -1,5 +1,6 @@
 package com.david0926.mbit.ui.main.main1
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.david0926.mbit.R
 import com.david0926.mbit.databinding.FragmentMain1PrivateBinding
-import com.david0926.mbit.ui.dialog.WorkingDialog
 import com.david0926.mbit.ui.main.article.ArticleActivity
 import com.david0926.mbit.ui.main.article.ArticleUploadActivity
 import com.david0926.mbit.ui.main.comment.CommentBottomSheet
@@ -59,12 +59,12 @@ class Main1PrivateFragment : Fragment() {
                 val firstVisibleItemPosition = lm.findFirstVisibleItemPosition()
 
                 if ((visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0)) {
-                    if (recyclerView.canScrollVertically(-1)) viewModel.isPrivateBottom.value = true
+                    //if (recyclerView.canScrollVertically(-1)) viewModel.isPrivateBottom.value = true
                     viewModel.nextPrivatePage(
                         UserCache.getToken(requireContext()),
                         UserCache.getUser(requireContext()).personalityType
                     ) { }
-                } else viewModel.isPrivateBottom.value = false
+                } //else viewModel.isPrivateBottom.value = false
             }
         })
 
@@ -85,7 +85,18 @@ class Main1PrivateFragment : Fragment() {
         }
 
         adapter.onDeleteClick = {
-            WorkingDialog.working(requireActivity())
+            val builder = AlertDialog.Builder(requireContext(), R.style.AlertDialogTheme)
+            builder.setMessage("이 게시물을 삭제할까요?")
+            builder.setPositiveButton("삭제") { _, _ ->
+                viewModel.deletePost(
+                    UserCache.getToken(requireContext()),
+                    viewModel.privatePostList[it]._id,
+                    UserCache.getUser(requireContext()).personalityType,
+                    failed = {
+                        Toast.makeText(requireContext(), "게시물 삭제에 실패했습니다.", Toast.LENGTH_SHORT)
+                            .show()
+                    })
+            }.setNegativeButton("취소") { _, _ -> }.show()
         }
 
         binding.recyclerMain1Private.adapter = adapter
